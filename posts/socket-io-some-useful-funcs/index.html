@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Socket.io 中一些有用的方法</title>
+	
+	<meta name="description" content="">
+	<meta name="image" content="">
+	
+	<meta itemprop="name" content="Socket.io 中一些有用的方法">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+	
+	<meta name="og:title" content="Socket.io 中一些有用的方法">
+	<meta name="og:description" content="">
+	
+	<meta name="og:url" content="https://idreamshen.github.io/posts/socket-io-some-useful-funcs/">
+	<meta name="og:site_name" content="Socket.io 中一些有用的方法">
+	<meta name="og:type" content="article">
+	
+	<meta name="article:tag" content="">
+	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
+	
+	
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-123-45', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+
+<header>
+	
+	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu&#39;s Blog</strong></a>
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	
+	
+	
+	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+</header>
+
+
+<div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;"></div>
+<script>
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
+    last = +new Date();
+    
+
+    if (el.style.opacity > 0) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    } else {
+      el.style.display='none';
+    }
+  };
+
+  tick();
+}
+
+function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+         el = document.getElementById('loadingMask');
+         fadeOut(el);
+        var elements = document.querySelectorAll("img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("alt")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("alt"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+window.onload = ready;
+</script>
+
+<div class="content">
+  <h1>Socket.io 中一些有用的方法 <aside></aside></h1>
+  
+
+<h3 id="io-use">io.use</h3>
+
+<p>注册中间件。看一下下面的这个例子</p>
+
+<pre><code class="language-javascript">// 服务端代码
+var io = require('socket.io')(); // 引用 socket.io 库并实例化
+
+/** 注册中间件 **/
+io.use(function (socket, next) {
+  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
+  var password = query.password; // 读取参数中密码
+
+  if (password === '123456') return next(); // 如果密码正确，则执行返回 next()
+  next(new Error('密码错误')); // 如果密码错误，则抛出异常
+});
+
+/** 监听事件 **/
+io.on('connection', function (socket) {
+  socket.on('disconnect', function () {
+    // 客户端断线
+  });
+
+  socket.on('message', function (body) {
+    // 服务器收到客户端发来的消息
+  });
+});
+</code></pre>
+
+<pre><code class="language-javascript">// 客户端代码
+&lt;script src='/socket.io/socket.io.js'&gt;&lt;/script&gt; // 加载 socket.io.js
+&lt;script&gt;
+  var socket = io('http://localhost', {query: 'password=654321'}); // 实例化并连接到 socket 服务器，传入密码参数
+
+  /** 监听 error 事件 **/
+  socket.on('error', function (err) {
+    console.log(err); // 打印 err，注：err 是字符串类型
+  });
+
+  socket.send('hello server');
+&lt;/script&gt;
+</code></pre>
+
+<p>可以看到，当客户端尝试连接服务器时，因为传入的密码是 654321，导致服务端的中间件认证失败，触发客户端的 error 事件。客户端代码第 8 行会打印出“密码错误”这几个字。</p>
+
+<p>注意服务端代码中第 9 行的 return 不能省略。</p>
+
+<pre><code class="language-javascript">// 服务端代码
+var io = require('socket.io')(); // 引用 socket.io 库并实例化
+
+/** 注册中间件 **/
+io.use(function (socket, next) {
+  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
+  var password = query.password; // 读取参数中密码
+
+  if (password === '123456') next(); // 如果密码正确，则执行返回 next()
+  next(new Error('密码错误')); // 如果密码错误，则抛出异常
+});
+</code></pre>
+
+<p>注意第 9 行，如果省略 return，则会导致第 10 行代码也被执行。可以将代码修改成下面的更易理解</p>
+
+<pre><code class="language-javascript">// 服务端代码
+var io = require('socket.io')(); // 引用 socket.io 库并实例化
+
+/** 注册中间件 **/
+io.use(function (socket, next) {
+  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
+  var password = query.password; // 读取参数中密码
+
+  if (password === '123456') {
+    next(); // 如果密码正确，则执行返回 next()
+  } else {
+    next(new Error('密码错误')); // 如果密码错误，则抛出异常
+  }
+});
+</code></pre>
+
+<h3 id="ack-模式">ACK 模式</h3>
+
+<pre><code class="language-javascript">// 服务端
+var io = require('socket.io')();
+
+io.on('connection', function (socket) {
+  socket.on('chat', function (msg, callback) {
+    callback({
+      success: true
+    });
+    io.emit('chat', msg);
+  });
+});
+</code></pre>
+
+<pre><code class="language-javascript">// 客户端
+&lt;script&gt;
+  var socket = io();
+  socket.on('connect', function () {
+    socket.emit('chat', 'Hello', function (response) {
+      console.log(response.success); // 打印结果为 true
+    });
+
+    socket.on('chat', function (response) {
+      console.log(response); // 打印结果为 Hello
+    });
+  });
+&lt;/script&gt;
+</code></pre>
+
+</div>
+
+
+
+
+<footer>
+	<p>© 2017-2018, all rights reserved.</a>
+</footer>
+</body>
+</html>
