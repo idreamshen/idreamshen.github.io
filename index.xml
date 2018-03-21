@@ -28,13 +28,20 @@
 &lt;li&gt;梯子&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h3 id=&#34;详细步骤&#34;&gt;详细步骤&lt;/h3&gt;
+&lt;h3 id=&#34;首次操作-仅需操作一次&#34;&gt;首次操作（仅需操作一次）&lt;/h3&gt;
 
 &lt;ol&gt;
 &lt;li&gt;将 iPad 地区改为美国地区&lt;/li&gt;
 &lt;li&gt;将 iPad 语言改为英文&lt;/li&gt;
-&lt;li&gt;确保自己的 iPad 网络处于梯子上&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;运行步骤&#34;&gt;运行步骤&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;打开飞行模式&lt;/li&gt;
+&lt;li&gt;连接无线网络，且确保自己的 iPad 网络处于梯子上&lt;/li&gt;
 &lt;li&gt;找到 News 这个 APP，运行之，理论上就能正常展示新闻信息了&lt;/li&gt;
+&lt;li&gt;关闭飞行模式&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h3 id=&#34;效果&#34;&gt;效果&lt;/h3&gt;
@@ -44,8 +51,9 @@
 &lt;h3 id=&#34;备注&#34;&gt;备注&lt;/h3&gt;
 
 &lt;ul&gt;
+&lt;li&gt;上述飞行模式的切换不是必须的，但是切换飞行模式后能提高成功率&lt;/li&gt;
 &lt;li&gt;不建议在 iPhone 上使用 News，iPhone 上运行 News 必须开启飞行模式&lt;/li&gt;
-&lt;li&gt;一旦 News 加载新闻成功后，可以关闭梯子，因为 News 仅在启动时进行地域检测 &lt;/li&gt;
+&lt;li&gt;一旦 News 加载新闻成功后，可以关闭梯子，因为 News 仅在启动时进行地域检测&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;参考&#34;&gt;参考&lt;/h3&gt;

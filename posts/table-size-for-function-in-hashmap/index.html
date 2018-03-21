@@ -4,21 +4,21 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title>如何在国服使用 Apple News</title>
+	<title>HashMap 类中的 tableSizeFor 方法</title>
 	
 	
 	<meta name="description" content="">
 	<meta name="image" content="">
 	
-	<meta itemprop="name" content="如何在国服使用 Apple News">
+	<meta itemprop="name" content="HashMap 类中的 tableSizeFor 方法">
 	<meta itemprop="description" content="">
 	<meta itemprop="image" content="">
 	
-	<meta name="og:title" content="如何在国服使用 Apple News">
+	<meta name="og:title" content="HashMap 类中的 tableSizeFor 方法">
 	<meta name="og:description" content="">
 	
-	<meta name="og:url" content="https://idreamshen.github.io/posts/how-to-use-apple-news-in-china/">
-	<meta name="og:site_name" content="如何在国服使用 Apple News">
+	<meta name="og:url" content="https://idreamshen.github.io/posts/table-size-for-function-in-hashmap/">
+	<meta name="og:site_name" content="HashMap 类中的 tableSizeFor 方法">
 	<meta name="og:type" content="article">
 	
 	<meta name="article:tag" content="">
@@ -48,6 +48,8 @@ ga('send', 'pageview');
 	
 	&nbsp;&nbsp;&nbsp;&nbsp;
 	
+	
+	DRAFT
 	
 	
 	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
@@ -102,51 +104,23 @@ window.onload = ready;
 </script>
 
 <div class="content">
-  <h1>如何在国服使用 Apple News <aside></aside></h1>
-  <h3 id="简介">简介</h3>
+  <h1>HashMap 类中的 tableSizeFor 方法 <aside></aside></h1>
+  <h3 id="tablesizefor-方法源码">tableSizeFor 方法源码</h3>
 
-<p>本文主要介绍如何使用 Apple News</p>
-
-<h3 id="准备">准备</h3>
-
-<ol>
-<li>iPad</li>
-<li>梯子</li>
-</ol>
-
-<h3 id="首次操作-仅需操作一次">首次操作（仅需操作一次）</h3>
-
-<ol>
-<li>将 iPad 地区改为美国地区</li>
-<li>将 iPad 语言改为英文</li>
-</ol>
-
-<h3 id="运行步骤">运行步骤</h3>
-
-<ol>
-<li>打开飞行模式</li>
-<li>连接无线网络，且确保自己的 iPad 网络处于梯子上</li>
-<li>找到 News 这个 APP，运行之，理论上就能正常展示新闻信息了</li>
-<li>关闭飞行模式</li>
-</ol>
-
-<h3 id="效果">效果</h3>
-
-<p><img src="/image/apple-news.jpg" alt="News App in iPad" title="News App in iPad" /></p>
-
-<h3 id="备注">备注</h3>
-
-<ul>
-<li>上述飞行模式的切换不是必须的，但是切换飞行模式后能提高成功率</li>
-<li>不建议在 iPhone 上使用 News，iPhone 上运行 News 必须开启飞行模式</li>
-<li>一旦 News 加载新闻成功后，可以关闭梯子，因为 News 仅在启动时进行地域检测</li>
-</ul>
-
-<h3 id="参考">参考</h3>
-
-<ul>
-<li><a href="https://www.v2ex.com/t/223846#r_2466757" title="https://www.v2ex.com/t/223846#r_2466757">https://www.v2ex.com/t/223846#r_2466757</a></li>
-</ul>
+<pre><code class="language-java">
+/**
+ * Returns a power of two size for the given target capacity.
+ */
+static final int tableSizeFor(int cap) {
+    int n = cap - 1;
+    n |= n &gt;&gt;&gt; 1;
+    n |= n &gt;&gt;&gt; 2;
+    n |= n &gt;&gt;&gt; 4;
+    n |= n &gt;&gt;&gt; 8;
+    n |= n &gt;&gt;&gt; 16;
+    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+}
+</code></pre>
 
 </div>
 
