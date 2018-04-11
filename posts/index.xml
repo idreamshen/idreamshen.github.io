@@ -6,10 +6,169 @@
     <description>Recent content in Posts on ChenHsingYu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 07 Mar 2018 14:56:06 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 11 Apr 2018 13:54:13 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>从 JDK Hotspot 源码探讨线程状态</title>
+      <link>https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/</link>
+      <pubDate>Wed, 11 Apr 2018 13:54:13 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/</guid>
+      <description>&lt;p&gt;src/share/vm/classfile/javaClasses.hpp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;
+// Java Thread Status for JVMTI and M&amp;amp;M use.
+// This thread status info is saved in threadStatus field of
+// java.lang.Thread java class.
+enum ThreadStatus {
+  NEW                      = 0,
+  RUNNABLE                 = JVMTI_THREAD_STATE_ALIVE +          // runnable / running
+                             JVMTI_THREAD_STATE_RUNNABLE,
+  SLEEPING                 = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
+                             JVMTI_THREAD_STATE_WAITING +
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+                             JVMTI_THREAD_STATE_SLEEPING,
+  IN_OBJECT_WAIT           = JVMTI_THREAD_STATE_ALIVE +          // Object.wait()
+                             JVMTI_THREAD_STATE_WAITING +
+                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY +
+                             JVMTI_THREAD_STATE_IN_OBJECT_WAIT,
+  IN_OBJECT_WAIT_TIMED     = JVMTI_THREAD_STATE_ALIVE +          // Object.wait(long)
+                             JVMTI_THREAD_STATE_WAITING +
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+                             JVMTI_THREAD_STATE_IN_OBJECT_WAIT,
+  PARKED                   = JVMTI_THREAD_STATE_ALIVE +          // LockSupport.park()
+                             JVMTI_THREAD_STATE_WAITING +
+                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY +
+                             JVMTI_THREAD_STATE_PARKED,
+  PARKED_TIMED             = JVMTI_THREAD_STATE_ALIVE +          // LockSupport.park(long)
+                             JVMTI_THREAD_STATE_WAITING +
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+                             JVMTI_THREAD_STATE_PARKED,
+  BLOCKED_ON_MONITOR_ENTER = JVMTI_THREAD_STATE_ALIVE +          // (re-)entering a synchronization block
+                             JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER,
+  TERMINATED               = JVMTI_THREAD_STATE_TERMINATED
+};
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;src/share/vm/prims/jvmti.xml&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;
+&amp;lt;constants id=&amp;quot;jvmtiThreadState&amp;quot; label=&amp;quot;Thread State Flags&amp;quot; kind=&amp;quot;bits&amp;quot;&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_ALIVE&amp;quot; num=&amp;quot;0x0001&amp;quot;&amp;gt;
+    Thread is alive. Zero if thread is new (not started) or terminated.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_TERMINATED&amp;quot; num=&amp;quot;0x0002&amp;quot;&amp;gt;
+    Thread has completed execution.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_RUNNABLE&amp;quot; num=&amp;quot;0x0004&amp;quot;&amp;gt;
+    Thread is runnable.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER&amp;quot; num=&amp;quot;0x0400&amp;quot;&amp;gt;
+    Thread is waiting to enter a synchronization block/method or,
+          after an &amp;lt;code&amp;gt;Object.wait()&amp;lt;/code&amp;gt;, waiting to re-enter a 
+          synchronization block/method.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_WAITING&amp;quot; num=&amp;quot;0x0080&amp;quot;&amp;gt;
+    Thread is waiting.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_WAITING_INDEFINITELY&amp;quot; num=&amp;quot;0x0010&amp;quot;&amp;gt;
+    Thread is waiting without a timeout.
+          For example, &amp;lt;code&amp;gt;Object.wait()&amp;lt;/code&amp;gt;.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT&amp;quot; num=&amp;quot;0x0020&amp;quot;&amp;gt;
+    Thread is waiting with a maximum time to wait specified.
+          For example, &amp;lt;code&amp;gt;Object.wait(long)&amp;lt;/code&amp;gt;.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_SLEEPING&amp;quot; num=&amp;quot;0x0040&amp;quot;&amp;gt;
+    Thread is sleeping -- &amp;lt;code&amp;gt;Thread.sleep(long)&amp;lt;/code&amp;gt;.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_IN_OBJECT_WAIT&amp;quot; num=&amp;quot;0x0100&amp;quot;&amp;gt;
+    Thread is waiting on an object monitor -- &amp;lt;code&amp;gt;Object.wait&amp;lt;/code&amp;gt;.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_PARKED&amp;quot; num=&amp;quot;0x0200&amp;quot;&amp;gt;
+    Thread is parked, for example: &amp;lt;code&amp;gt;LockSupport.park&amp;lt;/code&amp;gt;,
+          &amp;lt;code&amp;gt;LockSupport.parkUtil&amp;lt;/code&amp;gt; and &amp;lt;code&amp;gt;LockSupport.parkNanos&amp;lt;/code&amp;gt;.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_SUSPENDED&amp;quot; num=&amp;quot;0x100000&amp;quot;&amp;gt;
+    Thread suspended.
+    &amp;lt;code&amp;gt;java.lang.Thread.suspend()&amp;lt;/code&amp;gt;
+    or a &amp;lt;jvmti/&amp;gt; suspend function 
+          (such as &amp;lt;functionlink id=&amp;quot;SuspendThread&amp;quot;&amp;gt;&amp;lt;/functionlink&amp;gt;) 
+          has been called on the thread. If this bit
+    is set, the other bits refer to the thread state before suspension.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_INTERRUPTED&amp;quot; num=&amp;quot;0x200000&amp;quot;&amp;gt;
+    Thread has been interrupted.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_IN_NATIVE&amp;quot; num=&amp;quot;0x400000&amp;quot;&amp;gt;
+          Thread is in native code--that is, a native method is running
+          which has not called back into the VM or Java programming
+          language code.
+          &amp;lt;p/&amp;gt;
+          This flag is not set when running VM compiled Java programming
+          language code nor is it set when running VM code or
+          VM support code. Native VM interface functions, such as JNI and
+          &amp;lt;jvmti/&amp;gt; functions, may be implemented as VM code.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_VENDOR_1&amp;quot; num=&amp;quot;0x10000000&amp;quot;&amp;gt;
+          Defined by VM vendor.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_VENDOR_2&amp;quot; num=&amp;quot;0x20000000&amp;quot;&amp;gt;
+          Defined by VM vendor.
+  &amp;lt;/constant&amp;gt;
+  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_VENDOR_3&amp;quot; num=&amp;quot;0x40000000&amp;quot;&amp;gt;
+          Defined by VM vendor.
+  &amp;lt;/constant&amp;gt;
+&amp;lt;/constants&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;当一个线程的状态为 225 时，转换成 16 进制则为 e1。
+按照公式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
+           JVMTI_THREAD_STATE_WAITING +
+           JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+           JVMTI_THREAD_STATE_SLEEPING
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以发现满足 e1 = 0x0001 + 0x0080 + 0x0020 + 0x0040（这4个数值与 jvmti.xml 一一对应），所以可以推断该线程当时处于 sleep 状态&lt;/p&gt;
+
+&lt;p&gt;另外 threadService.hpp 文件控制了一个线程的 threadStatus，比如 JavaThreadSleepState 该函数就将线程状态修改为 java_lang_Thread::SLEEPING&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;
+// Change status to sleeping
+class JavaThreadSleepState : public JavaThreadStatusChanger {
+ private:
+  ThreadStatistics* _stat;
+  bool _active;
+ public:
+  JavaThreadSleepState(JavaThread *java_thread) :
+    JavaThreadStatusChanger(java_thread, java_lang_Thread::SLEEPING) {
+    if (is_alive()) {
+      _stat = java_thread-&amp;gt;get_thread_stat();
+      _active = ThreadService::is_thread_monitoring_contention();
+      _stat-&amp;gt;thread_sleep();
+      if (_active) {
+        _stat-&amp;gt;thread_sleep_begin();
+      }
+    } else {
+      _active = false;
+    }
+  }
+
+  ~JavaThreadSleepState() {
+    if (_active) {
+      _stat-&amp;gt;thread_sleep_end();
+    }
+  }
+};
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>如何在国服使用 Apple News</title>
