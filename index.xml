@@ -6,10 +6,35 @@
     <description>Recent content on ChenHsingYu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 11 Apr 2018 13:54:13 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 14 Apr 2018 15:33:31 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使用 GIT 克隆指定 TAG 或分支</title>
+      <link>https://idreamshen.github.io/posts/git-clone-specific-tag-or-branch/</link>
+      <pubDate>Sat, 14 Apr 2018 15:33:31 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/git-clone-specific-tag-or-branch/</guid>
+      <description>&lt;h2 id=&#34;命令&#34;&gt;命令&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;
+git clone -b &#39;v2.0&#39; --single-branch --depth 1 https://github.com/git/git.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;v2.0 代指 branch 或 tag&lt;/li&gt;
+&lt;li&gt;depth 表示 clone 深度，如果待克隆的项目很大，同时您不关注代码的变更历史，那可以使用 depth=1 提高 clone 速度&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;参考资料&#34;&gt;参考资料&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/791959/download-a-specific-tag-with-git?utm_medium%3Dorganic&amp;amp;utm_source%3Dgoogle_rich_qa&amp;amp;utm_campaign%3Dgoogle_rich_qa&#34; title=&#34;Download a specific tag with Git&#34;&gt;Download a specific tag with Git&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>从 JDK Hotspot 源码探讨线程状态</title>
