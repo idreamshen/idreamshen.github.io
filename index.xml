@@ -6,10 +6,34 @@
     <description>Recent content on ChenHsingYu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 14 Apr 2018 15:33:31 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 20 Apr 2018 16:14:14 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何观看 Netflix</title>
+      <link>https://idreamshen.github.io/posts/how-to-watch-netflix/</link>
+      <pubDate>Fri, 20 Apr 2018 16:14:14 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/how-to-watch-netflix/</guid>
+      <description>&lt;p&gt;前段时间用某云的 HK 节点自建梯子观看 Netflix 很流畅，但是最近发现 HK 节点已无法正常观看。更换了该云上的 IP 后依然无法正常观看。&lt;/p&gt;
+
+&lt;p&gt;经过一番折腾，找到了一家不错的梯子，可以顺利观看 Netflix，下面就简要介绍一番。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;服务商为 &lt;a href=&#34;https://hkssnetwork.net/&#34; title=&#34;https://hkssnetwork.net/&#34;&gt;https://hkssnetwork.net/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;注册 hkss 账号&lt;/li&gt;
+&lt;li&gt;充值 11 元&lt;/li&gt;
+&lt;li&gt;购买最低配的 50G 流量套餐&lt;/li&gt;
+&lt;li&gt;在 iPad 上使用梯子连接新的服务器&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://idreamshen.github.io/image/netflix.jpg&#34; alt=&#34;netflix.jpg&#34; title=&#34;netflix.jpg&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;由于 Netflix 无法截图播放界面，但是实测播放相当流畅，hava fun~&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>使用 GIT 克隆指定 TAG 或分支</title>
