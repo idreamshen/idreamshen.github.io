@@ -43,8 +43,7 @@
       <guid>https://idreamshen.github.io/posts/git-clone-specific-tag-or-branch/</guid>
       <description>&lt;h2 id=&#34;命令&#34;&gt;命令&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;
-git clone -b &#39;v2.0&#39; --single-branch --depth 1 https://github.com/git/git.git
+&lt;pre&gt;&lt;code&gt;git clone -b &#39;v2.0&#39; --single-branch --depth 1 https://github.com/git/git.git
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
@@ -68,8 +67,7 @@ git clone -b &#39;v2.0&#39; --single-branch --depth 1 https://github.com/git/git
       <guid>https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/</guid>
       <description>&lt;p&gt;src/share/vm/classfile/javaClasses.hpp&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;
-// Java Thread Status for JVMTI and M&amp;amp;M use.
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;// Java Thread Status for JVMTI and M&amp;amp;M use.
 // This thread status info is saved in threadStatus field of
 // java.lang.Thread java class.
 enum ThreadStatus {
@@ -104,8 +102,7 @@ enum ThreadStatus {
 
 &lt;p&gt;src/share/vm/prims/jvmti.xml&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;
-&amp;lt;constants id=&amp;quot;jvmtiThreadState&amp;quot; label=&amp;quot;Thread State Flags&amp;quot; kind=&amp;quot;bits&amp;quot;&amp;gt;
+&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;constants id=&amp;quot;jvmtiThreadState&amp;quot; label=&amp;quot;Thread State Flags&amp;quot; kind=&amp;quot;bits&amp;quot;&amp;gt;
   &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_ALIVE&amp;quot; num=&amp;quot;0x0001&amp;quot;&amp;gt;
     Thread is alive. Zero if thread is new (not started) or terminated.
   &amp;lt;/constant&amp;gt;
@@ -177,8 +174,7 @@ enum ThreadStatus {
 &lt;p&gt;当一个线程的状态为 225 时，转换成 16 进制则为 e1。
 按照公式：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;
-SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
+&lt;pre&gt;&lt;code&gt;SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
            JVMTI_THREAD_STATE_WAITING +
            JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
            JVMTI_THREAD_STATE_SLEEPING
@@ -188,8 +184,7 @@ SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
 
 &lt;p&gt;另外 threadService.hpp 文件控制了一个线程的 threadStatus，比如 JavaThreadSleepState 该函数就将线程状态修改为 java_lang_Thread::SLEEPING&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;
-// Change status to sleeping
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;// Change status to sleeping
 class JavaThreadSleepState : public JavaThreadStatusChanger {
  private:
   ThreadStatistics* _stat;
