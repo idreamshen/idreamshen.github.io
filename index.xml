@@ -6,10 +6,47 @@
     <description>Recent content on ChenHsingYu&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 05 Nov 2018 19:23:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Dec 2018 15:16:57 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>伪造微信群发助手截图</title>
+      <link>https://idreamshen.github.io/posts/wechat-broadcast-message-fake-picture/</link>
+      <pubDate>Mon, 03 Dec 2018 15:16:57 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/wechat-broadcast-message-fake-picture/</guid>
+      <description>&lt;p&gt;需求是这样的，我妈公司搞商场活动，每天需要上传5张微信群发200人的截图。&lt;/p&gt;
+
+&lt;p&gt;我第一反应是网上应该有微信聊天生成器这种，那会不会有微信群发助手生成器呢？很遗憾，我在 GitHub 上搜了一圈，没找到开源的微信聊天生成器，更不用说群发助手生成器了。怎么办呢？&lt;/p&gt;
+
+&lt;p&gt;那我们先对这个截图需求进行拆解，逐一突破。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;群发助手的文案应当与活动文案一致&lt;/li&gt;
+&lt;li&gt;群发助手的收件人人数必须是200人&lt;/li&gt;
+&lt;li&gt;群发助手的收件人昵称应当很多，最后显示为 ... 表示还有更多&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;最后分析下来，采用方案就是利用修图达到伪造效果。下面分享下其中的一些步骤（以下步骤与上方序号并不是一一对应的）。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;找到3～4个微信好友，能接受你微信消息骚扰的那种。然后修改他们的微信备注名，备注名的要求是包含英文逗号，使得一个微信号的昵称看上去是几个微信号连起来的，比如“天空,Away,时间,加菲猫”&lt;/li&gt;
+&lt;li&gt;打开微信群发助手，勾选刚刚备注过的微信好友，然后发送正确的文案。那么这时你会在群发助手历史记录里看到“4位收件人：xxx,xxx,xxx,xxx,xxx,xxx,xxx...”。因为刚刚这几位好友的昵称特别长，且包含英文逗号，所以展示的时候会被截断，同时从界面上看起来发给了不止4位好友&lt;/li&gt;
+&lt;li&gt;接下来就剩一个“收件人人数”的问题了，那用修图的方式来进行篡改。这里为了控制经济成本（没买 Photoshop），所以使用了网上免费的在线图片编辑网站进行操作，我用的是 http://www.uupoop.com 这家。修改人数的数字，然后重新导出图片即可。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;最后来看一下对比图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://idreamshen.github.io/image/wechat-broadcast-message-original.jpeg&#34; alt=&#34;原始图&#34; title=&#34;原始图&#34; /&gt;
+&lt;img src=&#34;https://idreamshen.github.io/image/wechat-broadcast-message-fake.jpeg&#34; alt=&#34;伪造图&#34; title=&#34;伪造图&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;注意，上面伪造图中数字字体是有问题的，细看是能发现字体不对的。但是就本需求实际来说，已经达到交付效果了。&lt;/p&gt;
+
+&lt;p&gt;好了，在双12来临之前，都需要这么忙上一阵子了。&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>修复 Chrome 控制台字体大小</title>
