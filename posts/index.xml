@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on ChenHsingYu&#39;s Blog</title>
+    <title>Posts on ChenHsingYu</title>
     <link>https://idreamshen.github.io/posts/</link>
-    <description>Recent content in Posts on ChenHsingYu&#39;s Blog</description>
+    <description>Recent content in Posts on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 03 Jan 2019 15:19:58 +0800</lastBuildDate>
@@ -133,10 +133,7 @@
       
       <guid>https://idreamshen.github.io/posts/git-clone-specific-tag-or-branch/</guid>
       <description>&lt;h2 id=&#34;命令&#34;&gt;命令&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code&gt;git clone -b &#39;v2.0&#39; --single-branch --depth 1 https://github.com/git/git.git
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;git clone -b &amp;#39;v2.0&amp;#39; --single-branch --depth 1 https://github.com/git/git.git&lt;/pre&gt;&lt;/div&gt;
 &lt;ul&gt;
 &lt;li&gt;v2.0 代指 branch 或 tag&lt;/li&gt;
 &lt;li&gt;depth 表示 clone 深度，如果待克隆的项目很大，同时您不关注代码的变更历史，那可以使用 depth=1 提高 clone 速度&lt;/li&gt;
@@ -157,152 +154,140 @@
       
       <guid>https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/</guid>
       <description>&lt;p&gt;src/share/vm/classfile/javaClasses.hpp&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;// Java Thread Status for JVMTI and M&amp;amp;M use.
-// This thread status info is saved in threadStatus field of
-// java.lang.Thread java class.
-enum ThreadStatus {
-  NEW                      = 0,
-  RUNNABLE                 = JVMTI_THREAD_STATE_ALIVE +          // runnable / running
-                             JVMTI_THREAD_STATE_RUNNABLE,
-  SLEEPING                 = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Java Thread Status for JVMTI and M&amp;amp;M use.
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// This thread status info is saved in threadStatus field of
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// java.lang.Thread java class.
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;enum&lt;/span&gt; ThreadStatus {
+  NEW                      &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;0&lt;/span&gt;,
+  RUNNABLE                 &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// runnable / running
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_RUNNABLE,
+  SLEEPING                 &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Thread.sleep()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_WAITING &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
                              JVMTI_THREAD_STATE_SLEEPING,
-  IN_OBJECT_WAIT           = JVMTI_THREAD_STATE_ALIVE +          // Object.wait()
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY +
+  IN_OBJECT_WAIT           &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Object.wait()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_WAITING &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
                              JVMTI_THREAD_STATE_IN_OBJECT_WAIT,
-  IN_OBJECT_WAIT_TIMED     = JVMTI_THREAD_STATE_ALIVE +          // Object.wait(long)
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+  IN_OBJECT_WAIT_TIMED     &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Object.wait(long)
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_WAITING &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
                              JVMTI_THREAD_STATE_IN_OBJECT_WAIT,
-  PARKED                   = JVMTI_THREAD_STATE_ALIVE +          // LockSupport.park()
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY +
+  PARKED                   &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// LockSupport.park()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_WAITING &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
                              JVMTI_THREAD_STATE_PARKED,
-  PARKED_TIMED             = JVMTI_THREAD_STATE_ALIVE +          // LockSupport.park(long)
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+  PARKED_TIMED             &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// LockSupport.park(long)
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_WAITING &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;
                              JVMTI_THREAD_STATE_PARKED,
-  BLOCKED_ON_MONITOR_ENTER = JVMTI_THREAD_STATE_ALIVE +          // (re-)entering a synchronization block
-                             JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER,
-  TERMINATED               = JVMTI_THREAD_STATE_TERMINATED
-};
-&lt;/code&gt;&lt;/pre&gt;
-
+  BLOCKED_ON_MONITOR_ENTER &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_ALIVE &lt;span style=&#34;color:#666&#34;&gt;+&lt;/span&gt;          &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// (re-)entering a synchronization block
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;                             JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER,
+  TERMINATED               &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; JVMTI_THREAD_STATE_TERMINATED
+};&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;src/share/vm/prims/jvmti.xml&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;constants id=&amp;quot;jvmtiThreadState&amp;quot; label=&amp;quot;Thread State Flags&amp;quot; kind=&amp;quot;bits&amp;quot;&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_ALIVE&amp;quot; num=&amp;quot;0x0001&amp;quot;&amp;gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constants&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;jvmtiThreadState&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;label=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;Thread State Flags&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;kind=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;bits&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_ALIVE&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0001&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread is alive. Zero if thread is new (not started) or terminated.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_TERMINATED&amp;quot; num=&amp;quot;0x0002&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_TERMINATED&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0002&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread has completed execution.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_RUNNABLE&amp;quot; num=&amp;quot;0x0004&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_RUNNABLE&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0004&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread is runnable.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER&amp;quot; num=&amp;quot;0x0400&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0400&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread is waiting to enter a synchronization block/method or,
-          after an &amp;lt;code&amp;gt;Object.wait()&amp;lt;/code&amp;gt;, waiting to re-enter a 
+          after an &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;Object.wait()&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;, waiting to re-enter a 
           synchronization block/method.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_WAITING&amp;quot; num=&amp;quot;0x0080&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_WAITING&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0080&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread is waiting.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_WAITING_INDEFINITELY&amp;quot; num=&amp;quot;0x0010&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_WAITING_INDEFINITELY&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0010&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread is waiting without a timeout.
-          For example, &amp;lt;code&amp;gt;Object.wait()&amp;lt;/code&amp;gt;.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT&amp;quot; num=&amp;quot;0x0020&amp;quot;&amp;gt;
+          For example, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;Object.wait()&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;.
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0020&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread is waiting with a maximum time to wait specified.
-          For example, &amp;lt;code&amp;gt;Object.wait(long)&amp;lt;/code&amp;gt;.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_SLEEPING&amp;quot; num=&amp;quot;0x0040&amp;quot;&amp;gt;
-    Thread is sleeping -- &amp;lt;code&amp;gt;Thread.sleep(long)&amp;lt;/code&amp;gt;.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_IN_OBJECT_WAIT&amp;quot; num=&amp;quot;0x0100&amp;quot;&amp;gt;
-    Thread is waiting on an object monitor -- &amp;lt;code&amp;gt;Object.wait&amp;lt;/code&amp;gt;.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_PARKED&amp;quot; num=&amp;quot;0x0200&amp;quot;&amp;gt;
-    Thread is parked, for example: &amp;lt;code&amp;gt;LockSupport.park&amp;lt;/code&amp;gt;,
-          &amp;lt;code&amp;gt;LockSupport.parkUtil&amp;lt;/code&amp;gt; and &amp;lt;code&amp;gt;LockSupport.parkNanos&amp;lt;/code&amp;gt;.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_SUSPENDED&amp;quot; num=&amp;quot;0x100000&amp;quot;&amp;gt;
+          For example, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;Object.wait(long)&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;.
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_SLEEPING&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0040&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+    Thread is sleeping -- &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;Thread.sleep(long)&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;.
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_IN_OBJECT_WAIT&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0100&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+    Thread is waiting on an object monitor -- &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;Object.wait&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;.
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_PARKED&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x0200&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+    Thread is parked, for example: &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;LockSupport.park&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;,
+          &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;LockSupport.parkUtil&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt; and &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;LockSupport.parkNanos&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;.
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_SUSPENDED&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x100000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread suspended.
-    &amp;lt;code&amp;gt;java.lang.Thread.suspend()&amp;lt;/code&amp;gt;
-    or a &amp;lt;jvmti/&amp;gt; suspend function 
-          (such as &amp;lt;functionlink id=&amp;quot;SuspendThread&amp;quot;&amp;gt;&amp;lt;/functionlink&amp;gt;) 
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;code&amp;gt;&lt;/span&gt;java.lang.Thread.suspend()&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;
+    or a &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;jvmti/&amp;gt;&lt;/span&gt; suspend function 
+          (such as &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;functionlink&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;SuspendThread&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&amp;lt;/functionlink&amp;gt;&lt;/span&gt;) 
           has been called on the thread. If this bit
     is set, the other bits refer to the thread state before suspension.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_INTERRUPTED&amp;quot; num=&amp;quot;0x200000&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_INTERRUPTED&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x200000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
     Thread has been interrupted.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_IN_NATIVE&amp;quot; num=&amp;quot;0x400000&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_IN_NATIVE&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x400000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
           Thread is in native code--that is, a native method is running
           which has not called back into the VM or Java programming
           language code.
-          &amp;lt;p/&amp;gt;
+          &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;p/&amp;gt;&lt;/span&gt;
           This flag is not set when running VM compiled Java programming
           language code nor is it set when running VM code or
           VM support code. Native VM interface functions, such as JNI and
-          &amp;lt;jvmti/&amp;gt; functions, may be implemented as VM code.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_VENDOR_1&amp;quot; num=&amp;quot;0x10000000&amp;quot;&amp;gt;
+          &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;jvmti/&amp;gt;&lt;/span&gt; functions, may be implemented as VM code.
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_VENDOR_1&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x10000000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
           Defined by VM vendor.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_VENDOR_2&amp;quot; num=&amp;quot;0x20000000&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_VENDOR_2&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x20000000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
           Defined by VM vendor.
-  &amp;lt;/constant&amp;gt;
-  &amp;lt;constant id=&amp;quot;JVMTI_THREAD_STATE_VENDOR_3&amp;quot; num=&amp;quot;0x40000000&amp;quot;&amp;gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;constant&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;id=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;JVMTI_THREAD_STATE_VENDOR_3&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#7d9029&#34;&gt;num=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#34;0x40000000&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
           Defined by VM vendor.
-  &amp;lt;/constant&amp;gt;
-&amp;lt;/constants&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constant&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;&amp;lt;/constants&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;当一个线程的状态为 225 时，转换成 16 进制则为 e1。
 按照公式：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
            JVMTI_THREAD_STATE_WAITING +
            JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
-           JVMTI_THREAD_STATE_SLEEPING
-&lt;/code&gt;&lt;/pre&gt;
-
+           JVMTI_THREAD_STATE_SLEEPING&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;可以发现满足 e1 = 0x0001 + 0x0080 + 0x0020 + 0x0040（这4个数值与 jvmti.xml 一一对应），所以可以推断该线程当时处于 sleep 状态&lt;/p&gt;
 
 &lt;p&gt;另外 threadService.hpp 文件控制了一个线程的 threadStatus，比如 JavaThreadSleepState 该函数就将线程状态修改为 java_lang_Thread::SLEEPING&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;// Change status to sleeping
-class JavaThreadSleepState : public JavaThreadStatusChanger {
- private:
-  ThreadStatistics* _stat;
-  bool _active;
- public:
-  JavaThreadSleepState(JavaThread *java_thread) :
-    JavaThreadStatusChanger(java_thread, java_lang_Thread::SLEEPING) {
-    if (is_alive()) {
-      _stat = java_thread-&amp;gt;get_thread_stat();
-      _active = ThreadService::is_thread_monitoring_contention();
-      _stat-&amp;gt;thread_sleep();
-      if (_active) {
-        _stat-&amp;gt;thread_sleep_begin();
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// Change status to sleeping
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#00f;font-weight:bold&#34;&gt;JavaThreadSleepState&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt; JavaThreadStatusChanger {
+ &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt;
+  ThreadStatistics&lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt; _stat;
+  &lt;span style=&#34;color:#b00040&#34;&gt;bool&lt;/span&gt; _active;
+ &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt;
+  JavaThreadSleepState(JavaThread &lt;span style=&#34;color:#666&#34;&gt;*&lt;/span&gt;java_thread) &lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt;
+    JavaThreadStatusChanger(java_thread, java_lang_Thread&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;SLEEPING) {
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (is_alive()) {
+      _stat &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; java_thread&lt;span style=&#34;color:#666&#34;&gt;-&amp;gt;&lt;/span&gt;get_thread_stat();
+      _active &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; ThreadService&lt;span style=&#34;color:#666&#34;&gt;::&lt;/span&gt;is_thread_monitoring_contention();
+      _stat&lt;span style=&#34;color:#666&#34;&gt;-&amp;gt;&lt;/span&gt;thread_sleep();
+      &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (_active) {
+        _stat&lt;span style=&#34;color:#666&#34;&gt;-&amp;gt;&lt;/span&gt;thread_sleep_begin();
       }
-    } else {
-      _active = false;
+    } &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+      _active &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;false&lt;/span&gt;;
     }
   }
 
-  ~JavaThreadSleepState() {
-    if (_active) {
-      _stat-&amp;gt;thread_sleep_end();
+  &lt;span style=&#34;color:#666&#34;&gt;~&lt;/span&gt;JavaThreadSleepState() {
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (_active) {
+      _stat&lt;span style=&#34;color:#666&#34;&gt;-&amp;gt;&lt;/span&gt;thread_sleep_end();
     }
   }
-};
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+};&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -367,14 +352,11 @@ class JavaThreadSleepState : public JavaThreadStatusChanger {
       <description>&lt;p&gt;今天玩 Clicker Heroes 的时候点鼠标点的累死,要是 mac 下也有个按键精灵就好了.在网上搜索一番后,找到了 robotjs 这个库,正和我意!&lt;/p&gt;
 
 &lt;p&gt;于是,三行鼠标左键连点代码就有了.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var robot = require(&amp;quot;robotjs&amp;quot;);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;var robot = require(&amp;#34;robotjs&amp;#34;);
 
 robot.setMouseDelay(80);
 
-while (true) robot.mouseClick();
-&lt;/code&gt;&lt;/pre&gt;
-
+while (true) robot.mouseClick();&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;可以轻轻松松在 Clicker Heroes 中刷刷刷啦.&lt;/p&gt;
 
 &lt;p&gt;robotjs 的 wiki 可以查阅: &lt;a href=&#34;https://github.com/octalmage/robotjs&#34;&gt;https://github.com/octalmage/robotjs&lt;/a&gt;&lt;/p&gt;
@@ -396,13 +378,12 @@ while (true) robot.mouseClick();
 &lt;p&gt;1.假设需求:通过一个网页向用户展示某件商品的相关信息.&lt;/p&gt;
 
 &lt;p&gt;Nodejs 版 (Express Framework)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;var express = require(&#39;express&#39;);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;var express = require(&amp;#39;express&amp;#39;);
 var app = express();
-var Promise = require(&#39;bluebird&#39;);
-var model = require(&#39;./models/index&#39;);
+var Promise = require(&amp;#39;bluebird&amp;#39;);
+var model = require(&amp;#39;./models/index&amp;#39;);
 
-app.get(&#39;/item&#39;, function(req, res) {
+app.get(&amp;#39;/item&amp;#39;, function(req, res) {
     var itemId = req.query.itemId;
     var myUserId = req.session.userId;
 
@@ -411,27 +392,24 @@ app.get(&#39;/item&#39;, function(req, res) {
         model.item.findById(itemId),
         model.itemDetail.findByItemId(itemId)
     ]).spread(function(user, item, itemDetail) {
-        res.render(&#39;item&#39;, {
+        res.render(&amp;#39;item&amp;#39;, {
             me: user,
             item: item,
             itemDetail: itemDetail
         });
     }).catch(function(err) {
-        res.render(&#39;error&#39;); // 渲染 error 页面
+        res.render(&amp;#39;error&amp;#39;); // 渲染 error 页面
     });
-});
-&lt;/code&gt;&lt;/pre&gt;
-
+});&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Java 版 (Spring Boot Framework)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@Controller
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;@Controller
 public class ItemController {
     @Autowired private UserRepository userRepository;
     @Autowired private ItemRepository itemRepository;
     @Autowired private ItemDetailRepository itemDetailRepository;
 
-    @RequestMapping(method = RequestMethod.GET, path = &#39;/item&#39;)
-    public String itemRender(@RequestParam(value = &amp;quot;itemId&amp;quot;, required = true) int itemId,
+    @RequestMapping(method = RequestMethod.GET, path = &amp;#39;/item&amp;#39;)
+    public String itemRender(@RequestParam(value = &amp;#34;itemId&amp;#34;, required = true) int itemId,
                             Model model) {
 
         Session session;
@@ -442,22 +420,19 @@ public class ItemController {
         ItemModel itemModel = itemRepository.findOne(itemId);
         ItemDetailModel itemDetailModel = itemDetailRepository.findByItemId(itemId);
 
-        model.addAttribute(&#39;me&#39;, userModel);
-        model.addAttribute(&#39;item&#39;, itemModel);
-        model.addAttribute(&#39;itemDetail&#39;, itemDetail);
+        model.addAttribute(&amp;#39;me&amp;#39;, userModel);
+        model.addAttribute(&amp;#39;item&amp;#39;, itemModel);
+        model.addAttribute(&amp;#39;itemDetail&amp;#39;, itemDetail);
 
-        return &amp;quot;shop/item&amp;quot;;
+        return &amp;#34;shop/item&amp;#34;;
     }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+}&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Nodejs 版中第 11 行至 13 行是从数据库获取信息,通过 Promise 的 all 方法包裹后,三个 sql 语句并行执行,假设 3 条 sql 语句耗时分别为 1ms 1.2ms 0.8ms,那么第 14 行的代码将在 1.2ms 后执行.再看 Java 版,第 15 行至 17 行是串行查询,所以第 19 行会在 1 + 1.2 + 0.8 = 3ms 后执行.这也就是一定程度上, Nodejs 的速度要优于 Java.&lt;/p&gt;
 
 &lt;p&gt;2.假设需求:实现一个机器人简单逻辑&lt;/p&gt;
 
 &lt;p&gt;Nodejs 版&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;function Bot(id) {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;function Bot(id) {
     this.id = id;
 }
 
@@ -469,12 +444,9 @@ Bot.prototype.talk = function(message) {
 // 走路
 Bot.prototype.walk = function(direction, step) {
     // ...
-}
-&lt;/code&gt;&lt;/pre&gt;
-
+}&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Java 版&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;public class Bot {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;public class Bot {
     private int id;
 
     public Bot(int id) {
@@ -488,10 +460,7 @@ Bot.prototype.walk = function(direction, step) {
     public void walk(Direction direction, int step) {
         // ...
     }
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
+}&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;从代码结构来看几乎是差不多的,但是当你运行上百个上千个机器人时,就有点区别了.假设生成了1000个机器人. Nodejs 中每个机器人的不同的属性就是 id,其他方法都是相同的引用,也就是会创建1000 份 Bot 对象和 1 份 Bot 原型链上的方法.而在 Java 中会创建 1000 个 Bot Class.两者的内存占用相差是不小的.这是我的个人理解,可能有错误.&lt;/p&gt;
 
 &lt;p&gt;以上两个例子似乎都在夸 Nodejs ,但是在实际使用中, Nodejs 并不是如此好驾驭的,上面我也提到了一些缺点. Nodejs 个人觉得适合小型项目比较好,比如说智能家居上面.对的,今天我花了五百大洋买了个树莓派,希望能把 Nodejs 折腾上去,那么用事件的模式去处理日常生活的各种指令应该是不错的体验(等待快递中 0.0).&lt;/p&gt;
@@ -513,30 +482,26 @@ Bot.prototype.walk = function(direction, step) {
 
 &lt;p&gt;本文主要介绍一下如何在 sequelize 的事务中进行循环插入。
 假设有两个模型 Order 和 OrderItem，一条 Order 记录会对应若干条 OrderItem 记录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; Promsise &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;bluebird&amp;#39;&lt;/span&gt;);
 
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;var Promsise = require(&#39;bluebird&#39;);
 
+&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; insert () {
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; itemIds &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#666&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#666&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#666&#34;&gt;3&lt;/span&gt;];
 
-function insert () {
-  var itemIds = [1,2,3];
-
-  return sequelize.transaction(function (t){
-    return Order.create({
-      name: &#39;XXX订单&#39;,
-      price: 100
-    }, {transaction: t}).then(function (order){
-      return Promise.map(itemIds, function(itemId) {
-        return OrderItem.create({
-          order_id: order.get(&#39;id&#39;),
-          item_id: itemId
-        }, {transaction: t});
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; sequelize.transaction(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (t){
+    &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; Order.create({
+      name&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;XXX订单&amp;#39;&lt;/span&gt;,
+      price&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#666&#34;&gt;100&lt;/span&gt;
+    }, {transaction&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; t}).then(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (order){
+      &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;Promise&lt;/span&gt;.map(itemIds, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt;(itemId) {
+        &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; OrderItem.create({
+          order_id&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; order.get(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;id&amp;#39;&lt;/span&gt;),
+          item_id&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; itemId
+        }, {transaction&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; t});
       });
     });
   });
-}
-
-&lt;/code&gt;&lt;/pre&gt;
-
+}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;解决的方案就是采用 Promise.map 这个方法，它能遍历数组并返回 promise。&lt;/p&gt;
 </description>
     </item>
@@ -552,110 +517,92 @@ function insert () {
 &lt;h3 id=&#34;io-use&#34;&gt;io.use&lt;/h3&gt;
 
 &lt;p&gt;注册中间件。看一下下面的这个例子&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 服务端代码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; io &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;socket.io&amp;#39;&lt;/span&gt;)(); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 引用 socket.io 库并实例化
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/** 注册中间件 **/&lt;/span&gt;
+io.use(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (socket, next) {
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; query &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; socket.handshake.query; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 获取客户端的连接 url 中的参数
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; query.password; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 读取参数中密码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (password &lt;span style=&#34;color:#666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;return&lt;/span&gt; next(); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 如果密码正确，则执行返回 next()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  next(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;Error&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;密码错误&amp;#39;&lt;/span&gt;)); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 如果密码错误，则抛出异常
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;});
 
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 服务端代码
-var io = require(&#39;socket.io&#39;)(); // 引用 socket.io 库并实例化
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/** 监听事件 **/&lt;/span&gt;
+io.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;connection&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (socket) {
+  socket.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;disconnect&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; () {
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 客户端断线
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  });
 
-/** 注册中间件 **/
-io.use(function (socket, next) {
-  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
-  var password = query.password; // 读取参数中密码
+  socket.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;message&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (body) {
+    &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 服务器收到客户端发来的消息
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  });
+});&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 客户端代码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;script src&lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;/socket.io/socket.io.js&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#b68&#34;&gt;/script&amp;gt; /&lt;/span&gt;&lt;span style=&#34;&#34;&gt;/ 加载 socket.io.js&lt;/span&gt;
+&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;script&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; socket &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; io(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;http://localhost&amp;#39;&lt;/span&gt;, {query&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;password=654321&amp;#39;&lt;/span&gt;}); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 实例化并连接到 socket 服务器，传入密码参数
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/** 监听 error 事件 **/&lt;/span&gt;
+  socket.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;error&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (err) {
+    console.log(err); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 打印 err，注：err 是字符串类型
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  });
 
-  if (password === &#39;123456&#39;) return next(); // 如果密码正确，则执行返回 next()
-  next(new Error(&#39;密码错误&#39;)); // 如果密码错误，则抛出异常
-});
-
-/** 监听事件 **/
-io.on(&#39;connection&#39;, function (socket) {
-  socket.on(&#39;disconnect&#39;, function () {
-    // 客户端断线
-  });
-
-  socket.on(&#39;message&#39;, function (body) {
-    // 服务器收到客户端发来的消息
-  });
-});
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 客户端代码
-&amp;lt;script src=&#39;https://idreamshen.github.io/socket.io/socket.io.js&#39;&amp;gt;&amp;lt;/script&amp;gt; // 加载 socket.io.js
-&amp;lt;script&amp;gt;
-  var socket = io(&#39;http://localhost&#39;, {query: &#39;password=654321&#39;}); // 实例化并连接到 socket 服务器，传入密码参数
-
-  /** 监听 error 事件 **/
-  socket.on(&#39;error&#39;, function (err) {
-    console.log(err); // 打印 err，注：err 是字符串类型
-  });
-
-  socket.send(&#39;hello server&#39;);
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
+  socket.send(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;hello server&amp;#39;&lt;/span&gt;);
+&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;可以看到，当客户端尝试连接服务器时，因为传入的密码是 654321，导致服务端的中间件认证失败，触发客户端的 error 事件。客户端代码第 8 行会打印出“密码错误”这几个字。&lt;/p&gt;
 
 &lt;p&gt;注意服务端代码中第 9 行的 return 不能省略。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 服务端代码
-var io = require(&#39;socket.io&#39;)(); // 引用 socket.io 库并实例化
-
-/** 注册中间件 **/
-io.use(function (socket, next) {
-  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
-  var password = query.password; // 读取参数中密码
-
-  if (password === &#39;123456&#39;) next(); // 如果密码正确，则执行返回 next()
-  next(new Error(&#39;密码错误&#39;)); // 如果密码错误，则抛出异常
-});
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 服务端代码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; io &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;socket.io&amp;#39;&lt;/span&gt;)(); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 引用 socket.io 库并实例化
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/** 注册中间件 **/&lt;/span&gt;
+io.use(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (socket, next) {
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; query &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; socket.handshake.query; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 获取客户端的连接 url 中的参数
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; query.password; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 读取参数中密码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (password &lt;span style=&#34;color:#666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;) next(); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 如果密码正确，则执行返回 next()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  next(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;Error&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;密码错误&amp;#39;&lt;/span&gt;)); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 如果密码错误，则抛出异常
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;});&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意第 9 行，如果省略 return，则会导致第 10 行代码也被执行。可以将代码修改成下面的更易理解&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 服务端代码
-var io = require(&#39;socket.io&#39;)(); // 引用 socket.io 库并实例化
-
-/** 注册中间件 **/
-io.use(function (socket, next) {
-  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
-  var password = query.password; // 读取参数中密码
-
-  if (password === &#39;123456&#39;) {
-    next(); // 如果密码正确，则执行返回 next()
-  } else {
-    next(new Error(&#39;密码错误&#39;)); // 如果密码错误，则抛出异常
-  }
-});
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 服务端代码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; io &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;socket.io&amp;#39;&lt;/span&gt;)(); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 引用 socket.io 库并实例化
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;/** 注册中间件 **/&lt;/span&gt;
+io.use(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (socket, next) {
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; query &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; socket.handshake.query; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 获取客户端的连接 url 中的参数
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; password &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; query.password; &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 读取参数中密码
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;if&lt;/span&gt; (password &lt;span style=&#34;color:#666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;) {
+    next(); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 如果密码正确，则执行返回 next()
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  } &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+    next(&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#008000&#34;&gt;Error&lt;/span&gt;(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;密码错误&amp;#39;&lt;/span&gt;)); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 如果密码错误，则抛出异常
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;  }
+});&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&#34;ack-模式&#34;&gt;ACK 模式&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 服务端
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; io &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;socket.io&amp;#39;&lt;/span&gt;)();
 
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 服务端
-var io = require(&#39;socket.io&#39;)();
-
-io.on(&#39;connection&#39;, function (socket) {
-  socket.on(&#39;chat&#39;, function (msg, callback) {
+io.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;connection&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (socket) {
+  socket.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;chat&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (msg, callback) {
     callback({
-      success: true
+      success&lt;span style=&#34;color:#666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;true&lt;/span&gt;
     });
-    io.emit(&#39;chat&#39;, msg);
+    io.emit(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;chat&amp;#39;&lt;/span&gt;, msg);
   });
-});
-&lt;/code&gt;&lt;/pre&gt;
+});&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 客户端
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;script&lt;span style=&#34;color:#666&#34;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;var&lt;/span&gt; socket &lt;span style=&#34;color:#666&#34;&gt;=&lt;/span&gt; io();
+  socket.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;connect&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; () {
+    socket.emit(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;chat&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;Hello&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (response) {
+      console.log(response.success); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 打印结果为 true
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    });
 
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// 客户端
-&amp;lt;script&amp;gt;
-  var socket = io();
-  socket.on(&#39;connect&#39;, function () {
-    socket.emit(&#39;chat&#39;, &#39;Hello&#39;, function (response) {
-      console.log(response.success); // 打印结果为 true
-    });
-
-    socket.on(&#39;chat&#39;, function (response) {
-      console.log(response); // 打印结果为 Hello
-    });
+    socket.on(&lt;span style=&#34;color:#ba2121&#34;&gt;&amp;#39;chat&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#008000;font-weight:bold&#34;&gt;function&lt;/span&gt; (response) {
+      console.log(response); &lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;// 打印结果为 Hello
+&lt;/span&gt;&lt;span style=&#34;color:#408080;font-style:italic&#34;&gt;&lt;/span&gt;    });
   });
-&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
+&lt;span style=&#34;color:#666&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;&#34;&gt;/script&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>

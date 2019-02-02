@@ -46,7 +46,7 @@ ga('send', 'pageview');
 	
 	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu&#39;s Blog</strong></a>
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>Archives</strong></a>&nbsp;&nbsp;
 	
 	
 	DRAFT
@@ -56,7 +56,6 @@ ga('send', 'pageview');
 </header>
 
 
-<div id="loadingMask" style="width: 100%; height: 100%; position: fixed; background: #fff;"></div>
 <script>
 function fadeOut(el) {
   el.style.opacity = 1;
@@ -79,8 +78,6 @@ function fadeOut(el) {
 
 function ready(fn) {
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-         el = document.getElementById('loadingMask');
-         fadeOut(el);
         var elements = document.querySelectorAll("img");
         Array.prototype.forEach.call(elements, function(el, i) {
             if (el.getAttribute("alt")) {
@@ -106,22 +103,18 @@ window.onload = ready;
 <div class="content">
   <h1>HashMap 类中的 tableSizeFor 方法 <aside></aside></h1>
   <h3 id="tablesizefor-方法源码">tableSizeFor 方法源码</h3>
-
-<pre><code class="language-java">
-/**
- * Returns a power of two size for the given target capacity.
- */
-static final int tableSizeFor(int cap) {
-    int n = cap - 1;
-    n |= n &gt;&gt;&gt; 1;
-    n |= n &gt;&gt;&gt; 2;
-    n |= n &gt;&gt;&gt; 4;
-    n |= n &gt;&gt;&gt; 8;
-    n |= n &gt;&gt;&gt; 16;
-    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
-}
-</code></pre>
-
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> * Returns a power of two size for the given target capacity.
+</span><span style="color:#408080;font-style:italic"> */</span>
+<span style="color:#008000;font-weight:bold">static</span> <span style="color:#008000;font-weight:bold">final</span> <span style="color:#b00040">int</span> <span style="color:#00f">tableSizeFor</span><span style="color:#666">(</span><span style="color:#b00040">int</span> cap<span style="color:#666">)</span> <span style="color:#666">{</span>
+    <span style="color:#b00040">int</span> n <span style="color:#666">=</span> cap <span style="color:#666">-</span> 1<span style="color:#666">;</span>
+    n <span style="color:#666">|=</span> n <span style="color:#666">&gt;&gt;&gt;</span> 1<span style="color:#666">;</span>
+    n <span style="color:#666">|=</span> n <span style="color:#666">&gt;&gt;&gt;</span> 2<span style="color:#666">;</span>
+    n <span style="color:#666">|=</span> n <span style="color:#666">&gt;&gt;&gt;</span> 4<span style="color:#666">;</span>
+    n <span style="color:#666">|=</span> n <span style="color:#666">&gt;&gt;&gt;</span> 8<span style="color:#666">;</span>
+    n <span style="color:#666">|=</span> n <span style="color:#666">&gt;&gt;&gt;</span> 16<span style="color:#666">;</span>
+    <span style="color:#008000;font-weight:bold">return</span> <span style="color:#666">(</span>n <span style="color:#666">&lt;</span> 0<span style="color:#666">)</span> <span style="color:#666">?</span> 1 <span style="color:#666">:</span> <span style="color:#666">(</span>n <span style="color:#666">&gt;=</span> MAXIMUM_CAPACITY<span style="color:#666">)</span> <span style="color:#666">?</span> MAXIMUM_CAPACITY <span style="color:#666">:</span> n <span style="color:#666">+</span> 1<span style="color:#666">;</span>
+<span style="color:#666">}</span></code></pre></div>
 </div>
 
 

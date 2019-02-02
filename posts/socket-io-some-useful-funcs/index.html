@@ -44,9 +44,9 @@ ga('send', 'pageview');
 
 <header>
 	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu&#39;s Blog</strong></a>
+	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>Archives</strong></a>&nbsp;&nbsp;
 	
 	
 	
@@ -105,110 +105,92 @@ window.onload = ready;
 <h3 id="io-use">io.use</h3>
 
 <p>注册中间件。看一下下面的这个例子</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
+</span><span style="color:#408080;font-style:italic"></span>
+<span style="color:#408080;font-style:italic">/** 注册中间件 **/</span>
+io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, next) {
+  <span style="color:#008000;font-weight:bold">var</span> query <span style="color:#666">=</span> socket.handshake.query; <span style="color:#408080;font-style:italic">// 获取客户端的连接 url 中的参数
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">var</span> password <span style="color:#666">=</span> query.password; <span style="color:#408080;font-style:italic">// 读取参数中密码
+</span><span style="color:#408080;font-style:italic"></span>
+  <span style="color:#008000;font-weight:bold">if</span> (password <span style="color:#666">===</span> <span style="color:#ba2121">&#39;123456&#39;</span>) <span style="color:#008000;font-weight:bold">return</span> next(); <span style="color:#408080;font-style:italic">// 如果密码正确，则执行返回 next()
+</span><span style="color:#408080;font-style:italic"></span>  next(<span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Error</span>(<span style="color:#ba2121">&#39;密码错误&#39;</span>)); <span style="color:#408080;font-style:italic">// 如果密码错误，则抛出异常
+</span><span style="color:#408080;font-style:italic"></span>});
 
-<pre><code class="language-javascript">// 服务端代码
-var io = require('socket.io')(); // 引用 socket.io 库并实例化
+<span style="color:#408080;font-style:italic">/** 监听事件 **/</span>
+io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (socket) {
+  socket.on(<span style="color:#ba2121">&#39;disconnect&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> () {
+    <span style="color:#408080;font-style:italic">// 客户端断线
+</span><span style="color:#408080;font-style:italic"></span>  });
 
-/** 注册中间件 **/
-io.use(function (socket, next) {
-  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
-  var password = query.password; // 读取参数中密码
+  socket.on(<span style="color:#ba2121">&#39;message&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (body) {
+    <span style="color:#408080;font-style:italic">// 服务器收到客户端发来的消息
+</span><span style="color:#408080;font-style:italic"></span>  });
+});</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端代码
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script src<span style="color:#666">=</span><span style="color:#ba2121">&#39;/socket.io/socket.io.js&#39;</span><span style="color:#666">&gt;&lt;</span><span style="color:#b68">/script&gt; /</span><span style="">/ 加载 socket.io.js</span>
+<span style="color:#666">&lt;</span>script<span style="color:#666">&gt;</span>
+  <span style="color:#008000;font-weight:bold">var</span> socket <span style="color:#666">=</span> io(<span style="color:#ba2121">&#39;http://localhost&#39;</span>, {query<span style="color:#666">:</span> <span style="color:#ba2121">&#39;password=654321&#39;</span>}); <span style="color:#408080;font-style:italic">// 实例化并连接到 socket 服务器，传入密码参数
+</span><span style="color:#408080;font-style:italic"></span>
+  <span style="color:#408080;font-style:italic">/** 监听 error 事件 **/</span>
+  socket.on(<span style="color:#ba2121">&#39;error&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (err) {
+    console.log(err); <span style="color:#408080;font-style:italic">// 打印 err，注：err 是字符串类型
+</span><span style="color:#408080;font-style:italic"></span>  });
 
-  if (password === '123456') return next(); // 如果密码正确，则执行返回 next()
-  next(new Error('密码错误')); // 如果密码错误，则抛出异常
-});
-
-/** 监听事件 **/
-io.on('connection', function (socket) {
-  socket.on('disconnect', function () {
-    // 客户端断线
-  });
-
-  socket.on('message', function (body) {
-    // 服务器收到客户端发来的消息
-  });
-});
-</code></pre>
-
-<pre><code class="language-javascript">// 客户端代码
-&lt;script src='/socket.io/socket.io.js'&gt;&lt;/script&gt; // 加载 socket.io.js
-&lt;script&gt;
-  var socket = io('http://localhost', {query: 'password=654321'}); // 实例化并连接到 socket 服务器，传入密码参数
-
-  /** 监听 error 事件 **/
-  socket.on('error', function (err) {
-    console.log(err); // 打印 err，注：err 是字符串类型
-  });
-
-  socket.send('hello server');
-&lt;/script&gt;
-</code></pre>
-
+  socket.send(<span style="color:#ba2121">&#39;hello server&#39;</span>);
+<span style="color:#666">&lt;</span><span style="">/script&gt;</span></code></pre></div>
 <p>可以看到，当客户端尝试连接服务器时，因为传入的密码是 654321，导致服务端的中间件认证失败，触发客户端的 error 事件。客户端代码第 8 行会打印出“密码错误”这几个字。</p>
 
 <p>注意服务端代码中第 9 行的 return 不能省略。</p>
-
-<pre><code class="language-javascript">// 服务端代码
-var io = require('socket.io')(); // 引用 socket.io 库并实例化
-
-/** 注册中间件 **/
-io.use(function (socket, next) {
-  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
-  var password = query.password; // 读取参数中密码
-
-  if (password === '123456') next(); // 如果密码正确，则执行返回 next()
-  next(new Error('密码错误')); // 如果密码错误，则抛出异常
-});
-</code></pre>
-
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
+</span><span style="color:#408080;font-style:italic"></span>
+<span style="color:#408080;font-style:italic">/** 注册中间件 **/</span>
+io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, next) {
+  <span style="color:#008000;font-weight:bold">var</span> query <span style="color:#666">=</span> socket.handshake.query; <span style="color:#408080;font-style:italic">// 获取客户端的连接 url 中的参数
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">var</span> password <span style="color:#666">=</span> query.password; <span style="color:#408080;font-style:italic">// 读取参数中密码
+</span><span style="color:#408080;font-style:italic"></span>
+  <span style="color:#008000;font-weight:bold">if</span> (password <span style="color:#666">===</span> <span style="color:#ba2121">&#39;123456&#39;</span>) next(); <span style="color:#408080;font-style:italic">// 如果密码正确，则执行返回 next()
+</span><span style="color:#408080;font-style:italic"></span>  next(<span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Error</span>(<span style="color:#ba2121">&#39;密码错误&#39;</span>)); <span style="color:#408080;font-style:italic">// 如果密码错误，则抛出异常
+</span><span style="color:#408080;font-style:italic"></span>});</code></pre></div>
 <p>注意第 9 行，如果省略 return，则会导致第 10 行代码也被执行。可以将代码修改成下面的更易理解</p>
-
-<pre><code class="language-javascript">// 服务端代码
-var io = require('socket.io')(); // 引用 socket.io 库并实例化
-
-/** 注册中间件 **/
-io.use(function (socket, next) {
-  var query = socket.handshake.query; // 获取客户端的连接 url 中的参数
-  var password = query.password; // 读取参数中密码
-
-  if (password === '123456') {
-    next(); // 如果密码正确，则执行返回 next()
-  } else {
-    next(new Error('密码错误')); // 如果密码错误，则抛出异常
-  }
-});
-</code></pre>
-
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
+</span><span style="color:#408080;font-style:italic"></span>
+<span style="color:#408080;font-style:italic">/** 注册中间件 **/</span>
+io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, next) {
+  <span style="color:#008000;font-weight:bold">var</span> query <span style="color:#666">=</span> socket.handshake.query; <span style="color:#408080;font-style:italic">// 获取客户端的连接 url 中的参数
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#008000;font-weight:bold">var</span> password <span style="color:#666">=</span> query.password; <span style="color:#408080;font-style:italic">// 读取参数中密码
+</span><span style="color:#408080;font-style:italic"></span>
+  <span style="color:#008000;font-weight:bold">if</span> (password <span style="color:#666">===</span> <span style="color:#ba2121">&#39;123456&#39;</span>) {
+    next(); <span style="color:#408080;font-style:italic">// 如果密码正确，则执行返回 next()
+</span><span style="color:#408080;font-style:italic"></span>  } <span style="color:#008000;font-weight:bold">else</span> {
+    next(<span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Error</span>(<span style="color:#ba2121">&#39;密码错误&#39;</span>)); <span style="color:#408080;font-style:italic">// 如果密码错误，则抛出异常
+</span><span style="color:#408080;font-style:italic"></span>  }
+});</code></pre></div>
 <h3 id="ack-模式">ACK 模式</h3>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)();
 
-<pre><code class="language-javascript">// 服务端
-var io = require('socket.io')();
-
-io.on('connection', function (socket) {
-  socket.on('chat', function (msg, callback) {
+io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (socket) {
+  socket.on(<span style="color:#ba2121">&#39;chat&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (msg, callback) {
     callback({
-      success: true
+      success<span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>
     });
-    io.emit('chat', msg);
+    io.emit(<span style="color:#ba2121">&#39;chat&#39;</span>, msg);
   });
-});
-</code></pre>
+});</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script<span style="color:#666">&gt;</span>
+  <span style="color:#008000;font-weight:bold">var</span> socket <span style="color:#666">=</span> io();
+  socket.on(<span style="color:#ba2121">&#39;connect&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> () {
+    socket.emit(<span style="color:#ba2121">&#39;chat&#39;</span>, <span style="color:#ba2121">&#39;Hello&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (response) {
+      console.log(response.success); <span style="color:#408080;font-style:italic">// 打印结果为 true
+</span><span style="color:#408080;font-style:italic"></span>    });
 
-<pre><code class="language-javascript">// 客户端
-&lt;script&gt;
-  var socket = io();
-  socket.on('connect', function () {
-    socket.emit('chat', 'Hello', function (response) {
-      console.log(response.success); // 打印结果为 true
-    });
-
-    socket.on('chat', function (response) {
-      console.log(response); // 打印结果为 Hello
-    });
+    socket.on(<span style="color:#ba2121">&#39;chat&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (response) {
+      console.log(response); <span style="color:#408080;font-style:italic">// 打印结果为 Hello
+</span><span style="color:#408080;font-style:italic"></span>    });
   });
-&lt;/script&gt;
-</code></pre>
-
+<span style="color:#666">&lt;</span><span style="">/script&gt;</span></code></pre></div>
 </div>
 
 

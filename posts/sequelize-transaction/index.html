@@ -44,9 +44,9 @@ ga('send', 'pageview');
 
 <header>
 	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu&#39;s Blog</strong></a>
+	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
 	
-	&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>Archives</strong></a>&nbsp;&nbsp;
 	
 	
 	
@@ -105,30 +105,26 @@ window.onload = ready;
 
 <p>本文主要介绍一下如何在 sequelize 的事务中进行循环插入。
 假设有两个模型 Order 和 OrderItem，一条 Order 记录会对应若干条 OrderItem 记录</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#008000;font-weight:bold">var</span> Promsise <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;bluebird&#39;</span>);
 
-<pre><code class="language-javascript">var Promsise = require('bluebird');
 
+<span style="color:#008000;font-weight:bold">function</span> insert () {
+  <span style="color:#008000;font-weight:bold">var</span> itemIds <span style="color:#666">=</span> [<span style="color:#666">1</span>,<span style="color:#666">2</span>,<span style="color:#666">3</span>];
 
-function insert () {
-  var itemIds = [1,2,3];
-
-  return sequelize.transaction(function (t){
-    return Order.create({
-      name: 'XXX订单',
-      price: 100
-    }, {transaction: t}).then(function (order){
-      return Promise.map(itemIds, function(itemId) {
-        return OrderItem.create({
-          order_id: order.get('id'),
-          item_id: itemId
-        }, {transaction: t});
+  <span style="color:#008000;font-weight:bold">return</span> sequelize.transaction(<span style="color:#008000;font-weight:bold">function</span> (t){
+    <span style="color:#008000;font-weight:bold">return</span> Order.create({
+      name<span style="color:#666">:</span> <span style="color:#ba2121">&#39;XXX订单&#39;</span>,
+      price<span style="color:#666">:</span> <span style="color:#666">100</span>
+    }, {transaction<span style="color:#666">:</span> t}).then(<span style="color:#008000;font-weight:bold">function</span> (order){
+      <span style="color:#008000;font-weight:bold">return</span> <span style="color:#008000">Promise</span>.map(itemIds, <span style="color:#008000;font-weight:bold">function</span>(itemId) {
+        <span style="color:#008000;font-weight:bold">return</span> OrderItem.create({
+          order_id<span style="color:#666">:</span> order.get(<span style="color:#ba2121">&#39;id&#39;</span>),
+          item_id<span style="color:#666">:</span> itemId
+        }, {transaction<span style="color:#666">:</span> t});
       });
     });
   });
-}
-
-</code></pre>
-
+}</code></pre></div>
 <p>解决的方案就是采用 Promise.map 这个方法，它能遍历数组并返回 promise。</p>
 
 </div>
