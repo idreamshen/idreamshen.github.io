@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://idreamshen.github.io/about/</loc>
+    <lastmod>2019-02-06T16:49:14+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://idreamshen.github.io/posts/2018-review/</loc>
     <lastmod>2019-02-02T19:59:07+08:00</lastmod>
   </url>
@@ -73,17 +78,13 @@
   </url>
   
   <url>
-    <loc>https://idreamshen.github.io/archives/</loc>
-  </url>
-  
-  <url>
     <loc>https://idreamshen.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://idreamshen.github.io/</loc>
-    <lastmod>2019-02-02T19:59:07+08:00</lastmod>
+    <lastmod>2019-02-06T16:49:14+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -96,6 +97,10 @@
   <url>
     <loc>https://idreamshen.github.io/tags/</loc>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://idreamshen.github.io/archives/</loc>
   </url>
   
 </urlset>
