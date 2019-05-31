@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Emacs 入门</title>
+	
+	
+	<meta name="description" content="">
+	<meta name="image" content="">
+	
+	<meta itemprop="name" content="Emacs 入门">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+	
+	<meta name="og:title" content="Emacs 入门">
+	<meta name="og:description" content="">
+	
+	<meta name="og:url" content="https://idreamshen.github.io/posts/emacs-beginner/">
+	<meta name="og:site_name" content="Emacs 入门">
+	<meta name="og:type" content="article">
+	
+	<meta name="article:tag" content="">
+	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
+	
+	
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-49492756-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+	
+	<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
+	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+
+<header>
+	
+	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
+	
+	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
+	
+	
+	
+	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+</header>
+
+
+<script>
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
+    last = +new Date();
+    
+
+    if (el.style.opacity > 0) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    } else {
+      el.style.display='none';
+    }
+  };
+
+  tick();
+}
+
+function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll("img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("alt")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("alt"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+window.onload = ready;
+</script>
+
+<div class="content">
+  <h1>Emacs 入门 <aside></aside></h1>
+  <h3 id="基础概念">基础概念</h3>
+
+<ol>
+<li>Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。</li>
+<li>使用 C-x C-c 退出 Emacs</li>
+<li>使用 C-g 即可中断当前的各种按键操作</li>
+</ol>
+
+<h3 id="启动-emacs">启动 Emacs</h3>
+
+<ol>
+<li>在命令行输入 emacs 即可启动</li>
+<li>第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可</li>
+<li>然后随便输入几个字符，打打回车等</li>
+</ol>
+
+<h3 id="光标移动">光标移动</h3>
+
+<ol>
+<li>C-n 移动到下一行。n 代表 next。</li>
+<li>C-p 移动到上一行。p 代表 previous。</li>
+<li>C-f 移动到下一个字母。f 代表 forward。</li>
+<li>C-b 移动到前一个字母。b 代表 back。</li>
+<li>C-a 回到行首。a 表示为字母中的第一个。</li>
+<li>C-e 回到行末。e 代表 end。</li>
+<li>M-b 回到单词头部。</li>
+<li>M-f 回到单词尾部。</li>
+<li>M-a 回到段落头部。</li>
+<li>M-e 回到段落尾部。</li>
+<li>C-l 将当前行置为窗口中间、或顶部、或底部</li>
+<li>C-v 向下滚动一屏</li>
+<li>M-v 向上滚动一屏</li>
+</ol>
+
+<h3 id="分屏-window">分屏（window）</h3>
+
+<ol>
+<li>C-x 2 水平分割为 2 个窗口</li>
+<li>C-x 3 垂直分割为 2 个窗口</li>
+<li>C-x o 跳转到另一个窗口。o 代表 other。</li>
+<li>C-x 0 隐藏当前窗口</li>
+<li>C-x 1 将当前窗口窗口展开</li>
+<li>C-x k 关闭当前 Buffer</li>
+</ol>
+
+<h3 id="文件操作">文件操作</h3>
+
+<ol>
+<li>C-x C-f 打开某个文件，如果不存在则新建一个</li>
+<li>C-x C-s 保存文件</li>
+</ol>
+
+<h3 id="查找帮助">查找帮助</h3>
+
+<ol>
+<li>C-h k 查看按键含义。k 代表 key</li>
+<li>C-h v 查看变量含义。v 代表 variable</li>
+<li>C-h f 查看函数含义。f 代表 function</li>
+</ol>
+
+<h3 id="学习-emacs-自带的帮助文件">学习 Emacs 自带的帮助文件</h3>
+
+<ol>
+<li>M-x help-with-tutorial-spec-language</li>
+<li>输入 Chinese-GBK 回车</li>
+</ol>
+
+</div>
+
+
+
+
+<footer>
+	<p>© 2017-2019, all rights reserved.</a>
+</footer>
+</body>
+</html>
+

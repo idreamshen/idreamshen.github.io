@@ -6,10 +6,85 @@
     <description>Recent content on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 24 May 2019 17:22:13 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 31 May 2019 19:13:17 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Emacs 入门</title>
+      <link>https://idreamshen.github.io/posts/emacs-beginner/</link>
+      <pubDate>Fri, 31 May 2019 19:13:17 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/emacs-beginner/</guid>
+      <description>&lt;h3 id=&#34;基础概念&#34;&gt;基础概念&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。&lt;/li&gt;
+&lt;li&gt;使用 C-x C-c 退出 Emacs&lt;/li&gt;
+&lt;li&gt;使用 C-g 即可中断当前的各种按键操作&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;启动-emacs&#34;&gt;启动 Emacs&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;在命令行输入 emacs 即可启动&lt;/li&gt;
+&lt;li&gt;第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可&lt;/li&gt;
+&lt;li&gt;然后随便输入几个字符，打打回车等&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;光标移动&#34;&gt;光标移动&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;C-n 移动到下一行。n 代表 next。&lt;/li&gt;
+&lt;li&gt;C-p 移动到上一行。p 代表 previous。&lt;/li&gt;
+&lt;li&gt;C-f 移动到下一个字母。f 代表 forward。&lt;/li&gt;
+&lt;li&gt;C-b 移动到前一个字母。b 代表 back。&lt;/li&gt;
+&lt;li&gt;C-a 回到行首。a 表示为字母中的第一个。&lt;/li&gt;
+&lt;li&gt;C-e 回到行末。e 代表 end。&lt;/li&gt;
+&lt;li&gt;M-b 回到单词头部。&lt;/li&gt;
+&lt;li&gt;M-f 回到单词尾部。&lt;/li&gt;
+&lt;li&gt;M-a 回到段落头部。&lt;/li&gt;
+&lt;li&gt;M-e 回到段落尾部。&lt;/li&gt;
+&lt;li&gt;C-l 将当前行置为窗口中间、或顶部、或底部&lt;/li&gt;
+&lt;li&gt;C-v 向下滚动一屏&lt;/li&gt;
+&lt;li&gt;M-v 向上滚动一屏&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;分屏-window&#34;&gt;分屏（window）&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;C-x 2 水平分割为 2 个窗口&lt;/li&gt;
+&lt;li&gt;C-x 3 垂直分割为 2 个窗口&lt;/li&gt;
+&lt;li&gt;C-x o 跳转到另一个窗口。o 代表 other。&lt;/li&gt;
+&lt;li&gt;C-x 0 隐藏当前窗口&lt;/li&gt;
+&lt;li&gt;C-x 1 将当前窗口窗口展开&lt;/li&gt;
+&lt;li&gt;C-x k 关闭当前 Buffer&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;文件操作&#34;&gt;文件操作&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;C-x C-f 打开某个文件，如果不存在则新建一个&lt;/li&gt;
+&lt;li&gt;C-x C-s 保存文件&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;查找帮助&#34;&gt;查找帮助&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;C-h k 查看按键含义。k 代表 key&lt;/li&gt;
+&lt;li&gt;C-h v 查看变量含义。v 代表 variable&lt;/li&gt;
+&lt;li&gt;C-h f 查看函数含义。f 代表 function&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&#34;学习-emacs-自带的帮助文件&#34;&gt;学习 Emacs 自带的帮助文件&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;M-x help-with-tutorial-spec-language&lt;/li&gt;
+&lt;li&gt;输入 Chinese-GBK 回车&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>复盘</title>
