@@ -6,10 +6,36 @@
     <description>Recent content in Posts on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 22 Aug 2019 22:01:41 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2020 20:14:08 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mac系统中如何修改主显示屏</title>
+      <link>https://idreamshen.github.io/posts/how-to-switch-primary-monitor-on-mac/</link>
+      <pubDate>Tue, 28 Jul 2020 20:14:08 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/how-to-switch-primary-monitor-on-mac/</guid>
+      <description>&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;
+
+&lt;p&gt;给笔记本外接了显示器，同时期望将外接显示器作为主显示器。但是使用过程中发现外接显示器并不是主显示器。比如在用 Alfred 时，其唤起的输入框是在笔记本上展示，而不是在外接显示器上展示，整体操作体验不流畅。具体的解决方案如下。&lt;/p&gt;
+
+&lt;h1 id=&#34;操作&#34;&gt;操作&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;打开“系统偏好设置”&lt;/li&gt;
+&lt;li&gt;点击“显示器”&lt;/li&gt;
+&lt;li&gt;点击“排列”，如下图。注意图中的红框内的白条，这个白条是可以拖动的&lt;/li&gt;
+&lt;img src=&#34;https://idreamshen.github.io/image/change-primary-monitor-1.jpg&#34; alt=&#34;图1&#34; title=&#34;图1&#34; /&gt;
+&lt;/ol&gt;
+
+&lt;ol&gt;
+&lt;li&gt;拖动白条，将其移动到另一块“显示屏”上，即可完成主显示器的切换&lt;/li&gt;
+&lt;img src=&#34;https://idreamshen.github.io/image/change-primary-monitor-2.jpg&#34; alt=&#34;图2&#34; title=&#34;图2&#34; /&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>羽毛球</title>
