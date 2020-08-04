@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>如何加快 helm-projectile-find-file 的执行速度</title>
+	
+	
+	<meta name="description" content="">
+	<meta name="image" content="">
+	
+	<meta itemprop="name" content="如何加快 helm-projectile-find-file 的执行速度">
+	<meta itemprop="description" content="">
+	<meta itemprop="image" content="">
+	
+	<meta name="og:title" content="如何加快 helm-projectile-find-file 的执行速度">
+	<meta name="og:description" content="">
+	
+	<meta name="og:url" content="https://idreamshen.github.io/posts/how-to-speed-up-helm-projectile-find-file/">
+	<meta name="og:site_name" content="如何加快 helm-projectile-find-file 的执行速度">
+	<meta name="og:type" content="article">
+	
+	<meta name="article:tag" content="">
+	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
+	
+	
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-49492756-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+	
+	<link rel="stylesheet"
+	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
+	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body>
+
+<header>
+	
+	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
+	
+	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
+	
+	
+	
+	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+</header>
+
+
+<script>
+function fadeOut(el) {
+  el.style.opacity = 1;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
+    last = +new Date();
+    
+
+    if (el.style.opacity > 0) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    } else {
+      el.style.display='none';
+    }
+  };
+
+  tick();
+}
+
+function ready(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll("img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("alt")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("alt"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+
+    } else {
+        document.addEventListener('DOMContentLoaded', fn);
+    }
+}
+window.onload = ready;
+</script>
+
+<div class="content">
+  <h1>如何加快 helm-projectile-find-file 的执行速度 <aside></aside></h1>
+  <h1 id="背景">背景</h1>
+
+<p>最近在 Emacs 中使用 <code>helm-projectile-find-file</code> 命令搜索源码文件时，发现卡顿很严重。后寻找资料发现原来是 <code>helm</code> 的搜索框内默认使用了 <code>Fuzzy</code> 搜索方式，导致搜索时间复杂度上升。</p>
+
+<h1 id="解决方案">解决方案</h1>
+
+<p>只需要在待搜索字符串前输入一个空格即可取消 <code>Fuzzy</code> 搜索模式。比如想搜索 <code>ArrayList.java</code> ，则需输入 <code>[space]ArrayList.java</code> （注意：[space] 表示空格）</p>
+
+<p>查阅以下 Helm 的帮助文档可知当输入空格时，将不启用 <code>Fuzzy</code> 模式。</p>
+
+<p>All that you write in minibuffer is interpreted as a regexp or
+multiple regexps if separated by a space.  This is true for most
+sources unless the developer of the source has disabled it or
+have choosen to use fuzzy matching.  Even if a source has fuzzy
+matching enabled, Helm will switch to multi match as soon as it
+detects a space in the pattern.  It may also switch to multi match
+as well if pattern starts with a "^" beginning of line sign.  In
+those cases each pattern separated with space should be a regexp
+and not a fuzzy pattern.  When using multi match patterns, each
+pattern starting with "!" is interpreted as a negation i.e.
+match everything but this.</p>
+
+<h1 id="参考资料">参考资料</h1>
+
+<ul>
+<li><a href="https://eklitzke.org/making-helm-projectile-find-file-fast-in-large-projects" title="Making helm-projectile-find-file Fast In Large Projects">Making helm-projectile-find-file Fast In Large Projects</a></li>
+</ul>
+
+</div>
+
+
+
+
+<footer>
+	<p>© 2017-2019, all rights reserved.</a>
+</footer>
+</body>
+</html>
+

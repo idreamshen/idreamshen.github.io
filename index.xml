@@ -6,10 +6,46 @@
     <description>Recent content on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 28 Jul 2020 20:14:08 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 04 Aug 2020 17:58:19 +0800</lastBuildDate>
     
         <atom:link href="https://idreamshen.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>如何加快 helm-projectile-find-file 的执行速度</title>
+      <link>https://idreamshen.github.io/posts/how-to-speed-up-helm-projectile-find-file/</link>
+      <pubDate>Tue, 04 Aug 2020 17:58:19 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/how-to-speed-up-helm-projectile-find-file/</guid>
+      <description>&lt;h1 id=&#34;背景&#34;&gt;背景&lt;/h1&gt;
+
+&lt;p&gt;最近在 Emacs 中使用 &lt;code&gt;helm-projectile-find-file&lt;/code&gt; 命令搜索源码文件时，发现卡顿很严重。后寻找资料发现原来是 &lt;code&gt;helm&lt;/code&gt; 的搜索框内默认使用了 &lt;code&gt;Fuzzy&lt;/code&gt; 搜索方式，导致搜索时间复杂度上升。&lt;/p&gt;
+
+&lt;h1 id=&#34;解决方案&#34;&gt;解决方案&lt;/h1&gt;
+
+&lt;p&gt;只需要在待搜索字符串前输入一个空格即可取消 &lt;code&gt;Fuzzy&lt;/code&gt; 搜索模式。比如想搜索 &lt;code&gt;ArrayList.java&lt;/code&gt; ，则需输入 &lt;code&gt;[space]ArrayList.java&lt;/code&gt; （注意：[space] 表示空格）&lt;/p&gt;
+
+&lt;p&gt;查阅以下 Helm 的帮助文档可知当输入空格时，将不启用 &lt;code&gt;Fuzzy&lt;/code&gt; 模式。&lt;/p&gt;
+
+&lt;p&gt;All that you write in minibuffer is interpreted as a regexp or
+multiple regexps if separated by a space.  This is true for most
+sources unless the developer of the source has disabled it or
+have choosen to use fuzzy matching.  Even if a source has fuzzy
+matching enabled, Helm will switch to multi match as soon as it
+detects a space in the pattern.  It may also switch to multi match
+as well if pattern starts with a &#34;^&#34; beginning of line sign.  In
+those cases each pattern separated with space should be a regexp
+and not a fuzzy pattern.  When using multi match patterns, each
+pattern starting with &#34;!&#34; is interpreted as a negation i.e.
+match everything but this.&lt;/p&gt;
+
+&lt;h1 id=&#34;参考资料&#34;&gt;参考资料&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://eklitzke.org/making-helm-projectile-find-file-fast-in-large-projects&#34; title=&#34;Making helm-projectile-find-file Fast In Large Projects&#34;&gt;Making helm-projectile-find-file Fast In Large Projects&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>Mac系统中如何修改主显示屏</title>
