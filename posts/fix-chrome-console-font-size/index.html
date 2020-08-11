@@ -1,134 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>修复 Chrome 控制台字体大小</title>
-	
-	
-	<meta name="description" content="">
-	<meta name="image" content="">
-	
-	<meta itemprop="name" content="修复 Chrome 控制台字体大小">
-	<meta itemprop="description" content="">
-	<meta itemprop="image" content="">
-	
-	<meta name="og:title" content="修复 Chrome 控制台字体大小">
-	<meta name="og:description" content="">
-	
-	<meta name="og:url" content="https://idreamshen.github.io/posts/fix-chrome-console-font-size/">
-	<meta name="og:site_name" content="修复 Chrome 控制台字体大小">
-	<meta name="og:type" content="article">
-	
-	<meta name="article:tag" content="">
-	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
-	
-	
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-49492756-1', 'auto');
-ga('send', 'pageview');
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/fix-chrome-console-font-size/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/fix-chrome-console-font-size/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "修复 Chrome 控制台字体大小",
+      "headline" : "修复 Chrome 控制台字体大小",
+      "description" : " 最近在调试 Web 应用时发现 Chrome 的控制台字体非常大，相当影响调试体验。在 Chrome 中调整了一遍字体相关的配置，仍然无效。 下图就是字体很大的情况：\n Chrome Console Large Font\n 后来终于找到解决方案，原来可以通过快捷键调整字体大小。具体的操作步骤如下：\n  打开 Chrome Console 界面\n  使用鼠标激活 Console 界面，即保持当前焦点位于 Console 上\n  使用 Command \u002b\/- 快捷键来放大或缩小字体，使用 Command 0 则是重置字体大小。（如果是 Windows 系统，则请使用 Control 键）\n  Chrome Console Small Font\n 参考资料\n  https:\/\/stackoverflow.com\/questions\/7613546\/increase-font-size-chrome-console\n  ",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2018",
+      "datePublished": "2018-11-05 19:23:00 \u002b0800 CST",
+      "dateModified" : "2018-11-05 19:23:00 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/fix-chrome-console-font-size\/",
+      "keywords" : [  ]
+  }
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<title>修复 Chrome 控制台字体大小 - ChenHsingYu</title>
+  <meta property="og:title" content="修复 Chrome 控制台字体大小 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content=" 最近在调试 Web 应用时发现 Chrome 的控制台字体非常大，相当影响调试体验。在 Chrome 中调整了一遍字体相关的配置，仍然无效。 下图就是字体很大的情况：
+ Chrome Console Large Font
+ 后来终于找到解决方案，原来可以通过快捷键调整字体大小。具体的操作步骤如下：
+  打开 Chrome Console 界面
+  使用鼠标激活 Console 界面，即保持当前焦点位于 Console 上
+  使用 Command &#43;/- 快捷键来放大或缩小字体，使用 Command 0 则是重置字体大小。（如果是 Windows 系统，则请使用 Control 键）
+  Chrome Console Small Font
+ 参考资料
+  https://stackoverflow.com/questions/7613546/increase-font-size-chrome-console
+  " />
+  <meta name="description" content=" 最近在调试 Web 应用时发现 Chrome 的控制台字体非常大，相当影响调试体验。在 Chrome 中调整了一遍字体相关的配置，仍然无效。 下图就是字体很大的情况：
+ Chrome Console Large Font
+ 后来终于找到解决方案，原来可以通过快捷键调整字体大小。具体的操作步骤如下：
+  打开 Chrome Console 界面
+  使用鼠标激活 Console 界面，即保持当前焦点位于 Console 上
+  使用 Command &#43;/- 快捷键来放大或缩小字体，使用 Command 0 则是重置字体大小。（如果是 Windows 系统，则请使用 Control 键）
+  Chrome Console Small Font
+ 参考资料
+  https://stackoverflow.com/questions/7613546/increase-font-size-chrome-console
+  " />
+  <meta property="og:locale" content="zh-cn" />
 
-	
-	<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
-	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
 
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
 </head>
 
 <body>
-
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
 <header>
-	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
-	
-	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
-	
-	
-	
-	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
 </header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">修复 Chrome 控制台字体大小</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2018-11-05 19:23:00 CST">
+                05 Nov 2018
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          <p>
+最近在调试 Web 应用时发现 Chrome 的控制台字体非常大，相当影响调试体验。在 Chrome 中调整了一遍字体相关的配置，仍然无效。
+下图就是字体很大的情况：</p>
+<p>
+<a href="/image/chrome-console-font-size-large.png">Chrome Console Large Font</a></p>
+<p>
+后来终于找到解决方案，原来可以通过快捷键调整字体大小。具体的操作步骤如下：</p>
+<ol>
+<li>
+<p>打开 Chrome Console 界面</p>
+</li>
+<li>
+<p>使用鼠标激活 Console 界面，即保持当前焦点位于 Console 上</p>
+</li>
+<li>
+<p>使用 Command +/- 快捷键来放大或缩小字体，使用 Command 0 则是重置字体大小。（如果是 Windows 系统，则请使用 Control 键）</p>
+</li>
+</ol>
+<p><a href="/image/chrome-console-font-size-small.png">Chrome Console Small Font</a></p>
+<p>
+参考资料</p>
+<ul>
+<li>
+<p><a href="https://stackoverflow.com/questions/7613546/increase-font-size-chrome-console">https://stackoverflow.com/questions/7613546/increase-font-size-chrome-console</a></p>
+</li>
+</ul>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
 
 
 <script>
-function fadeOut(el) {
-  el.style.opacity = 1;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
-    last = +new Date();
+  hljs.initHighlightingOnLoad();
+  
+  
+  
     
-
-    if (el.style.opacity > 0) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    } else {
-      el.style.display='none';
-    }
-  };
-
-  tick();
-}
-
-function ready(fn) {
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-        var elements = document.querySelectorAll("img");
-        Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("alt")) {
-                const caption = document.createElement('figcaption');
-                var node = document.createTextNode(el.getAttribute("alt"));
-                caption.appendChild(node);
-                const wrapper = document.createElement('figure');
-                wrapper.className = 'image';
-                el.parentNode.insertBefore(wrapper, el);
-                el.parentNode.removeChild(el);
-                wrapper.appendChild(el);
-                wrapper.appendChild(caption);
-            }
-        });
-
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-window.onload = ready;
+    
+  
 </script>
 
-<div class="content">
-  <h1>修复 Chrome 控制台字体大小 <aside></aside></h1>
-  <p>最近在调试 Web 应用时发现 Chrome 的控制台字体非常大，相当影响调试体验。在 Chrome 中调整了一遍字体相关的配置，仍然无效。
-下图就是字体很大的情况：</p>
+  
 
-<p><img src="/image/chrome-console-font-size-large.png" alt="Chrome Console Large Font" title="Chrome Console Large Font" /></p>
-
-<p>后来终于找到解决方案，原来可以通过快捷键调整字体大小。具体的操作步骤如下：</p>
-
-<ol>
-<li>打开 Chrome Console 界面</li>
-<li>使用鼠标激活 Console 界面，即保持当前焦点位于 Console 上</li>
-<li>使用 Command +/- 快捷键来放大或缩小字体，使用 Command 0 则是重置字体大小。（如果是 Windows 系统，则请使用 Control 键）</li>
-</ol>
-
-<p><img src="/image/chrome-console-font-size-small.png" alt="Chrome Console Small Font" title="Chrome Console Small Font" /></p>
-
-<p>参考资料</p>
-
-<ul>
-<li>https://stackoverflow.com/questions/7613546/increase-font-size-chrome-console</li>
-</ul>
-
-</div>
-
-
-
-
-<footer>
-	<p>© 2017-2019, all rights reserved.</a>
-</footer>
 </body>
-</html>
 
+</html>

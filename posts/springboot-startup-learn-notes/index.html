@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/springboot-startup-learn-notes/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/springboot-startup-learn-notes/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "SpringBoot 启动分析笔记",
+      "headline" : "SpringBoot 启动分析笔记",
+      "description" : "代码流程  SpringApplication.run()  public static ConfigurableApplicationContext run(Object source, String... args) { return run(new Object[] { source }, args); } public static ConfigurableApplicationContext run(Object[] sources, String[] args) { \/\/ 先实例化 SpringApplication  return new SpringApplication(sources) \/\/ 再执行 run 方法  .run(args); }    SpringApplication 实例化  public SpringApplication(Object... sources) { initialize(sources); } private void initialize(Object[] sources) { this.sources.addAll(Arrays.asList(sources)); \/* ,* 推断是否是 web 环境 ,* 满足 web 环境的条件是必须同时存在以下的类 ,* 1.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2020",
+      "datePublished": "2020-08-10 18:11:28 \u002b0800 CST",
+      "dateModified" : "2020-08-10 18:11:28 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/springboot-startup-learn-notes\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>SpringBoot 启动分析笔记 - ChenHsingYu</title>
+  <meta property="og:title" content="SpringBoot 启动分析笔记 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="代码流程  SpringApplication.run()  public static ConfigurableApplicationContext run(Object source, String... args) { return run(new Object[] { source }, args); } public static ConfigurableApplicationContext run(Object[] sources, String[] args) { // 先实例化 SpringApplication  return new SpringApplication(sources) // 再执行 run 方法  .run(args); }    SpringApplication 实例化  public SpringApplication(Object... sources) { initialize(sources); } private void initialize(Object[] sources) { this.sources.addAll(Arrays.asList(sources)); /* ,* 推断是否是 web 环境 ,* 满足 web 环境的条件是必须同时存在以下的类 ,* 1." />
+  <meta name="description" content="代码流程  SpringApplication.run()  public static ConfigurableApplicationContext run(Object source, String... args) { return run(new Object[] { source }, args); } public static ConfigurableApplicationContext run(Object[] sources, String[] args) { // 先实例化 SpringApplication  return new SpringApplication(sources) // 再执行 run 方法  .run(args); }    SpringApplication 实例化  public SpringApplication(Object... sources) { initialize(sources); } private void initialize(Object[] sources) { this.sources.addAll(Arrays.asList(sources)); /* ,* 推断是否是 web 环境 ,* 满足 web 环境的条件是必须同时存在以下的类 ,* 1." />
+  <meta property="og:locale" content="zh-cn" />
+
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
+</head>
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
+</header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">SpringBoot 启动分析笔记</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2020-08-10 18:11:28 CST">
+                10 Aug 2020
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+代码流程
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<div id="outline-container-headline-2" class="outline-4">
+<h4 id="headline-2">
+SpringApplication.run()
+</h4>
+<div id="outline-text-headline-2" class="outline-text-4">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>Object source<span style="color:#666">,</span> String<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#008000;font-weight:bold">return</span> run<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> Object<span style="color:#666">[]</span> <span style="color:#666">{</span> source <span style="color:#666">},</span> args<span style="color:#666">);</span>
+  <span style="color:#666">}</span>
+
+  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>Object<span style="color:#666">[]</span> sources<span style="color:#666">,</span> String<span style="color:#666">[]</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#408080;font-style:italic">// 先实例化 SpringApplication
+</span><span style="color:#408080;font-style:italic"></span>      <span style="color:#008000;font-weight:bold">return</span> <span style="color:#008000;font-weight:bold">new</span> SpringApplication<span style="color:#666">(</span>sources<span style="color:#666">)</span>
+          <span style="color:#408080;font-style:italic">// 再执行 run 方法
+</span><span style="color:#408080;font-style:italic"></span>          <span style="color:#666">.</span><span style="color:#7d9029">run</span><span style="color:#666">(</span>args<span style="color:#666">);</span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+SpringApplication 实例化
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#00f">SpringApplication</span><span style="color:#666">(</span>Object<span style="color:#666">...</span> sources<span style="color:#666">)</span> <span style="color:#666">{</span>
+      initialize<span style="color:#666">(</span>sources<span style="color:#666">);</span>
+  <span style="color:#666">}</span>
+
+  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">initialize</span><span style="color:#666">(</span>Object<span style="color:#666">[]</span> sources<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#008000;font-weight:bold">this</span><span style="color:#666">.</span><span style="color:#7d9029">sources</span><span style="color:#666">.</span><span style="color:#7d9029">addAll</span><span style="color:#666">(</span>Arrays<span style="color:#666">.</span><span style="color:#7d9029">asList</span><span style="color:#666">(</span>sources<span style="color:#666">));</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 推断是否是 web 环境
+</span><span style="color:#408080;font-style:italic">       ,* 满足 web 环境的条件是必须同时存在以下的类
+</span><span style="color:#408080;font-style:italic">       ,* 1. javax.servlet.Servlet
+</span><span style="color:#408080;font-style:italic">       ,* 2. org.springframework.web.context.ConfigurableWebApplicationContext
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      <span style="color:#008000;font-weight:bold">this</span><span style="color:#666">.</span><span style="color:#7d9029">webEnvironment</span> <span style="color:#666">=</span> deduceWebEnvironment<span style="color:#666">();</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 1. 实例化 org.springframework.context.ApplicationContextInitializer 配置对应类
+</span><span style="color:#408080;font-style:italic">       ,* 2. 将这些类赋值至成员变量 initializers 中
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      setInitializers<span style="color:#666">((</span>Collection<span style="color:#666">)</span> getSpringFactoriesInstances<span style="color:#666">(</span>ApplicationContextInitializer<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">));</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 1. 实例化 org.springframework.context.ApplicationListener 配置对应类
+</span><span style="color:#408080;font-style:italic">       ,* 2. 将这些类赋值至成员变量 initializers 中
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      setListeners<span style="color:#666">((</span>Collection<span style="color:#666">)</span> getSrpingFactoriesInstances<span style="color:#666">(</span>ApplicationListener<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">));</span>
+
+      <span style="color:#408080;font-style:italic">// 找到 main 函数对应的 Class
+</span><span style="color:#408080;font-style:italic"></span>      <span style="color:#008000;font-weight:bold">this</span><span style="color:#666">.</span><span style="color:#7d9029">mainApplicationClass</span> <span style="color:#666">=</span> deduceMainApplicationClass<span style="color:#666">();</span>
+  <span style="color:#666">}</span>
+
+  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> Collection<span style="color:#666">&lt;?</span> <span style="color:#008000;font-weight:bold">extends</span> T<span style="color:#666">&gt;</span> <span style="color:#00f">getSpringFactoriesInstances</span><span style="color:#666">(</span>Class<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> type<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#008000;font-weight:bold">return</span> getSpringFactoriesInstances<span style="color:#666">(</span>type<span style="color:#666">,</span> <span style="color:#008000;font-weight:bold">new</span> Class<span style="color:#666">&lt;?&gt;[]</span> <span style="color:#666">{});</span>
+  <span style="color:#666">}</span>
+
+  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> Collection<span style="color:#666">&lt;?</span> <span style="color:#008000;font-weight:bold">extends</span> T<span style="color:#666">&gt;</span> <span style="color:#00f">getSrpingFactoriesInstances</span><span style="color:#666">(</span>Class<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> type<span style="color:#666">,</span>
+                                                                  Class<span style="color:#666">&lt;?&gt;[]</span> parameterTypes<span style="color:#666">,</span>
+                                                                  Object<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 从 META-INF/spring.factories 中找到 key 为 type 的配置
+</span><span style="color:#408080;font-style:italic">       ,* 在此处，就是获取以下配置
+</span><span style="color:#408080;font-style:italic">       ,* 1. org.springframework.context.ApplicationContextInitializer
+</span><span style="color:#408080;font-style:italic">       ,* 2. org.springframework.context.ApplicationListener
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      Set<span style="color:#666">&lt;</span>String<span style="color:#666">&gt;</span> names <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> LinkedHashSet<span style="color:#666">&lt;&gt;(</span>SpringFactoriesLoader<span style="color:#666">.</span><span style="color:#7d9029">loadFactoryNames</span><span style="color:#666">(</span>type<span style="color:#666">,</span> classLoader<span style="color:#666">));</span>
+
+      <span style="color:#408080;font-style:italic">// 将 names 进行实例化
+</span><span style="color:#408080;font-style:italic"></span>      List<span style="color:#666">&lt;</span>T<span style="color:#666">&gt;</span> instances <span style="color:#666">=</span> createSpringFactoriesInstances<span style="color:#666">(</span>type<span style="color:#666">,</span> parameterTypes<span style="color:#666">,</span> classLoader<span style="color:#666">,</span> args<span style="color:#666">,</span> names<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 基于 Order 排序
+</span><span style="color:#408080;font-style:italic"></span>      AnnotationAwareOrderComparator<span style="color:#666">.</span><span style="color:#7d9029">sort</span><span style="color:#666">(</span>instances<span style="color:#666">);</span>
+
+      <span style="color:#008000;font-weight:bold">return</span> instances<span style="color:#666">;</span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+SpringApplication 实例方法 run
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>String<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 将 org.springframework.boot.SpringApplicationRunListener 对应的实现类
+</span><span style="color:#408080;font-style:italic">       ,* 都装载至 SpringApplicationRunListeners
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      SpringApplicationRunListeners listeners <span style="color:#666">=</span> getRunListeners<span style="color:#666">(</span>args<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 触发所有 listener 的 started 方法
+</span><span style="color:#408080;font-style:italic"></span>      listeners<span style="color:#666">.</span><span style="color:#7d9029">started</span><span style="color:#666">();</span>
+
+      <span style="color:#408080;font-style:italic">// 将命令行参数 args 包装成 ApplicationArguments，方便取值
+</span><span style="color:#408080;font-style:italic"></span>      ApplicationArguments applicationArguments <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">new</span> DefaultApplicationArguments<span style="color:#666">(</span>args<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 1. 创建 ConfigurableEnvironment
+</span><span style="color:#408080;font-style:italic">       ,* 2. 设置 environment
+</span><span style="color:#408080;font-style:italic">       ,*    1. 设置 PropertySources，一般 args 为空，故没有做特殊配置
+</span><span style="color:#408080;font-style:italic">       ,*    2. 设置 ActiveProfile，从命令行的 spring.profiles.active 中读取
+</span><span style="color:#408080;font-style:italic">       ,* 3. 触发所有 listener 的 environmentPrepared 方法
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      ConfigurableEnvironment environment <span style="color:#666">=</span> prepareEnvironment<span style="color:#666">(</span>listeners<span style="color:#666">,</span> applicationArguments<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 创建 ApplicationContext 应用上下文
+</span><span style="color:#408080;font-style:italic">       ,*
+</span><span style="color:#408080;font-style:italic">       ,* 非 Web 环境使用 org.springframework.context.annotation.
+</span><span style="color:#408080;font-style:italic">       ,* AnnotationConfigApplicationContext 创建
+</span><span style="color:#408080;font-style:italic">       ,*
+</span><span style="color:#408080;font-style:italic">       ,* Web 环境使用 org.springframework.boot.context.embedded.
+</span><span style="color:#408080;font-style:italic">       ,* AnnotationConfigEmbeddedWebApplicationContext 创建
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      ConfigurableApplicationContext context <span style="color:#666">=</span> createApplicationContext<span style="color:#666">();</span>
+
+      <span style="color:#408080;font-style:italic">// 准备上下文
+</span><span style="color:#408080;font-style:italic"></span>      prepareContext<span style="color:#666">(</span>context<span style="color:#666">,</span> environment<span style="color:#666">,</span> listeners<span style="color:#666">,</span> applicationArguments<span style="color:#666">,</span> printedBanner<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 刷新上下文
+</span><span style="color:#408080;font-style:italic"></span>      refreshContext<span style="color:#666">(</span>context<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 刷新上下文后置处理
+</span><span style="color:#408080;font-style:italic"></span>      afterRefresh<span style="color:#666">(</span>context<span style="color:#666">,</span> applicationArguments<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 触发所有 listener 的 finished 方法
+</span><span style="color:#408080;font-style:italic"></span>      listeners<span style="color:#666">.</span><span style="color:#7d9029">finished</span><span style="color:#666">(</span>context<span style="color:#666">,</span> <span style="color:#008000;font-weight:bold">null</span><span style="color:#666">);</span>
+
+      <span style="color:#008000;font-weight:bold">return</span> context<span style="color:#666">;</span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+SpringApplication 实例方法 prepareContext
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">prepareContext</span><span style="color:#666">(</span>ConfigurableApplicationContext context<span style="color:#666">,</span>
+                              ConfigurableEnvironment environment<span style="color:#666">,</span>
+                              SpringApplicationRunListeners listeners<span style="color:#666">,</span>
+                              ApplicationArguments applicationArguments<span style="color:#666">)</span> <span style="color:#666">{</span>
+
+      <span style="color:#408080;font-style:italic">// 将 environment 环境信息注入至 context 上下文中
+</span><span style="color:#408080;font-style:italic"></span>      context<span style="color:#666">.</span><span style="color:#7d9029">setEnvironment</span><span style="color:#666">(</span>environment<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 由于 this.beanNameGenerator 和 this.resourceLoader 默认为 null
+</span><span style="color:#408080;font-style:italic">       ,* 所以没做任何处理
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      postProcessApplicationContext<span style="color:#666">(</span>context<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 触发所有 this.intializers 实现类的 intialize 方法
+</span><span style="color:#408080;font-style:italic"></span>      applyInitializers<span style="color:#666">(</span>context<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 触发所有 listener 方法 contextPrepared 执行
+</span><span style="color:#408080;font-style:italic"></span>      listeners<span style="color:#666">.</span><span style="color:#7d9029">contextPrepared</span><span style="color:#666">(</span>context<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 这里可以简单的认为 sources 存储了启动的主类
+</span><span style="color:#408080;font-style:italic"></span>      Set<span style="color:#666">&lt;</span>Object<span style="color:#666">&gt;</span> sources <span style="color:#666">=</span> getSources<span style="color:#666">();</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 进行 bean 实例化，并加载到 context 上下文中
+</span><span style="color:#408080;font-style:italic">       ,* 具体逻辑查看下方的 load 方法
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      load<span style="color:#666">(</span>context<span style="color:#666">,</span> sources<span style="color:#666">.</span><span style="color:#7d9029">toArray</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> Object<span style="color:#666">[</span>sources<span style="color:#666">.</span><span style="color:#7d9029">size</span><span style="color:#666">()]));</span>
+
+      <span style="color:#408080;font-style:italic">// 触发所有 listener 方法 contextLoaded 执行
+</span><span style="color:#408080;font-style:italic"></span>      listeners<span style="color:#666">.</span><span style="color:#7d9029">contextLoaded</span><span style="color:#666">(</span>context<span style="color:#666">);</span>
+  <span style="color:#666">}</span>
+
+  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">load</span><span style="color:#666">(</span>Application context<span style="color:#666">,</span> Object<span style="color:#666">[]</span> sources<span style="color:#666">)</span> <span style="color:#666">{</span>
+
+      <span style="color:#408080;font-style:italic">// 获取 registry。context 是 BeanDefinitionRegistry 的实现类，所以直接转化即可
+</span><span style="color:#408080;font-style:italic"></span>      BeanDefinitionRegistry registry <span style="color:#666">=</span> getBeanDefinitionRegistry<span style="color:#666">(</span>context<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* 使用 new BeanDefinitionLoader(registry, sources) 构造
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      BeanDefinitionLoader loader <span style="color:#666">=</span> createBeanDefinitionLoader<span style="color:#666">(</span>registry<span style="color:#666">,</span> sources<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 给 loader 注入环境信息
+</span><span style="color:#408080;font-style:italic"></span>      loader<span style="color:#666">.</span><span style="color:#7d9029">setEnvironment</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">this</span><span style="color:#666">.</span><span style="color:#7d9029">environment</span><span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// 将主类的 BeanDefinition 注册至 BeanDefinitionRegistry 中
+</span><span style="color:#408080;font-style:italic"></span>      loader<span style="color:#666">.</span><span style="color:#7d9029">load</span><span style="color:#666">();</span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+SpringApplication 实例方法 refreshContext
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">refreshContext</span><span style="color:#666">(</span>ConfigurableApplicationContext context<span style="color:#666">)</span> <span style="color:#666">{</span>
+      refresh<span style="color:#666">(</span>context<span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// shutdownhook
+</span><span style="color:#408080;font-style:italic"></span>      <span style="color:#408080;font-style:italic">// ...
+</span><span style="color:#408080;font-style:italic"></span>  <span style="color:#666">}</span>
+
+  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">refresh</span><span style="color:#666">(</span>ApplicationContext applicationContext<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#408080;font-style:italic">// 调用 applicationContext 的 refresh 方法
+</span><span style="color:#408080;font-style:italic"></span>      <span style="color:#666">((</span>AbstractApplicationContext<span style="color:#666">)</span> applicationContext<span style="color:#666">).</span><span style="color:#7d9029">refresh</span><span style="color:#666">();</span>
+  <span style="color:#666">}</span>
+
+  <span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic">   ,* AbstractApplicationContext.refresh()
+</span><span style="color:#408080;font-style:italic">   ,*/</span>
+  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#b00040">void</span> <span style="color:#00f">refresh</span><span style="color:#666">()</span> <span style="color:#666">{</span>
+
+      <span style="color:#408080;font-style:italic">/*
+</span><span style="color:#408080;font-style:italic">       ,* refresh 前准备工作
+</span><span style="color:#408080;font-style:italic">       ,* 设置程序启动时间、active 标记等
+</span><span style="color:#408080;font-style:italic">       ,*/</span>
+      prepareRefresh<span style="color:#666">();</span>
+
+      <span style="color:#408080;font-style:italic">// 获取 DefaultListableBeanFactory 这个 BeanFactory
+</span><span style="color:#408080;font-style:italic"></span>      ConfigurableListableBeanFactory beanFactory <span style="color:#666">=</span> obtainFreshBeanFactory<span style="color:#666">();</span>
+
+      prepareBeanFactory<span style="color:#666">(</span>beanFactory<span style="color:#666">);</span>
+
+      <span style="color:#008000;font-weight:bold">try</span> <span style="color:#666">{</span>
+          postProcessBeanFactory<span style="color:#666">(</span>beanFactory<span style="color:#666">);</span>
+
+          invokeBeanFactoryPostProcessors<span style="color:#666">(</span>beanFactory<span style="color:#666">);</span>
+
+          registerBeanPostProcessors<span style="color:#666">(</span>beanFactory<span style="color:#666">);</span>
+
+          initMessageSource<span style="color:#666">();</span>
+
+          initApplicationEventMulticaster<span style="color:#666">();</span>
+
+          onRefresh<span style="color:#666">();</span>
+
+          registerListeners<span style="color:#666">();</span>
+
+          finishBeanFactoryInitialization<span style="color:#666">(</span>beanFactory<span style="color:#666">);</span>
+
+          finishRefresh<span style="color:#666">();</span>
+      <span style="color:#666">}</span>
+      <span style="color:#408080;font-style:italic">// catch
+</span><span style="color:#408080;font-style:italic"></span>      <span style="color:#408080;font-style:italic">// finally
+</span><span style="color:#408080;font-style:italic"></span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+<div id="outline-container-headline-7" class="outline-5">
+<h5 id="headline-7">
+AbstractApplicationContext 实例方法 prepareBeanFactory
+</h5>
+<div id="outline-text-headline-7" class="outline-text-5">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">prepareBeanFactory</span><span style="color:#666">(</span>ConfigurableListableBeanFactory beanFactory<span style="color:#666">)</span> <span style="color:#666">{</span>
+      <span style="color:#408080;font-style:italic">// Tell the internal bean factory to use the context&#39;s class loader etc.
+</span><span style="color:#408080;font-style:italic"></span>      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">setBeanClassLoader</span><span style="color:#666">(</span>getClassLoader<span style="color:#666">());</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">setBeanExpressionResolver</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> StandardBeanExpressionResolver<span style="color:#666">(</span>beanFactory<span style="color:#666">.</span><span style="color:#7d9029">getBeanClassLoader</span><span style="color:#666">()));</span>
+
+      <span style="color:#408080;font-style:italic">// Configure the bean factory with context callbacks.
+</span><span style="color:#408080;font-style:italic"></span>      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">addBeanPostProcessor</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> ApplicationContextAwareProcessor<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">this</span><span style="color:#666">));</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">ignoreDependencyInterface</span><span style="color:#666">(</span>EnvironmentAware<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">ignoreDependencyInterface</span><span style="color:#666">(</span>EmbeddedValueResolverAware<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">ignoreDependencyInterface</span><span style="color:#666">(</span>ResourceLoaderAware<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">ignoreDependencyInterface</span><span style="color:#666">(</span>ApplicationEventPublisherAware<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">ignoreDependencyInterface</span><span style="color:#666">(</span>MessageSourceAware<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">ignoreDependencyInterface</span><span style="color:#666">(</span>ApplicationContextAware<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// BeanFactory interface not registered as resolvable type in a plain factory.
+</span><span style="color:#408080;font-style:italic"></span>      <span style="color:#408080;font-style:italic">// MessageSource registered (and found for autowiring) as a bean.
+</span><span style="color:#408080;font-style:italic"></span>      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerResolvableDependency</span><span style="color:#666">(</span>BeanFactory<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">,</span> beanFactory<span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerResolvableDependency</span><span style="color:#666">(</span>ResourceLoader<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">,</span> <span style="color:#008000;font-weight:bold">this</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerResolvableDependency</span><span style="color:#666">(</span>ApplicationEventPublisher<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">,</span> <span style="color:#008000;font-weight:bold">this</span><span style="color:#666">);</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerResolvableDependency</span><span style="color:#666">(</span>ApplicationContext<span style="color:#666">.</span><span style="color:#7d9029">class</span><span style="color:#666">,</span> <span style="color:#008000;font-weight:bold">this</span><span style="color:#666">);</span>
+
+      <span style="color:#408080;font-style:italic">// Register early post-processor for detecting inner beans as ApplicationListeners.
+</span><span style="color:#408080;font-style:italic"></span>      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">addBeanPostProcessor</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> ApplicationListenerDetector<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">this</span><span style="color:#666">));</span>
+
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerSingleton</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;environment&#34;</span><span style="color:#666">,</span> getEnvironment<span style="color:#666">());</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerSingleton</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;systemProperties&#34;</span><span style="color:#666">,</span> getEnvironment<span style="color:#666">().</span><span style="color:#7d9029">getSystemProperties</span><span style="color:#666">());</span>
+      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">registerSingleton</span><span style="color:#666">(</span><span style="color:#ba2121">&#34;systemEnvironment&#34;</span><span style="color:#666">,</span> getEnvironment<span style="color:#666">().</span><span style="color:#7d9029">getSystemEnvironment</span><span style="color:#666">());</span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-5">
+<h5 id="headline-8">
+AbstractApplicationContext 实例方法 postProcessBeanFactory
+</h5>
+<div id="outline-text-headline-8" class="outline-text-5">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#666">//</span> 默认空逻辑</code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-5">
+<h5 id="headline-9">
+AbstractApplicationContext 实例方法 invokeBeanFactoryPostProcessors
+</h5>
+<div id="outline-text-headline-9" class="outline-text-5">
+<div class="src src-java">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">invokeBeanFactoryPostProcessors</span><span style="color:#666">(</span>ConfigurableListableBeanFactory beanFactory<span style="color:#666">)</span> <span style="color:#666">{</span>
+      PostProcessorRegistrationDelegate<span style="color:#666">.</span><span style="color:#7d9029">invokeBeanFactoryPostProcessors</span><span style="color:#666">(</span>beanFactory<span style="color:#666">,</span> getBeanFactoryPostProcessors<span style="color:#666">());</span>
+  <span style="color:#666">}</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-10" class="outline-5">
+<h5 id="headline-10">
+AbstractApplicationContext 实例方法 registerBeanPostProcessors
+</h5>
+</div>
+<div id="outline-container-headline-11" class="outline-5">
+<h5 id="headline-11">
+AbstractApplicationContext 实例方法 initMessageSource
+</h5>
+</div>
+<div id="outline-container-headline-12" class="outline-5">
+<h5 id="headline-12">
+AbstractApplicationContext 实例方法 initApplicationEventMulticaster
+</h5>
+</div>
+<div id="outline-container-headline-13" class="outline-5">
+<h5 id="headline-13">
+AbstractApplicationContext 实例方法 onRefresh
+</h5>
+</div>
+<div id="outline-container-headline-14" class="outline-5">
+<h5 id="headline-14">
+AbstractApplicationContext 实例方法 registerListeners
+</h5>
+</div>
+<div id="outline-container-headline-15" class="outline-5">
+<h5 id="headline-15">
+AbstractApplicationContext 实例方法 finishBeanFactoryInitialization
+</h5>
+</div>
+<div id="outline-container-headline-16" class="outline-5">
+<h5 id="headline-16">
+AbstractApplicationContext 实例方法 finishRefresh
+</h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-17" class="outline-2">
+<h2 id="headline-17">
+时序图
+</h2>
+<div id="outline-text-headline-17" class="outline-text-2">
+<p>
+<a href="/image/springboot-sequence-diagram.png"><img src="/image/springboot-sequence-diagram.png" alt="/image/springboot-sequence-diagram.png" /></a></p>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-2">
+<h2 id="headline-18">
+参考资料
+</h2>
+<div id="outline-text-headline-18" class="outline-text-2">
+<ul>
+<li>
+<p><a href="https://www.cnblogs.com/java-chen-hao/p/11829056.html">SpringBoot 源码解析 （一）—– SpringBoot核心原理入门</a></p>
+</li>
+</ul>
+</div>
+</div>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>

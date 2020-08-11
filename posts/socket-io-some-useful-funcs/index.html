@@ -1,109 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>Socket.io 中一些有用的方法</title>
-	
-	
-	<meta name="description" content="">
-	<meta name="image" content="">
-	
-	<meta itemprop="name" content="Socket.io 中一些有用的方法">
-	<meta itemprop="description" content="">
-	<meta itemprop="image" content="">
-	
-	<meta name="og:title" content="Socket.io 中一些有用的方法">
-	<meta name="og:description" content="">
-	
-	<meta name="og:url" content="https://idreamshen.github.io/posts/socket-io-some-useful-funcs/">
-	<meta name="og:site_name" content="Socket.io 中一些有用的方法">
-	<meta name="og:type" content="article">
-	
-	<meta name="article:tag" content="">
-	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
-	
-	
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-49492756-1', 'auto');
-ga('send', 'pageview');
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/socket-io-some-useful-funcs/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/socket-io-some-useful-funcs/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "Socket.io 中一些有用的方法",
+      "headline" : "Socket.io 中一些有用的方法",
+      "description" : "io.use 注册中间件。看一下下面的这个例子\n\/\/ 服务端代码 var io = require(\u0026#39;socket.io\u0026#39;)(); \/\/ 引用 socket.io 库并实例化  \/** 注册中间件 **\/ io.use(function (socket, next) { var query = socket.handshake.query; \/\/ 获取客户端的连接 url 中的参数  var password = query.password; \/\/ 读取参数中密码  if (password === \u0026#39;123456\u0026#39;) return next(); \/\/ 如果密码正确，则执行返回 next()  next(new Error(\u0026#39;密码错误\u0026#39;)); \/\/ 如果密码错误，则抛出异常 }); \/** 监听事件 **\/ io.on(\u0026#39;connection\u0026#39;, function (socket) { socket.on(\u0026#39;disconnect\u0026#39;, function () { \/\/ 客户端断线  }); socket.on(\u0026#39;message\u0026#39;, function (body) { \/\/ 服务器收到客户端发来的消息  }); }); \/\/ 客户端代码 \u0026lt;script src=\u0026#39;\/socket.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2015",
+      "datePublished": "2015-08-11 16:08:32 \u002b0800 CST",
+      "dateModified" : "2015-08-11 16:08:32 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/socket-io-some-useful-funcs\/",
+      "keywords" : [  ]
+  }
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<title>Socket.io 中一些有用的方法 - ChenHsingYu</title>
+  <meta property="og:title" content="Socket.io 中一些有用的方法 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="io.use 注册中间件。看一下下面的这个例子
+// 服务端代码 var io = require(&#39;socket.io&#39;)(); // 引用 socket.io 库并实例化  /** 注册中间件 **/ io.use(function (socket, next) { var query = socket.handshake.query; // 获取客户端的连接 url 中的参数  var password = query.password; // 读取参数中密码  if (password === &#39;123456&#39;) return next(); // 如果密码正确，则执行返回 next()  next(new Error(&#39;密码错误&#39;)); // 如果密码错误，则抛出异常 }); /** 监听事件 **/ io.on(&#39;connection&#39;, function (socket) { socket.on(&#39;disconnect&#39;, function () { // 客户端断线  }); socket.on(&#39;message&#39;, function (body) { // 服务器收到客户端发来的消息  }); }); // 客户端代码 &lt;script src=&#39;/socket." />
+  <meta name="description" content="io.use 注册中间件。看一下下面的这个例子
+// 服务端代码 var io = require(&#39;socket.io&#39;)(); // 引用 socket.io 库并实例化  /** 注册中间件 **/ io.use(function (socket, next) { var query = socket.handshake.query; // 获取客户端的连接 url 中的参数  var password = query.password; // 读取参数中密码  if (password === &#39;123456&#39;) return next(); // 如果密码正确，则执行返回 next()  next(new Error(&#39;密码错误&#39;)); // 如果密码错误，则抛出异常 }); /** 监听事件 **/ io.on(&#39;connection&#39;, function (socket) { socket.on(&#39;disconnect&#39;, function () { // 客户端断线  }); socket.on(&#39;message&#39;, function (body) { // 服务器收到客户端发来的消息  }); }); // 客户端代码 &lt;script src=&#39;/socket." />
+  <meta property="og:locale" content="zh-cn" />
 
-	
-	<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
-	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
 
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
 </head>
 
 <body>
-
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
 <header>
-	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
-	
-	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
-	
-	
-	
-	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
 </header>
-
-
-<script>
-function fadeOut(el) {
-  el.style.opacity = 1;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
-    last = +new Date();
-    
-
-    if (el.style.opacity > 0) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    } else {
-      el.style.display='none';
-    }
-  };
-
-  tick();
-}
-
-function ready(fn) {
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-        var elements = document.querySelectorAll("img");
-        Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("alt")) {
-                const caption = document.createElement('figcaption');
-                var node = document.createTextNode(el.getAttribute("alt"));
-                caption.appendChild(node);
-                const wrapper = document.createElement('figure');
-                wrapper.className = 'image';
-                el.parentNode.insertBefore(wrapper, el);
-                el.parentNode.removeChild(el);
-                wrapper.appendChild(el);
-                wrapper.appendChild(caption);
-            }
-        });
-
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-window.onload = ready;
-</script>
-
-<div class="content">
-  <h1>Socket.io 中一些有用的方法 <aside></aside></h1>
+<div class="row end-xs">
   
+  
+</div>
+<div class="header-line"></div>
 
-<h3 id="io-use">io.use</h3>
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Socket.io 中一些有用的方法</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2015-08-11 16:08:32 CST">
+                11 Aug 2015
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
 
+        <div class="post-content markdown-body">
+          
+          <h3 id="iouse">io.use</h3>
 <p>注册中间件。看一下下面的这个例子</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
@@ -126,8 +122,9 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
   socket.on(<span style="color:#ba2121">&#39;message&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (body) {
     <span style="color:#408080;font-style:italic">// 服务器收到客户端发来的消息
 </span><span style="color:#408080;font-style:italic"></span>  });
-});</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端代码
-</span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script src<span style="color:#666">=</span><span style="color:#ba2121">&#39;/socket.io/socket.io.js&#39;</span><span style="color:#666">&gt;&lt;</span><span style="color:#b68">/script&gt; /</span><span style="">/ 加载 socket.io.js</span>
+});
+</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端代码
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script src<span style="color:#666">=</span><span style="color:#ba2121">&#39;/socket.io/socket.io.js&#39;</span><span style="color:#666">&gt;&lt;</span><span style="color:#b68">/script&gt; /</span><span style="color:#666">/</span> 加载 socket.io.js
 <span style="color:#666">&lt;</span>script<span style="color:#666">&gt;</span>
   <span style="color:#008000;font-weight:bold">var</span> socket <span style="color:#666">=</span> io(<span style="color:#ba2121">&#39;http://localhost&#39;</span>, {query<span style="color:#666">:</span> <span style="color:#ba2121">&#39;password=654321&#39;</span>}); <span style="color:#408080;font-style:italic">// 实例化并连接到 socket 服务器，传入密码参数
 </span><span style="color:#408080;font-style:italic"></span>
@@ -137,9 +134,8 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
 </span><span style="color:#408080;font-style:italic"></span>  });
 
   socket.send(<span style="color:#ba2121">&#39;hello server&#39;</span>);
-<span style="color:#666">&lt;</span><span style="">/script&gt;</span></code></pre></div>
-<p>可以看到，当客户端尝试连接服务器时，因为传入的密码是 654321，导致服务端的中间件认证失败，触发客户端的 error 事件。客户端代码第 8 行会打印出“密码错误”这几个字。</p>
-
+<span style="color:#666">&lt;</span><span style="">/script&gt;</span>
+</code></pre></div><p>可以看到，当客户端尝试连接服务器时，因为传入的密码是 654321，导致服务端的中间件认证失败，触发客户端的 error 事件。客户端代码第 8 行会打印出“密码错误”这几个字。</p>
 <p>注意服务端代码中第 9 行的 return 不能省略。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
@@ -151,8 +147,8 @@ io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, nex
 </span><span style="color:#408080;font-style:italic"></span>
   <span style="color:#008000;font-weight:bold">if</span> (password <span style="color:#666">===</span> <span style="color:#ba2121">&#39;123456&#39;</span>) next(); <span style="color:#408080;font-style:italic">// 如果密码正确，则执行返回 next()
 </span><span style="color:#408080;font-style:italic"></span>  next(<span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Error</span>(<span style="color:#ba2121">&#39;密码错误&#39;</span>)); <span style="color:#408080;font-style:italic">// 如果密码错误，则抛出异常
-</span><span style="color:#408080;font-style:italic"></span>});</code></pre></div>
-<p>注意第 9 行，如果省略 return，则会导致第 10 行代码也被执行。可以将代码修改成下面的更易理解</p>
+</span><span style="color:#408080;font-style:italic"></span>});
+</code></pre></div><p>注意第 9 行，如果省略 return，则会导致第 10 行代码也被执行。可以将代码修改成下面的更易理解</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
 </span><span style="color:#408080;font-style:italic"></span>
@@ -166,8 +162,8 @@ io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, nex
 </span><span style="color:#408080;font-style:italic"></span>  } <span style="color:#008000;font-weight:bold">else</span> {
     next(<span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Error</span>(<span style="color:#ba2121">&#39;密码错误&#39;</span>)); <span style="color:#408080;font-style:italic">// 如果密码错误，则抛出异常
 </span><span style="color:#408080;font-style:italic"></span>  }
-});</code></pre></div>
-<h3 id="ack-模式">ACK 模式</h3>
+});
+</code></pre></div><h3 id="ack-模式">ACK 模式</h3>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)();
 
@@ -178,7 +174,8 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
     });
     io.emit(<span style="color:#ba2121">&#39;chat&#39;</span>, msg);
   });
-});</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端
+});
+</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script<span style="color:#666">&gt;</span>
   <span style="color:#008000;font-weight:bold">var</span> socket <span style="color:#666">=</span> io();
   socket.on(<span style="color:#ba2121">&#39;connect&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> () {
@@ -190,15 +187,58 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
       console.log(response); <span style="color:#408080;font-style:italic">// 打印结果为 Hello
 </span><span style="color:#408080;font-style:italic"></span>    });
   });
-<span style="color:#666">&lt;</span><span style="">/script&gt;</span></code></pre></div>
+<span style="color:#666">&lt;</span><span style="">/script&gt;</span>
+</code></pre></div>
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  
 </div>
 
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
 
 
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
 
-<footer>
-	<p>© 2017-2019, all rights reserved.</a>
-</footer>
+  
+
 </body>
-</html>
 
+</html>

@@ -1,180 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>Emacs 入门</title>
-	
-	
-	<meta name="description" content="">
-	<meta name="image" content="">
-	
-	<meta itemprop="name" content="Emacs 入门">
-	<meta itemprop="description" content="">
-	<meta itemprop="image" content="">
-	
-	<meta name="og:title" content="Emacs 入门">
-	<meta name="og:description" content="">
-	
-	<meta name="og:url" content="https://idreamshen.github.io/posts/emacs-beginner/">
-	<meta name="og:site_name" content="Emacs 入门">
-	<meta name="og:type" content="article">
-	
-	<meta name="article:tag" content="">
-	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
-	
-	
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-49492756-1', 'auto');
-ga('send', 'pageview');
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/emacs-beginner/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/emacs-beginner/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "Emacs 入门",
+      "headline" : "Emacs 入门",
+      "description" : "基础概念    Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。\n  使用 C-x C-c 退出 Emacs\n  使用 C-g 即可中断当前的各种按键操作\n    启动 Emacs    在命令行输入 emacs 即可启动\n  第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可\n  然后随便输入几个字符，打打回车等\n    光标移动    C-n 移动到下一行。n 代表 next。",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2019",
+      "datePublished": "2019-05-31 19:13:17 \u002b0800 CST",
+      "dateModified" : "2019-05-31 19:13:17 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/emacs-beginner\/",
+      "keywords" : [  ]
+  }
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<title>Emacs 入门 - ChenHsingYu</title>
+  <meta property="og:title" content="Emacs 入门 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="基础概念    Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。
+  使用 C-x C-c 退出 Emacs
+  使用 C-g 即可中断当前的各种按键操作
+    启动 Emacs    在命令行输入 emacs 即可启动
+  第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可
+  然后随便输入几个字符，打打回车等
+    光标移动    C-n 移动到下一行。n 代表 next。" />
+  <meta name="description" content="基础概念    Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。
+  使用 C-x C-c 退出 Emacs
+  使用 C-g 即可中断当前的各种按键操作
+    启动 Emacs    在命令行输入 emacs 即可启动
+  第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可
+  然后随便输入几个字符，打打回车等
+    光标移动    C-n 移动到下一行。n 代表 next。" />
+  <meta property="og:locale" content="zh-cn" />
 
-	
-	<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
-	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
 
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
 </head>
 
 <body>
-
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
 <header>
-	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
-	
-	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
-	
-	
-	
-	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
 </header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Emacs 入门</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2019-05-31 19:13:17 CST">
+                31 May 2019
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          
+<div id="outline-container-headline-1" class="outline-4">
+<h4 id="headline-1">
+基础概念 
+</h4>
+<div id="outline-text-headline-1" class="outline-text-4">
+<ol>
+<li>
+<p>Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。</p>
+</li>
+<li>
+<p>使用 C-x C-c 退出 Emacs</p>
+</li>
+<li>
+<p>使用 C-g 即可中断当前的各种按键操作</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-4">
+<h4 id="headline-2">
+启动 Emacs
+</h4>
+<div id="outline-text-headline-2" class="outline-text-4">
+<ol>
+<li>
+<p>在命令行输入 emacs 即可启动</p>
+</li>
+<li>
+<p>第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可</p>
+</li>
+<li>
+<p>然后随便输入几个字符，打打回车等</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-4">
+<h4 id="headline-3">
+光标移动
+</h4>
+<div id="outline-text-headline-3" class="outline-text-4">
+<ol>
+<li>
+<p>C-n 移动到下一行。n 代表 next。</p>
+</li>
+<li>
+<p>C-p 移动到上一行。p 代表 previous。</p>
+</li>
+<li>
+<p>C-f 移动到下一个字母。f 代表 forward。</p>
+</li>
+<li>
+<p>C-b 移动到前一个字母。b 代表 back。</p>
+</li>
+<li>
+<p>C-a 回到行首。a 表示为字母中的第一个。</p>
+</li>
+<li>
+<p>C-e 回到行末。e 代表 end。</p>
+</li>
+<li>
+<p>M-b 回到单词头部。</p>
+</li>
+<li>
+<p>M-f 回到单词尾部。</p>
+</li>
+<li>
+<p>M-a 回到段落头部。</p>
+</li>
+<li>
+<p>M-e 回到段落尾部。</p>
+</li>
+<li>
+<p>C-l 将当前行置为窗口中间、或顶部、或底部</p>
+</li>
+<li>
+<p>C-v 向下滚动一屏</p>
+</li>
+<li>
+<p>M-v 向上滚动一屏</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+分屏（window）
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<ol>
+<li>
+<p>C-x 2 水平分割为 2 个窗口</p>
+</li>
+<li>
+<p>C-x 3 垂直分割为 2 个窗口</p>
+</li>
+<li>
+<p>C-x o 跳转到另一个窗口。o 代表 other。</p>
+</li>
+<li>
+<p>C-x 0 隐藏当前窗口</p>
+</li>
+<li>
+<p>C-x 1 将当前窗口窗口展开</p>
+</li>
+<li>
+<p>C-x k 关闭当前 Buffer</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+文件操作
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<ol>
+<li>
+<p>C-x C-f 打开某个文件，如果不存在则新建一个</p>
+</li>
+<li>
+<p>C-x C-s 保存文件</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+查找帮助
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<ol>
+<li>
+<p>C-h k 查看按键含义。k 代表 key</p>
+</li>
+<li>
+<p>C-h v 查看变量含义。v 代表 variable</p>
+</li>
+<li>
+<p>C-h f 查看函数含义。f 代表 function</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-4">
+<h4 id="headline-7">
+学习 Emacs 自带的帮助文件
+</h4>
+<div id="outline-text-headline-7" class="outline-text-4">
+<ol>
+<li>
+<p>M-x help-with-tutorial-spec-language</p>
+</li>
+<li>
+<p>输入 Chinese-GBK 回车</p>
+</li>
+</ol>
+</div>
+</div>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
 
 
 <script>
-function fadeOut(el) {
-  el.style.opacity = 1;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
-    last = +new Date();
+  hljs.initHighlightingOnLoad();
+  
+  
+  
     
-
-    if (el.style.opacity > 0) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    } else {
-      el.style.display='none';
-    }
-  };
-
-  tick();
-}
-
-function ready(fn) {
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-        var elements = document.querySelectorAll("img");
-        Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("alt")) {
-                const caption = document.createElement('figcaption');
-                var node = document.createTextNode(el.getAttribute("alt"));
-                caption.appendChild(node);
-                const wrapper = document.createElement('figure');
-                wrapper.className = 'image';
-                el.parentNode.insertBefore(wrapper, el);
-                el.parentNode.removeChild(el);
-                wrapper.appendChild(el);
-                wrapper.appendChild(caption);
-            }
-        });
-
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-window.onload = ready;
+    
+  
 </script>
 
-<div class="content">
-  <h1>Emacs 入门 <aside></aside></h1>
-  <h3 id="基础概念">基础概念</h3>
+  
 
-<ol>
-<li>Mac 系统中有两个按键是长按的。第一个是 Ctrl 键，在 Emacs 中也表示 Ctrl 键，简写为 C。另一个是 option 键，在 Emacs 中表示为 Meta 键，简写为 M。</li>
-<li>使用 C-x C-c 退出 Emacs</li>
-<li>使用 C-g 即可中断当前的各种按键操作</li>
-</ol>
-
-<h3 id="启动-emacs">启动 Emacs</h3>
-
-<ol>
-<li>在命令行输入 emacs 即可启动</li>
-<li>第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可</li>
-<li>然后随便输入几个字符，打打回车等</li>
-</ol>
-
-<h3 id="光标移动">光标移动</h3>
-
-<ol>
-<li>C-n 移动到下一行。n 代表 next。</li>
-<li>C-p 移动到上一行。p 代表 previous。</li>
-<li>C-f 移动到下一个字母。f 代表 forward。</li>
-<li>C-b 移动到前一个字母。b 代表 back。</li>
-<li>C-a 回到行首。a 表示为字母中的第一个。</li>
-<li>C-e 回到行末。e 代表 end。</li>
-<li>M-b 回到单词头部。</li>
-<li>M-f 回到单词尾部。</li>
-<li>M-a 回到段落头部。</li>
-<li>M-e 回到段落尾部。</li>
-<li>C-l 将当前行置为窗口中间、或顶部、或底部</li>
-<li>C-v 向下滚动一屏</li>
-<li>M-v 向上滚动一屏</li>
-</ol>
-
-<h3 id="分屏-window">分屏（window）</h3>
-
-<ol>
-<li>C-x 2 水平分割为 2 个窗口</li>
-<li>C-x 3 垂直分割为 2 个窗口</li>
-<li>C-x o 跳转到另一个窗口。o 代表 other。</li>
-<li>C-x 0 隐藏当前窗口</li>
-<li>C-x 1 将当前窗口窗口展开</li>
-<li>C-x k 关闭当前 Buffer</li>
-</ol>
-
-<h3 id="文件操作">文件操作</h3>
-
-<ol>
-<li>C-x C-f 打开某个文件，如果不存在则新建一个</li>
-<li>C-x C-s 保存文件</li>
-</ol>
-
-<h3 id="查找帮助">查找帮助</h3>
-
-<ol>
-<li>C-h k 查看按键含义。k 代表 key</li>
-<li>C-h v 查看变量含义。v 代表 variable</li>
-<li>C-h f 查看函数含义。f 代表 function</li>
-</ol>
-
-<h3 id="学习-emacs-自带的帮助文件">学习 Emacs 自带的帮助文件</h3>
-
-<ol>
-<li>M-x help-with-tutorial-spec-language</li>
-<li>输入 Chinese-GBK 回车</li>
-</ol>
-
-</div>
-
-
-
-
-<footer>
-	<p>© 2017-2019, all rights reserved.</a>
-</footer>
 </body>
-</html>
 
+</html>

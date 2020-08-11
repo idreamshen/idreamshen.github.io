@@ -1,110 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>从 JDK Hotspot 源码探讨线程状态</title>
-	
-	
-	<meta name="description" content="">
-	<meta name="image" content="">
-	
-	<meta itemprop="name" content="从 JDK Hotspot 源码探讨线程状态">
-	<meta itemprop="description" content="">
-	<meta itemprop="image" content="">
-	
-	<meta name="og:title" content="从 JDK Hotspot 源码探讨线程状态">
-	<meta name="og:description" content="">
-	
-	<meta name="og:url" content="https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/">
-	<meta name="og:site_name" content="从 JDK Hotspot 源码探讨线程状态">
-	<meta name="og:type" content="article">
-	
-	<meta name="article:tag" content="">
-	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
-	
-	
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-49492756-1', 'auto');
-ga('send', 'pageview');
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "从 JDK Hotspot 源码探讨线程状态",
+      "headline" : "从 JDK Hotspot 源码探讨线程状态",
+      "description" : "src\/share\/vm\/classfile\/javaClasses.hpp\n\/\/ Java Thread Status for JVMTI and M\u0026amp;M use. \/\/ This thread status info is saved in threadStatus field of \/\/ java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ runnable \/ running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Thread.sleep()  JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT \u002b JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Object.wait()  JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_INDEFINITELY \u002b JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Object.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2018",
+      "datePublished": "2018-04-11 13:54:13 \u002b0800 CST",
+      "dateModified" : "2018-04-11 13:54:13 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/thread-status-from-jdk-hotspot\/",
+      "keywords" : [  ]
+  }
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<title>从 JDK Hotspot 源码探讨线程状态 - ChenHsingYu</title>
+  <meta property="og:title" content="从 JDK Hotspot 源码探讨线程状态 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="src/share/vm/classfile/javaClasses.hpp
+// Java Thread Status for JVMTI and M&amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE &#43; // runnable / running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE &#43; // Thread.sleep()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_INDEFINITELY &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE &#43; // Object." />
+  <meta name="description" content="src/share/vm/classfile/javaClasses.hpp
+// Java Thread Status for JVMTI and M&amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE &#43; // runnable / running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE &#43; // Thread.sleep()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_INDEFINITELY &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE &#43; // Object." />
+  <meta property="og:locale" content="zh-cn" />
 
-	
-	<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
-	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
 
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
 </head>
 
 <body>
-
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
 <header>
-	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
-	
-	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
-	
-	
-	
-	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
 </header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
 
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">从 JDK Hotspot 源码探讨线程状态</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2018-04-11 13:54:13 CST">
+                11 Apr 2018
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
 
-<script>
-function fadeOut(el) {
-  el.style.opacity = 1;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
-    last = +new Date();
-    
-
-    if (el.style.opacity > 0) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    } else {
-      el.style.display='none';
-    }
-  };
-
-  tick();
-}
-
-function ready(fn) {
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-        var elements = document.querySelectorAll("img");
-        Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("alt")) {
-                const caption = document.createElement('figcaption');
-                var node = document.createTextNode(el.getAttribute("alt"));
-                caption.appendChild(node);
-                const wrapper = document.createElement('figure');
-                wrapper.className = 'image';
-                el.parentNode.insertBefore(wrapper, el);
-                el.parentNode.removeChild(el);
-                wrapper.appendChild(el);
-                wrapper.appendChild(caption);
-            }
-        });
-
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-window.onload = ready;
-</script>
-
-<div class="content">
-  <h1>从 JDK Hotspot 源码探讨线程状态 <aside></aside></h1>
-  <p>src/share/vm/classfile/javaClasses.hpp</p>
+        <div class="post-content markdown-body">
+          
+          <p>
+src/share/vm/classfile/javaClasses.hpp</p>
+<div class="src src-cpp">
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#408080;font-style:italic">// Java Thread Status for JVMTI and M&amp;M use.
 </span><span style="color:#408080;font-style:italic">// This thread status info is saved in threadStatus field of
 </span><span style="color:#408080;font-style:italic">// java.lang.Thread java class.
-</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">enum</span> ThreadStatus {
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">enum</span> <span style="color:#00f;font-weight:bold">ThreadStatus</span> {
   NEW                      <span style="color:#666">=</span> <span style="color:#666">0</span>,
   RUNNABLE                 <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// runnable / running
 </span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_RUNNABLE,
@@ -131,8 +132,12 @@ window.onload = ready;
   BLOCKED_ON_MONITOR_ENTER <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// (re-)entering a synchronization block
 </span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER,
   TERMINATED               <span style="color:#666">=</span> JVMTI_THREAD_STATE_TERMINATED
-};</code></pre></div>
-<p>src/share/vm/prims/jvmti.xml</p>
+};
+</code></pre></div>
+</div>
+<p>
+src/share/vm/prims/jvmti.xml</p>
+<div class="src src-xml">
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#008000;font-weight:bold">&lt;constants</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;jvmtiThreadState&#34;</span> <span style="color:#7d9029">label=</span><span style="color:#ba2121">&#34;Thread State Flags&#34;</span> <span style="color:#7d9029">kind=</span><span style="color:#ba2121">&#34;bits&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
   <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_ALIVE&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0001&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is alive. Zero if thread is new (not started) or terminated.
@@ -200,15 +205,21 @@ window.onload = ready;
           Defined by VM vendor.
   <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
 <span style="color:#008000;font-weight:bold">&lt;/constants&gt;</span></code></pre></div>
-<p>当一个线程的状态为 225 时，转换成 16 进制则为 e1。
+</div>
+<p>
+当一个线程的状态为 225 时，转换成 16 进制则为 e1。
 按照公式：</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
+<div class="src src-text">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
            JVMTI_THREAD_STATE_WAITING +
            JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
-           JVMTI_THREAD_STATE_SLEEPING</pre></div>
-<p>可以发现满足 e1 = 0x0001 + 0x0080 + 0x0020 + 0x0040（这4个数值与 jvmti.xml 一一对应），所以可以推断该线程当时处于 sleep 状态</p>
-
-<p>另外 threadService.hpp 文件控制了一个线程的 threadStatus，比如 JavaThreadSleepState 该函数就将线程状态修改为 java_lang_Thread::SLEEPING</p>
+           JVMTI_THREAD_STATE_SLEEPING</code></pre></div>
+</div>
+<p>
+可以发现满足 e1 = 0x0001 + 0x0080 + 0x0020 + 0x0040（这4个数值与 jvmti.xml 一一对应），所以可以推断该线程当时处于 sleep 状态</p>
+<p>
+另外 threadService.hpp 文件控制了一个线程的 threadStatus，比如 JavaThreadSleepState 该函数就将线程状态修改为 java_lang_Thread::SLEEPING</p>
+<div class="src src-cpp">
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#408080;font-style:italic">// Change status to sleeping
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">JavaThreadSleepState</span> <span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">public</span> JavaThreadStatusChanger {
  <span style="color:#008000;font-weight:bold">private</span><span style="color:#666">:</span>
@@ -234,15 +245,60 @@ window.onload = ready;
       _stat<span style="color:#666">-&gt;</span>thread_sleep_end();
     }
   }
-};</code></pre></div>
+};
+</code></pre></div>
 </div>
 
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
 
 
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
 
-<footer>
-	<p>© 2017-2019, all rights reserved.</a>
-</footer>
+  
+
 </body>
-</html>
 
+</html>

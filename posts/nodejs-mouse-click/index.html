@@ -1,125 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>Nodejs 鼠标点击</title>
-	
-	
-	<meta name="description" content="">
-	<meta name="image" content="">
-	
-	<meta itemprop="name" content="Nodejs 鼠标点击">
-	<meta itemprop="description" content="">
-	<meta itemprop="image" content="">
-	
-	<meta name="og:title" content="Nodejs 鼠标点击">
-	<meta name="og:description" content="">
-	
-	<meta name="og:url" content="https://idreamshen.github.io/posts/nodejs-mouse-click/">
-	<meta name="og:site_name" content="Nodejs 鼠标点击">
-	<meta name="og:type" content="article">
-	
-	<meta name="article:tag" content="">
-	<link rel="stylesheet" type="text/css" href="https://idreamshen.github.io/css/style.css">
-	
-	
-<script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-49492756-1', 'auto');
-ga('send', 'pageview');
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/nodejs-mouse-click/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/nodejs-mouse-click/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "Nodejs 鼠标点击",
+      "headline" : "Nodejs 鼠标点击",
+      "description" : "今天玩 Clicker Heroes 的时候点鼠标点的累死,要是 mac 下也有个按键精灵就好了.在网上搜索一番后,找到了 robotjs 这个库,正和我意!\n于是,三行鼠标左键连点代码就有了.\nvar robot = require(\u0026#34;robotjs\u0026#34;); robot.setMouseDelay(80); while (true) robot.mouseClick(); 可以轻轻松松在 Clicker Heroes 中刷刷刷啦.\nrobotjs 的 wiki 可以查阅: https:\/\/github.com\/octalmage\/robotjs",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2016",
+      "datePublished": "2016-02-16 19:53:47 \u002b0800 CST",
+      "dateModified" : "2016-02-16 19:53:47 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/nodejs-mouse-click\/",
+      "keywords" : [  ]
+  }
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<title>Nodejs 鼠标点击 - ChenHsingYu</title>
+  <meta property="og:title" content="Nodejs 鼠标点击 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="今天玩 Clicker Heroes 的时候点鼠标点的累死,要是 mac 下也有个按键精灵就好了.在网上搜索一番后,找到了 robotjs 这个库,正和我意!
+于是,三行鼠标左键连点代码就有了.
+var robot = require(&#34;robotjs&#34;); robot.setMouseDelay(80); while (true) robot.mouseClick(); 可以轻轻松松在 Clicker Heroes 中刷刷刷啦.
+robotjs 的 wiki 可以查阅: https://github.com/octalmage/robotjs" />
+  <meta name="description" content="今天玩 Clicker Heroes 的时候点鼠标点的累死,要是 mac 下也有个按键精灵就好了.在网上搜索一番后,找到了 robotjs 这个库,正和我意!
+于是,三行鼠标左键连点代码就有了.
+var robot = require(&#34;robotjs&#34;); robot.setMouseDelay(80); while (true) robot.mouseClick(); 可以轻轻松松在 Clicker Heroes 中刷刷刷啦.
+robotjs 的 wiki 可以查阅: https://github.com/octalmage/robotjs" />
+  <meta property="og:locale" content="zh-cn" />
 
-	
-	<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/styles/default.min.css">
-	<script 	src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.12.0/build/highlight.min.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
 
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
 </head>
 
 <body>
-
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
 <header>
-	
-	<a href="https://idreamshen.github.io/" style="float: left;color:#777;"><strong>ChenHsingYu</strong></a>
-	
-	&nbsp;&nbsp;<a href="https://idreamshen.github.io/archives/" style="color:#777;"><strong>归档</strong></a>&nbsp;&nbsp;<a href="https://idreamshen.github.io/about/" style="color:#777;"><strong>关于</strong></a>
-	
-	
-	
-	<a href="https://idreamshen.github.io/index.xml" style="color:#777;float: right;"><strong><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></strong></a>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
 </header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
 
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Nodejs 鼠标点击</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2016-02-16 19:53:47 CST">
+                16 Feb 2016
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
 
-<script>
-function fadeOut(el) {
-  el.style.opacity = 1;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity - (new Date() - last) / 80;
-    last = +new Date();
-    
-
-    if (el.style.opacity > 0) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    } else {
-      el.style.display='none';
-    }
-  };
-
-  tick();
-}
-
-function ready(fn) {
-    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
-        var elements = document.querySelectorAll("img");
-        Array.prototype.forEach.call(elements, function(el, i) {
-            if (el.getAttribute("alt")) {
-                const caption = document.createElement('figcaption');
-                var node = document.createTextNode(el.getAttribute("alt"));
-                caption.appendChild(node);
-                const wrapper = document.createElement('figure');
-                wrapper.className = 'image';
-                el.parentNode.insertBefore(wrapper, el);
-                el.parentNode.removeChild(el);
-                wrapper.appendChild(el);
-                wrapper.appendChild(caption);
-            }
-        });
-
-    } else {
-        document.addEventListener('DOMContentLoaded', fn);
-    }
-}
-window.onload = ready;
-</script>
-
-<div class="content">
-  <h1>Nodejs 鼠标点击 <aside></aside></h1>
-  <p>今天玩 Clicker Heroes 的时候点鼠标点的累死,要是 mac 下也有个按键精灵就好了.在网上搜索一番后,找到了 robotjs 这个库,正和我意!</p>
-
+        <div class="post-content markdown-body">
+          
+          <p>今天玩 Clicker Heroes 的时候点鼠标点的累死,要是 mac 下也有个按键精灵就好了.在网上搜索一番后,找到了 robotjs 这个库,正和我意!</p>
 <p>于是,三行鼠标左键连点代码就有了.</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">var robot = require(&#34;robotjs&#34;);
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">var robot = require(&#34;robotjs&#34;);
 
 robot.setMouseDelay(80);
 
-while (true) robot.mouseClick();</pre></div>
-<p>可以轻轻松松在 Clicker Heroes 中刷刷刷啦.</p>
-
+while (true) robot.mouseClick();
+</code></pre></div><p>可以轻轻松松在 Clicker Heroes 中刷刷刷啦.</p>
 <p>robotjs 的 wiki 可以查阅: <a href="https://github.com/octalmage/robotjs">https://github.com/octalmage/robotjs</a></p>
 
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  
 </div>
 
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
 
 
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
 
-<footer>
-	<p>© 2017-2019, all rights reserved.</a>
-</footer>
+  
+
 </body>
-</html>
 
+</html>
