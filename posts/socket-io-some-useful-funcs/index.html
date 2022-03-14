@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.74.3" />
+  <meta name="generator" content="Hugo 0.88.1" />
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,7 +58,7 @@
   
   
 
-  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49492756-1"></script>
 </head>
 
 <body>
@@ -101,7 +101,7 @@
           
           <h3 id="iouse">io.use</h3>
 <p>注册中间件。看一下下面的这个例子</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
 </span><span style="color:#408080;font-style:italic"></span>
 <span style="color:#408080;font-style:italic">/** 注册中间件 **/</span>
@@ -123,7 +123,7 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
     <span style="color:#408080;font-style:italic">// 服务器收到客户端发来的消息
 </span><span style="color:#408080;font-style:italic"></span>  });
 });
-</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端代码
+</code></pre></div><div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script src<span style="color:#666">=</span><span style="color:#ba2121">&#39;/socket.io/socket.io.js&#39;</span><span style="color:#666">&gt;&lt;</span><span style="color:#b68">/script&gt; /</span><span style="color:#666">/</span> 加载 socket.io.js
 <span style="color:#666">&lt;</span>script<span style="color:#666">&gt;</span>
   <span style="color:#008000;font-weight:bold">var</span> socket <span style="color:#666">=</span> io(<span style="color:#ba2121">&#39;http://localhost&#39;</span>, {query<span style="color:#666">:</span> <span style="color:#ba2121">&#39;password=654321&#39;</span>}); <span style="color:#408080;font-style:italic">// 实例化并连接到 socket 服务器，传入密码参数
@@ -137,7 +137,7 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
 <span style="color:#666">&lt;</span><span style="">/script&gt;</span>
 </code></pre></div><p>可以看到，当客户端尝试连接服务器时，因为传入的密码是 654321，导致服务端的中间件认证失败，触发客户端的 error 事件。客户端代码第 8 行会打印出“密码错误”这几个字。</p>
 <p>注意服务端代码中第 9 行的 return 不能省略。</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
 </span><span style="color:#408080;font-style:italic"></span>
 <span style="color:#408080;font-style:italic">/** 注册中间件 **/</span>
@@ -149,7 +149,7 @@ io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, nex
 </span><span style="color:#408080;font-style:italic"></span>  next(<span style="color:#008000;font-weight:bold">new</span> <span style="color:#008000">Error</span>(<span style="color:#ba2121">&#39;密码错误&#39;</span>)); <span style="color:#408080;font-style:italic">// 如果密码错误，则抛出异常
 </span><span style="color:#408080;font-style:italic"></span>});
 </code></pre></div><p>注意第 9 行，如果省略 return，则会导致第 10 行代码也被执行。可以将代码修改成下面的更易理解</p>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端代码
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)(); <span style="color:#408080;font-style:italic">// 引用 socket.io 库并实例化
 </span><span style="color:#408080;font-style:italic"></span>
 <span style="color:#408080;font-style:italic">/** 注册中间件 **/</span>
@@ -164,7 +164,7 @@ io.use(<span style="color:#008000;font-weight:bold">function</span> (socket, nex
 </span><span style="color:#408080;font-style:italic"></span>  }
 });
 </code></pre></div><h3 id="ack-模式">ACK 模式</h3>
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 服务端
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">var</span> io <span style="color:#666">=</span> require(<span style="color:#ba2121">&#39;socket.io&#39;</span>)();
 
 io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> (socket) {
@@ -175,7 +175,7 @@ io.on(<span style="color:#ba2121">&#39;connection&#39;</span>, <span style="colo
     io.emit(<span style="color:#ba2121">&#39;chat&#39;</span>, msg);
   });
 });
-</code></pre></div><div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端
+</code></pre></div><div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#408080;font-style:italic">// 客户端
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#666">&lt;</span>script<span style="color:#666">&gt;</span>
   <span style="color:#008000;font-weight:bold">var</span> socket <span style="color:#666">=</span> io();
   socket.on(<span style="color:#ba2121">&#39;connect&#39;</span>, <span style="color:#008000;font-weight:bold">function</span> () {

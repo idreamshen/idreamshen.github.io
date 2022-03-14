@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.74.3" />
+  <meta name="generator" content="Hugo 0.88.1" />
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -68,7 +68,7 @@ Host github." />
   
   
 
-  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49492756-1"></script>
 </head>
 
 <body>
@@ -128,7 +128,7 @@ Host github." />
 </li>
 </ul>
 <div class="src src-sh">
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ssh -T git@github.com
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ssh -T git@github.com
 
 kex_exchange_identification: Connection closed by remote host</code></pre></div>
 </div>
@@ -149,7 +149,7 @@ kex_exchange_identification: Connection closed by remote host</code></pre></div>
 <div id="outline-text-headline-3" class="outline-text-2">
 <p>将 Github 的连接端口从 22 改为 443 即可。修改 <code class="verbatim">~/.ssh/config</code> ，添加如下段落即可</p>
 <div class="src src-sh">
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">Host github.com
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">Host github.com
     HostName ssh.github.com
     User git
     Port <span style="color:#666">443</span></code></pre></div>
@@ -162,7 +162,7 @@ kex_exchange_identification: Connection closed by remote host</code></pre></div>
 </h2>
 <div id="outline-text-headline-4" class="outline-text-2">
 <div class="src src-sh">
-<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ssh -T git@github.com
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ssh -T git@github.com
 
 Hi xxx! You<span style="">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.</code></pre></div>
 </div>
