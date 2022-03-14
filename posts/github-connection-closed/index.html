@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.74.3" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/github-connection-closed/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/github-connection-closed/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "Github Clone: Connection closed by remote host",
+      "headline" : "Github Clone: Connection closed by remote host",
+      "description" : "背景  今天尝试克隆 Github 仓库时遇到了诡异的报措 kex_exchange_identification: Connection closed by remote host 。随即做如下检查：\n  Github 平台与本地的 ssh key 均配置正常\n  本地 ~\/.ssh\/config~ 中没有开启 proxy 代理配置\n  执行命令 ssh -T git@github.com 返回如下结果\n  $ ssh -T git@github.com kex_exchange_identification: Connection closed by remote host    原因  家中使用的梯子封禁了 Github 端口 22 的连接\n  解决  将 Github 的连接端口从 22 改为 443 即可。修改 ~\/.ssh\/config ，添加如下段落即可\nHost github.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2022",
+      "datePublished": "2022-03-14 12:12:02 \u002b0800 CST",
+      "dateModified" : "2022-03-14 12:12:02 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/github-connection-closed\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Github Clone: Connection closed by remote host - ChenHsingYu</title>
+  <meta property="og:title" content="Github Clone: Connection closed by remote host - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="背景  今天尝试克隆 Github 仓库时遇到了诡异的报措 kex_exchange_identification: Connection closed by remote host 。随即做如下检查：
+  Github 平台与本地的 ssh key 均配置正常
+  本地 ~/.ssh/config~ 中没有开启 proxy 代理配置
+  执行命令 ssh -T git@github.com 返回如下结果
+  $ ssh -T git@github.com kex_exchange_identification: Connection closed by remote host    原因  家中使用的梯子封禁了 Github 端口 22 的连接
+  解决  将 Github 的连接端口从 22 改为 443 即可。修改 ~/.ssh/config ，添加如下段落即可
+Host github." />
+  <meta name="description" content="背景  今天尝试克隆 Github 仓库时遇到了诡异的报措 kex_exchange_identification: Connection closed by remote host 。随即做如下检查：
+  Github 平台与本地的 ssh key 均配置正常
+  本地 ~/.ssh/config~ 中没有开启 proxy 代理配置
+  执行命令 ssh -T git@github.com 返回如下结果
+  $ ssh -T git@github.com kex_exchange_identification: Connection closed by remote host    原因  家中使用的梯子封禁了 Github 端口 22 的连接
+  解决  将 Github 的连接端口从 22 改为 443 即可。修改 ~/.ssh/config ，添加如下段落即可
+Host github." />
+  <meta property="og:locale" content="zh-cn" />
+
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  
+</head>
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
+</header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Github Clone: Connection closed by remote host</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2022-03-14 12:12:02 CST">
+                14 Mar 2022
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+背景
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>今天尝试克隆 Github 仓库时遇到了诡异的报措 <code>kex_exchange_identification: Connection closed by remote host</code> 。随即做如下检查：</p>
+<ul>
+<li>
+<p>Github 平台与本地的 <code>ssh key</code> 均配置正常</p>
+</li>
+<li>
+<p>本地 <code class="verbatim">~/.ssh/config~</code> 中没有开启 <code class="verbatim">proxy</code> 代理配置</p>
+</li>
+<li>
+<p>执行命令 <code>ssh -T git@github.com</code> 返回如下结果</p>
+</li>
+</ul>
+<div class="src src-sh">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ssh -T git@github.com
+
+kex_exchange_identification: Connection closed by remote host</code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+原因
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>家中使用的梯子封禁了 Github 端口 22 的连接</p>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+解决
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<p>将 Github 的连接端口从 22 改为 443 即可。修改 <code class="verbatim">~/.ssh/config</code> ，添加如下段落即可</p>
+<div class="src src-sh">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">Host github.com
+    HostName ssh.github.com
+    User git
+    Port <span style="color:#666">443</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-2">
+<h2 id="headline-4">
+验证
+</h2>
+<div id="outline-text-headline-4" class="outline-text-2">
+<div class="src src-sh">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ ssh -T git@github.com
+
+Hi xxx! You<span style="">&#39;</span>ve successfully authenticated, but GitHub does not provide shell access.</code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+参考资料
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<ul>
+<li>
+<p><a href="https://www.v2ex.com/t/807649">ssh github 突然报 Connection closed？</a></p>
+</li>
+<li>
+<p><a href="https://docs.github.com/cn/authentication/troubleshooting-ssh/using-ssh-over-the-https-port">在 HTTPS 端口使用 SSH</a></p>
+</li>
+</ul>
+</div>
+</div>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  <div class="site-footer-item">
+    <a href="mailto:idream.shen@gmail.com" target="_blank">Email</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>
