@@ -6,7 +6,20 @@
     <description>Recent content in Posts on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 14 Mar 2022 12:12:02 +0800</lastBuildDate><atom:link href="https://idreamshen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 16 Mar 2022 21:47:49 +0800</lastBuildDate><atom:link href="https://idreamshen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 Node-Red 对 Volvo On Call 的地理位置纠偏</title>
+      <link>https://idreamshen.github.io/posts/homeassistant-node-red-fix-car-gps/</link>
+      <pubDate>Wed, 16 Mar 2022 21:47:49 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/homeassistant-node-red-fix-car-gps/</guid>
+      <description>背景  最近在 Home Assistant 中接入了官方集成 Volvo On Call，确实能很方便的获取车辆各种信息以及控制车辆。但有一个问题就是 Volvo On Call 上传的地理坐标是 GCJ-02 火星坐标系，而 Home Assistant 使用的是 WGS84 坐标系，这会导致 Volvo 车辆的坐标产生偏离，比如判定车辆是否在家中都会产生问题。
+  解决方案  大致流程    在 Home Assistant 生成一个新的 device tracker
+  使用 node-red 轮询 volvo on call 上报的坐标，并经过 js 脚本转换坐标，再调用 device_tracker.see 服务更新第1步中的 device tracker 坐标
+  使用第1步中的 device tracker 作为实体在 Home Assistant 中进行地理距离的判定运算等
+    详细步骤    在 /config/configuration.</description>
+    </item>
+    
     <item>
       <title>Github Clone: Connection closed by remote host</title>
       <link>https://idreamshen.github.io/posts/github-connection-closed/</link>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.88.1" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://idreamshen.github.io/posts/homeassistant-node-red-fix-car-gps/" />
+  <link rel="canonical" href="https://idreamshen.github.io/posts/homeassistant-node-red-fix-car-gps/" /><link rel="alternate" type="application/atom+xml" href="https://idreamshen.github.io/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/idreamshen.github.io\/"
+      },
+      "articleSection" : "posts",
+      "name" : "使用 Node-Red 对 Volvo On Call 的地理位置纠偏",
+      "headline" : "使用 Node-Red 对 Volvo On Call 的地理位置纠偏",
+      "description" : "背景  最近在 Home Assistant 中接入了官方集成 Volvo On Call，确实能很方便的获取车辆各种信息以及控制车辆。但有一个问题就是 Volvo On Call 上传的地理坐标是 GCJ-02 火星坐标系，而 Home Assistant 使用的是 WGS84 坐标系，这会导致 Volvo 车辆的坐标产生偏离，比如判定车辆是否在家中都会产生问题。\n  解决方案  大致流程    在 Home Assistant 生成一个新的 device tracker\n  使用 node-red 轮询 volvo on call 上报的坐标，并经过 js 脚本转换坐标，再调用 device_tracker.see 服务更新第1步中的 device tracker 坐标\n  使用第1步中的 device tracker 作为实体在 Home Assistant 中进行地理距离的判定运算等\n    详细步骤    在 \/config\/configuration.",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2022",
+      "datePublished": "2022-03-16 21:47:49 \u002b0800 CST",
+      "dateModified" : "2022-03-16 21:47:49 \u002b0800 CST",
+      "url" : "https:\/\/idreamshen.github.io\/posts\/homeassistant-node-red-fix-car-gps\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>使用 Node-Red 对 Volvo On Call 的地理位置纠偏 - ChenHsingYu</title>
+  <meta property="og:title" content="使用 Node-Red 对 Volvo On Call 的地理位置纠偏 - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="背景  最近在 Home Assistant 中接入了官方集成 Volvo On Call，确实能很方便的获取车辆各种信息以及控制车辆。但有一个问题就是 Volvo On Call 上传的地理坐标是 GCJ-02 火星坐标系，而 Home Assistant 使用的是 WGS84 坐标系，这会导致 Volvo 车辆的坐标产生偏离，比如判定车辆是否在家中都会产生问题。
+  解决方案  大致流程    在 Home Assistant 生成一个新的 device tracker
+  使用 node-red 轮询 volvo on call 上报的坐标，并经过 js 脚本转换坐标，再调用 device_tracker.see 服务更新第1步中的 device tracker 坐标
+  使用第1步中的 device tracker 作为实体在 Home Assistant 中进行地理距离的判定运算等
+    详细步骤    在 /config/configuration." />
+  <meta name="description" content="背景  最近在 Home Assistant 中接入了官方集成 Volvo On Call，确实能很方便的获取车辆各种信息以及控制车辆。但有一个问题就是 Volvo On Call 上传的地理坐标是 GCJ-02 火星坐标系，而 Home Assistant 使用的是 WGS84 坐标系，这会导致 Volvo 车辆的坐标产生偏离，比如判定车辆是否在家中都会产生问题。
+  解决方案  大致流程    在 Home Assistant 生成一个新的 device tracker
+  使用 node-red 轮询 volvo on call 上报的坐标，并经过 js 脚本转换坐标，再调用 device_tracker.see 服务更新第1步中的 device tracker 坐标
+  使用第1步中的 device tracker 作为实体在 Home Assistant 中进行地理距离的判定运算等
+    详细步骤    在 /config/configuration." />
+  <meta property="og:locale" content="zh-cn" />
+
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49492756-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-49492756-1");</script>
+</head>
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
+</header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">使用 Node-Red 对 Volvo On Call 的地理位置纠偏</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2022-03-16 21:47:49 CST">
+                16 Mar 2022
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+背景
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>最近在 Home Assistant 中接入了官方集成 Volvo On Call，确实能很方便的获取车辆各种信息以及控制车辆。但有一个问题就是 Volvo On Call 上传的地理坐标是 GCJ-02 火星坐标系，而 Home Assistant 使用的是 WGS84 坐标系，这会导致 Volvo 车辆的坐标产生偏离，比如判定车辆是否在家中都会产生问题。</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+解决方案
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+大致流程
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<ol>
+<li>
+<p>在 Home Assistant 生成一个新的 <code class="verbatim">device tracker</code></p>
+</li>
+<li>
+<p>使用 node-red 轮询 volvo on call 上报的坐标，并经过 js 脚本转换坐标，再调用 <code class="verbatim">device_tracker.see</code> 服务更新第1步中的 <code class="verbatim">device tracker</code> 坐标</p>
+</li>
+<li>
+<p>使用第1步中的 <code class="verbatim">device tracker</code> 作为实体在 Home Assistant 中进行地理距离的判定运算等</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+详细步骤
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<ol>
+<li>
+<p>在 <code class="verbatim">/config/configuration.yaml</code> 中新增 volvooncall 配置。更多参考<a href="https://www.home-assistant.io/integrations/volvooncall/">官方教程</a>。</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvooncall</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">username</span>:<span style="color:#bbb"> </span>!secret volvooncall_username<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">password</span>:<span style="color:#bbb"> </span>!secret volvooncall_password<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">region</span>:<span style="color:#bbb"> </span>cn</code></pre></div>
+</div>
+</li>
+<li>
+<p>重启 Home Assistant 使 <code class="verbatim">volvooncall</code> 集成生效，并观察 <code class="verbatim">/config/known_devices.yaml</code> 中是否多了一个 <code class="verbatim">volvo_xxxx</code> 自动生成的配置，如下</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvo_xxxxxx</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">name</span>:<span style="color:#bbb"> </span>xxxxxx<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">mac</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">icon</span>:<span style="color:#bbb"> </span>mdi:car<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">picture</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">track</span>:<span style="color:#bbb"> </span><span style="color:#008000;font-weight:bold">true</span></code></pre></div>
+</div>
+</li>
+<li>
+<p>在 <code class="verbatim">/config/known_devices.yaml</code> 中手动新增一个配置（将用于代替上方的 <code class="verbatim">volvo_xxxxxx</code> )</p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvo_car</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Volvo Car<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">mac</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">icon</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">track</span>:<span style="color:#bbb"> </span><span style="color:#008000;font-weight:bold">true</span></code></pre></div>
+</div>
+</li>
+<li>
+<p>重启 Home Assistant，此时你应该能在 <code class="verbatim">开发者工具</code> 中找到第3步手动生成的新实体 <code class="verbatim">device_tracker.volvo_car</code></p>
+<div class="src src-yaml">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">source_type</span>:<span style="color:#bbb"> </span><span style="color:#008000;font-weight:bold">null</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">friendly_name</span>:<span style="color:#bbb"> </span>Volvo Car</code></pre></div>
+</div>
+<p>
+<img src="/image/volvo-car-before-update-gps.png" alt="/image/volvo-car-before-update-gps.png" title="/image/volvo-car-before-update-gps.png" /></p>
+</li>
+<li>
+<p>打开 <code class="verbatim">Node-RED</code> 配置页面，接下来进行相关配置</p>
+</li>
+<li>
+<p>新增一个 <code class="verbatim">poll state</code> 节点，用于获取第2步中的 <code class="verbatim">volvo_xxxxxx</code> 地理坐标
+<img src="/image/volvo-car-node-red-poll-state.png" alt="/image/volvo-car-node-red-poll-state.png" title="/image/volvo-car-node-red-poll-state.png" /></p>
+</li>
+<li>
+<p>新增一个 <code class="verbatim">function</code> 节点，用于计算新的地理坐标，并在 <code class="verbatim">函数</code> 中输入如下代码
+<img src="/image/volvo-car-node-red-function.png" alt="/image/volvo-car-node-red-function.png" title="/image/volvo-car-node-red-function.png" /></p>
+<div class="src src-js">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">var</span> x_PI <span style="color:#666">=</span> <span style="color:#666">3.14159265358979324</span> <span style="color:#666">*</span> <span style="color:#666">3000.0</span> <span style="color:#666">/</span> <span style="color:#666">180.0</span>;
+<span style="color:#008000;font-weight:bold">var</span> PI <span style="color:#666">=</span> <span style="color:#666">3.1415926535897932384626</span>;
+<span style="color:#008000;font-weight:bold">var</span> a <span style="color:#666">=</span> <span style="color:#666">6378245.0</span>;
+<span style="color:#008000;font-weight:bold">var</span> ee <span style="color:#666">=</span> <span style="color:#666">0.00669342162296594323</span>;
+<span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> ,* 百度坐标系 (BD-09) 与 火星坐标系 (GCJ-02) 的转换
+</span><span style="color:#408080;font-style:italic"> ,* 即 百度 转 谷歌、高德
+</span><span style="color:#408080;font-style:italic"> ,* @param bd_lng
+</span><span style="color:#408080;font-style:italic"> ,* @param bd_lat
+</span><span style="color:#408080;font-style:italic"> ,* @returns {*[]}
+</span><span style="color:#408080;font-style:italic"> ,*/</span>
+<span style="color:#008000;font-weight:bold">var</span> bd09togcj02 <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> bd09togcj02(bd_lng, bd_lat) {
+    <span style="color:#008000;font-weight:bold">var</span> bd_lng <span style="color:#666">=</span> <span style="color:#666">+</span>bd_lng;
+    <span style="color:#008000;font-weight:bold">var</span> bd_lat <span style="color:#666">=</span> <span style="color:#666">+</span>bd_lat;
+    <span style="color:#008000;font-weight:bold">var</span> x <span style="color:#666">=</span> bd_lng <span style="color:#666">-</span> <span style="color:#666">0.0065</span>;
+    <span style="color:#008000;font-weight:bold">var</span> y <span style="color:#666">=</span> bd_lat <span style="color:#666">-</span> <span style="color:#666">0.006</span>;
+    <span style="color:#008000;font-weight:bold">var</span> z <span style="color:#666">=</span> <span style="color:#008000">Math</span>.sqrt(x <span style="color:#666">*</span> x <span style="color:#666">+</span> y <span style="color:#666">*</span> y) <span style="color:#666">-</span> <span style="color:#666">0.00002</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(y <span style="color:#666">*</span> x_PI);
+    <span style="color:#008000;font-weight:bold">var</span> theta <span style="color:#666">=</span> <span style="color:#008000">Math</span>.atan2(y, x) <span style="color:#666">-</span> <span style="color:#666">0.000003</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.cos(x <span style="color:#666">*</span> x_PI);
+    <span style="color:#008000;font-weight:bold">var</span> gg_lng <span style="color:#666">=</span> z <span style="color:#666">*</span> <span style="color:#008000">Math</span>.cos(theta);
+    <span style="color:#008000;font-weight:bold">var</span> gg_lat <span style="color:#666">=</span> z <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(theta);
+    <span style="color:#008000;font-weight:bold">return</span> [gg_lng, gg_lat]
+};
+
+<span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> ,* 火星坐标系 (GCJ-02) 与百度坐标系 (BD-09) 的转换
+</span><span style="color:#408080;font-style:italic"> ,* 即 谷歌、高德 转 百度
+</span><span style="color:#408080;font-style:italic"> ,* @param lng
+</span><span style="color:#408080;font-style:italic"> ,* @param lat
+</span><span style="color:#408080;font-style:italic"> ,* @returns {*[]}
+</span><span style="color:#408080;font-style:italic"> ,*/</span>
+<span style="color:#008000;font-weight:bold">var</span> gcj02tobd09 <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> gcj02tobd09(lng, lat) {
+    <span style="color:#008000;font-weight:bold">var</span> lat <span style="color:#666">=</span> <span style="color:#666">+</span>lat;
+    <span style="color:#008000;font-weight:bold">var</span> lng <span style="color:#666">=</span> <span style="color:#666">+</span>lng;
+    <span style="color:#008000;font-weight:bold">var</span> z <span style="color:#666">=</span> <span style="color:#008000">Math</span>.sqrt(lng <span style="color:#666">*</span> lng <span style="color:#666">+</span> lat <span style="color:#666">*</span> lat) <span style="color:#666">+</span> <span style="color:#666">0.00002</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lat <span style="color:#666">*</span> x_PI);
+    <span style="color:#008000;font-weight:bold">var</span> theta <span style="color:#666">=</span> <span style="color:#008000">Math</span>.atan2(lat, lng) <span style="color:#666">+</span> <span style="color:#666">0.000003</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.cos(lng <span style="color:#666">*</span> x_PI);
+    <span style="color:#008000;font-weight:bold">var</span> bd_lng <span style="color:#666">=</span> z <span style="color:#666">*</span> <span style="color:#008000">Math</span>.cos(theta) <span style="color:#666">+</span> <span style="color:#666">0.0065</span>;
+    <span style="color:#008000;font-weight:bold">var</span> bd_lat <span style="color:#666">=</span> z <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(theta) <span style="color:#666">+</span> <span style="color:#666">0.006</span>;
+    <span style="color:#008000;font-weight:bold">return</span> [bd_lng, bd_lat]
+};
+
+<span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> ,* WGS-84 转 GCJ-02
+</span><span style="color:#408080;font-style:italic"> ,* @param lng
+</span><span style="color:#408080;font-style:italic"> ,* @param lat
+</span><span style="color:#408080;font-style:italic"> ,* @returns {*[]}
+</span><span style="color:#408080;font-style:italic"> ,*/</span>
+<span style="color:#008000;font-weight:bold">var</span> wgs84togcj02 <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> wgs84togcj02(lng, lat) {
+    <span style="color:#008000;font-weight:bold">var</span> lat <span style="color:#666">=</span> <span style="color:#666">+</span>lat;
+    <span style="color:#008000;font-weight:bold">var</span> lng <span style="color:#666">=</span> <span style="color:#666">+</span>lng;
+    <span style="color:#008000;font-weight:bold">if</span> (out_of_china(lng, lat)) {
+        <span style="color:#008000;font-weight:bold">return</span> [lng, lat]
+    } <span style="color:#008000;font-weight:bold">else</span> {
+        <span style="color:#008000;font-weight:bold">var</span> dlat <span style="color:#666">=</span> transformlat(lng <span style="color:#666">-</span> <span style="color:#666">105.0</span>, lat <span style="color:#666">-</span> <span style="color:#666">35.0</span>);
+        <span style="color:#008000;font-weight:bold">var</span> dlng <span style="color:#666">=</span> transformlng(lng <span style="color:#666">-</span> <span style="color:#666">105.0</span>, lat <span style="color:#666">-</span> <span style="color:#666">35.0</span>);
+        <span style="color:#008000;font-weight:bold">var</span> radlat <span style="color:#666">=</span> lat <span style="color:#666">/</span> <span style="color:#666">180.0</span> <span style="color:#666">*</span> PI;
+        <span style="color:#008000;font-weight:bold">var</span> magic <span style="color:#666">=</span> <span style="color:#008000">Math</span>.sin(radlat);
+        magic <span style="color:#666">=</span> <span style="color:#666">1</span> <span style="color:#666">-</span> ee <span style="color:#666">*</span> magic <span style="color:#666">*</span> magic;
+        <span style="color:#008000;font-weight:bold">var</span> sqrtmagic <span style="color:#666">=</span> <span style="color:#008000">Math</span>.sqrt(magic);
+        dlat <span style="color:#666">=</span> (dlat <span style="color:#666">*</span> <span style="color:#666">180.0</span>) <span style="color:#666">/</span> ((a <span style="color:#666">*</span> (<span style="color:#666">1</span> <span style="color:#666">-</span> ee)) <span style="color:#666">/</span> (magic <span style="color:#666">*</span> sqrtmagic) <span style="color:#666">*</span> PI);
+        dlng <span style="color:#666">=</span> (dlng <span style="color:#666">*</span> <span style="color:#666">180.0</span>) <span style="color:#666">/</span> (a <span style="color:#666">/</span> sqrtmagic <span style="color:#666">*</span> <span style="color:#008000">Math</span>.cos(radlat) <span style="color:#666">*</span> PI);
+        <span style="color:#008000;font-weight:bold">var</span> mglat <span style="color:#666">=</span> lat <span style="color:#666">+</span> dlat;
+        <span style="color:#008000;font-weight:bold">var</span> mglng <span style="color:#666">=</span> lng <span style="color:#666">+</span> dlng;
+        <span style="color:#008000;font-weight:bold">return</span> [mglng, mglat]
+    }
+};
+
+<span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> ,* GCJ-02 转换为 WGS-84
+</span><span style="color:#408080;font-style:italic"> ,* @param lng
+</span><span style="color:#408080;font-style:italic"> ,* @param lat
+</span><span style="color:#408080;font-style:italic"> ,* @returns {*[]}
+</span><span style="color:#408080;font-style:italic"> ,*/</span>
+<span style="color:#008000;font-weight:bold">var</span> gcj02towgs84 <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> gcj02towgs84(lng, lat) {
+    <span style="color:#008000;font-weight:bold">var</span> lat <span style="color:#666">=</span> <span style="color:#666">+</span>lat;
+    <span style="color:#008000;font-weight:bold">var</span> lng <span style="color:#666">=</span> <span style="color:#666">+</span>lng;
+    <span style="color:#008000;font-weight:bold">if</span> (out_of_china(lng, lat)) {
+        <span style="color:#008000;font-weight:bold">return</span> [lng, lat]
+    } <span style="color:#008000;font-weight:bold">else</span> {
+        <span style="color:#008000;font-weight:bold">var</span> dlat <span style="color:#666">=</span> transformlat(lng <span style="color:#666">-</span> <span style="color:#666">105.0</span>, lat <span style="color:#666">-</span> <span style="color:#666">35.0</span>);
+        <span style="color:#008000;font-weight:bold">var</span> dlng <span style="color:#666">=</span> transformlng(lng <span style="color:#666">-</span> <span style="color:#666">105.0</span>, lat <span style="color:#666">-</span> <span style="color:#666">35.0</span>);
+        <span style="color:#008000;font-weight:bold">var</span> radlat <span style="color:#666">=</span> lat <span style="color:#666">/</span> <span style="color:#666">180.0</span> <span style="color:#666">*</span> PI;
+        <span style="color:#008000;font-weight:bold">var</span> magic <span style="color:#666">=</span> <span style="color:#008000">Math</span>.sin(radlat);
+        magic <span style="color:#666">=</span> <span style="color:#666">1</span> <span style="color:#666">-</span> ee <span style="color:#666">*</span> magic <span style="color:#666">*</span> magic;
+        <span style="color:#008000;font-weight:bold">var</span> sqrtmagic <span style="color:#666">=</span> <span style="color:#008000">Math</span>.sqrt(magic);
+        dlat <span style="color:#666">=</span> (dlat <span style="color:#666">*</span> <span style="color:#666">180.0</span>) <span style="color:#666">/</span> ((a <span style="color:#666">*</span> (<span style="color:#666">1</span> <span style="color:#666">-</span> ee)) <span style="color:#666">/</span> (magic <span style="color:#666">*</span> sqrtmagic) <span style="color:#666">*</span> PI);
+        dlng <span style="color:#666">=</span> (dlng <span style="color:#666">*</span> <span style="color:#666">180.0</span>) <span style="color:#666">/</span> (a <span style="color:#666">/</span> sqrtmagic <span style="color:#666">*</span> <span style="color:#008000">Math</span>.cos(radlat) <span style="color:#666">*</span> PI);
+        <span style="color:#008000;font-weight:bold">var</span> mglat <span style="color:#666">=</span> lat <span style="color:#666">+</span> dlat;
+        <span style="color:#008000;font-weight:bold">var</span> mglng <span style="color:#666">=</span> lng <span style="color:#666">+</span> dlng;
+        <span style="color:#008000;font-weight:bold">return</span> [lng <span style="color:#666">*</span> <span style="color:#666">2</span> <span style="color:#666">-</span> mglng, lat <span style="color:#666">*</span> <span style="color:#666">2</span> <span style="color:#666">-</span> mglat]
+    }
+};
+
+<span style="color:#008000;font-weight:bold">var</span> transformlat <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> transformlat(lng, lat) {
+    <span style="color:#008000;font-weight:bold">var</span> lat <span style="color:#666">=</span> <span style="color:#666">+</span>lat;
+    <span style="color:#008000;font-weight:bold">var</span> lng <span style="color:#666">=</span> <span style="color:#666">+</span>lng;
+    <span style="color:#008000;font-weight:bold">var</span> ret <span style="color:#666">=</span> <span style="color:#666">-</span><span style="color:#666">100.0</span> <span style="color:#666">+</span> <span style="color:#666">2.0</span> <span style="color:#666">*</span> lng <span style="color:#666">+</span> <span style="color:#666">3.0</span> <span style="color:#666">*</span> lat <span style="color:#666">+</span> <span style="color:#666">0.2</span> <span style="color:#666">*</span> lat <span style="color:#666">*</span> lat <span style="color:#666">+</span> <span style="color:#666">0.1</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> lat <span style="color:#666">+</span> <span style="color:#666">0.2</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sqrt(<span style="color:#008000">Math</span>.abs(lng));
+    ret <span style="color:#666">+=</span> (<span style="color:#666">20.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(<span style="color:#666">6.0</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> PI) <span style="color:#666">+</span> <span style="color:#666">20.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(<span style="color:#666">2.0</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> PI)) <span style="color:#666">*</span> <span style="color:#666">2.0</span> <span style="color:#666">/</span> <span style="color:#666">3.0</span>;
+    ret <span style="color:#666">+=</span> (<span style="color:#666">20.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lat <span style="color:#666">*</span> PI) <span style="color:#666">+</span> <span style="color:#666">40.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lat <span style="color:#666">/</span> <span style="color:#666">3.0</span> <span style="color:#666">*</span> PI)) <span style="color:#666">*</span> <span style="color:#666">2.0</span> <span style="color:#666">/</span> <span style="color:#666">3.0</span>;
+    ret <span style="color:#666">+=</span> (<span style="color:#666">160.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lat <span style="color:#666">/</span> <span style="color:#666">12.0</span> <span style="color:#666">*</span> PI) <span style="color:#666">+</span> <span style="color:#666">320</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lat <span style="color:#666">*</span> PI <span style="color:#666">/</span> <span style="color:#666">30.0</span>)) <span style="color:#666">*</span> <span style="color:#666">2.0</span> <span style="color:#666">/</span> <span style="color:#666">3.0</span>;
+    <span style="color:#008000;font-weight:bold">return</span> ret
+};
+
+<span style="color:#008000;font-weight:bold">var</span> transformlng <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> transformlng(lng, lat) {
+    <span style="color:#008000;font-weight:bold">var</span> lat <span style="color:#666">=</span> <span style="color:#666">+</span>lat;
+    <span style="color:#008000;font-weight:bold">var</span> lng <span style="color:#666">=</span> <span style="color:#666">+</span>lng;
+    <span style="color:#008000;font-weight:bold">var</span> ret <span style="color:#666">=</span> <span style="color:#666">300.0</span> <span style="color:#666">+</span> lng <span style="color:#666">+</span> <span style="color:#666">2.0</span> <span style="color:#666">*</span> lat <span style="color:#666">+</span> <span style="color:#666">0.1</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> lng <span style="color:#666">+</span> <span style="color:#666">0.1</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> lat <span style="color:#666">+</span> <span style="color:#666">0.1</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sqrt(<span style="color:#008000">Math</span>.abs(lng));
+    ret <span style="color:#666">+=</span> (<span style="color:#666">20.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(<span style="color:#666">6.0</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> PI) <span style="color:#666">+</span> <span style="color:#666">20.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(<span style="color:#666">2.0</span> <span style="color:#666">*</span> lng <span style="color:#666">*</span> PI)) <span style="color:#666">*</span> <span style="color:#666">2.0</span> <span style="color:#666">/</span> <span style="color:#666">3.0</span>;
+    ret <span style="color:#666">+=</span> (<span style="color:#666">20.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lng <span style="color:#666">*</span> PI) <span style="color:#666">+</span> <span style="color:#666">40.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lng <span style="color:#666">/</span> <span style="color:#666">3.0</span> <span style="color:#666">*</span> PI)) <span style="color:#666">*</span> <span style="color:#666">2.0</span> <span style="color:#666">/</span> <span style="color:#666">3.0</span>;
+    ret <span style="color:#666">+=</span> (<span style="color:#666">150.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lng <span style="color:#666">/</span> <span style="color:#666">12.0</span> <span style="color:#666">*</span> PI) <span style="color:#666">+</span> <span style="color:#666">300.0</span> <span style="color:#666">*</span> <span style="color:#008000">Math</span>.sin(lng <span style="color:#666">/</span> <span style="color:#666">30.0</span> <span style="color:#666">*</span> PI)) <span style="color:#666">*</span> <span style="color:#666">2.0</span> <span style="color:#666">/</span> <span style="color:#666">3.0</span>;
+    <span style="color:#008000;font-weight:bold">return</span> ret
+};
+
+<span style="color:#408080;font-style:italic">/**
+</span><span style="color:#408080;font-style:italic"> ,* 判断是否在国内，不在国内则不做偏移
+</span><span style="color:#408080;font-style:italic"> ,* @param lng
+</span><span style="color:#408080;font-style:italic"> ,* @param lat
+</span><span style="color:#408080;font-style:italic"> ,* @returns {boolean}
+</span><span style="color:#408080;font-style:italic"> ,*/</span>
+<span style="color:#008000;font-weight:bold">var</span> out_of_china <span style="color:#666">=</span> <span style="color:#008000;font-weight:bold">function</span> out_of_china(lng, lat) {
+    <span style="color:#008000;font-weight:bold">var</span> lat <span style="color:#666">=</span> <span style="color:#666">+</span>lat;
+    <span style="color:#008000;font-weight:bold">var</span> lng <span style="color:#666">=</span> <span style="color:#666">+</span>lng;
+    <span style="color:#408080;font-style:italic">// 纬度 3.86~53.55, 经度 73.66~135.05
+</span><span style="color:#408080;font-style:italic"></span>    <span style="color:#008000;font-weight:bold">return</span> <span style="color:#666">!</span>(lng <span style="color:#666">&gt;</span> <span style="color:#666">73.66</span> <span style="color:#666">&amp;&amp;</span> lng <span style="color:#666">&lt;</span> <span style="color:#666">135.05</span> <span style="color:#666">&amp;&amp;</span> lat <span style="color:#666">&gt;</span> <span style="color:#666">3.86</span> <span style="color:#666">&amp;&amp;</span> lat <span style="color:#666">&lt;</span> <span style="color:#666">53.55</span>);
+};
+
+<span style="color:#008000;font-weight:bold">var</span> newLocation <span style="color:#666">=</span> gcj02towgs84(msg.data.attributes.longitude, msg.data.attributes.latitude)
+
+msg.payload <span style="color:#666">=</span> {}
+msg.payload.longitude <span style="color:#666">=</span> newLocation[<span style="color:#666">0</span>]
+msg.payload.latitude <span style="color:#666">=</span> newLocation[<span style="color:#666">1</span>]
+
+<span style="color:#008000;font-weight:bold">return</span> msg;</code></pre></div>
+</div>
+</li>
+<li>
+<p>新增一个 <code class="verbatim">call service</code> 节点，用于更新第3步中手动创建的实体地理坐标</p>
+<pre class="example">
+Domain: device_tracker
+Service: see
+Data: {
+  &#34;dev_id&#34;:&#34;volvo_car&#34;,
+  &#34;gps&#34;:[payload.latitude, payload.longitude]
+}
+</pre>
+<p><img src="/image/volvo-car-node-red-call-service.png" alt="/image/volvo-car-node-red-call-service.png" title="/image/volvo-car-node-red-call-service.png" /></p>
+</li>
+<li>
+<p>将上述3个节点依次连接，并点击“部署”按钮
+<img src="/image/volvo-car-node-red-line.png" alt="/image/volvo-car-node-red-line.png" title="/image/volvo-car-node-red-line.png" /></p>
+</li>
+<li>
+<p>回到 Home Assistant 的“开发者工具”页面，搜索 <code class="verbatim">device_tracker.volvo_car</code> ，此时就能看到纠偏后的地理坐标
+<img src="/image/volvo-car-after-update-gps.png" alt="/image/volvo-car-after-update-gps.png" title="/image/volvo-car-after-update-gps.png" /></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-2">
+<h2 id="headline-5">
+附
+</h2>
+<div id="outline-text-headline-5" class="outline-text-2">
+<p><code class="verbatim">node-red</code> 一键导入</p>
+<div class="src src-js">
+<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">[
+    {
+        <span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;eaae412a3cb97052&#34;</span>,
+        <span style="color:#ba2121">&#34;type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;poll-state&#34;</span>,
+        <span style="color:#ba2121">&#34;z&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;b30b6133eb27f27e&#34;</span>,
+        <span style="color:#ba2121">&#34;name&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;server&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;fbec60d9.9bf86&#34;</span>,
+        <span style="color:#ba2121">&#34;version&#34;</span><span style="color:#666">:</span> <span style="color:#666">2</span>,
+        <span style="color:#ba2121">&#34;exposeToHomeAssistant&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
+        <span style="color:#ba2121">&#34;haConfig&#34;</span><span style="color:#666">:</span> [
+            {
+                <span style="color:#ba2121">&#34;property&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;name&#34;</span>,
+                <span style="color:#ba2121">&#34;value&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>
+            },
+            {
+                <span style="color:#ba2121">&#34;property&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;icon&#34;</span>,
+                <span style="color:#ba2121">&#34;value&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>
+            }
+        ],
+        <span style="color:#ba2121">&#34;updateinterval&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;60&#34;</span>,
+        <span style="color:#ba2121">&#34;updateIntervalType&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;num&#34;</span>,
+        <span style="color:#ba2121">&#34;updateIntervalUnits&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;seconds&#34;</span>,
+        <span style="color:#ba2121">&#34;outputinitially&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
+        <span style="color:#ba2121">&#34;outputonchanged&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
+        <span style="color:#ba2121">&#34;entity_id&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;device_tracker.volvo_xxxxxx&#34;</span>,
+        <span style="color:#ba2121">&#34;state_type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;str&#34;</span>,
+        <span style="color:#ba2121">&#34;halt_if&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;halt_if_type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;str&#34;</span>,
+        <span style="color:#ba2121">&#34;halt_if_compare&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;is&#34;</span>,
+        <span style="color:#ba2121">&#34;outputs&#34;</span><span style="color:#666">:</span> <span style="color:#666">1</span>,
+        <span style="color:#ba2121">&#34;x&#34;</span><span style="color:#666">:</span> <span style="color:#666">250</span>,
+        <span style="color:#ba2121">&#34;y&#34;</span><span style="color:#666">:</span> <span style="color:#666">200</span>,
+        <span style="color:#ba2121">&#34;wires&#34;</span><span style="color:#666">:</span> [
+            [
+                <span style="color:#ba2121">&#34;38ed7f10fa11c589&#34;</span>
+            ]
+        ]
+    },
+    {
+        <span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;38ed7f10fa11c589&#34;</span>,
+        <span style="color:#ba2121">&#34;type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;function&#34;</span>,
+        <span style="color:#ba2121">&#34;z&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;b30b6133eb27f27e&#34;</span>,
+        <span style="color:#ba2121">&#34;name&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;func&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;var x_PI = 3.14159265358979324 * 3000.0 / 180.0;\nvar PI = 3.1415926535897932384626;\nvar a = 6378245.0;\nvar ee = 0.00669342162296594323;\n/**\n * 百度坐标系 (BD-09) 与 火星坐标系 (GCJ-02) 的转换\n * 即 百度 转 谷歌、高德\n * @param bd_lng\n * @param bd_lat\n * @returns {*[]}\n */\nvar bd09togcj02 = function bd09togcj02(bd_lng, bd_lat) {\n    var bd_lng = +bd_lng;\n    var bd_lat = +bd_lat;\n    var x = bd_lng - 0.0065;\n    var y = bd_lat - 0.006;\n    var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_PI);\n    var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_PI);\n    var gg_lng = z * Math.cos(theta);\n    var gg_lat = z * Math.sin(theta);\n    return [gg_lng, gg_lat]\n};\n\n/**\n * 火星坐标系 (GCJ-02) 与百度坐标系 (BD-09) 的转换\n * 即 谷歌、高德 转 百度\n * @param lng\n * @param lat\n * @returns {*[]}\n */\nvar gcj02tobd09 = function gcj02tobd09(lng, lat) {\n    var lat = +lat;\n    var lng = +lng;\n    var z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * x_PI);\n    var theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * x_PI);\n    var bd_lng = z * Math.cos(theta) + 0.0065;\n    var bd_lat = z * Math.sin(theta) + 0.006;\n    return [bd_lng, bd_lat]\n};\n\n/**\n * WGS-84 转 GCJ-02\n * @param lng\n * @param lat\n * @returns {*[]}\n */\nvar wgs84togcj02 = function wgs84togcj02(lng, lat) {\n    var lat = +lat;\n    var lng = +lng;\n    if (out_of_china(lng, lat)) {\n        return [lng, lat]\n    } else {\n        var dlat = transformlat(lng - 105.0, lat - 35.0);\n        var dlng = transformlng(lng - 105.0, lat - 35.0);\n        var radlat = lat / 180.0 * PI;\n        var magic = Math.sin(radlat);\n        magic = 1 - ee * magic * magic;\n        var sqrtmagic = Math.sqrt(magic);\n        dlat = (dlat * 180.0) / ((a * (1 - ee)) / (magic * sqrtmagic) * PI);\n        dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);\n        var mglat = lat + dlat;\n        var mglng = lng + dlng;\n        return [mglng, mglat]\n    }\n};\n\n/**\n * GCJ-02 转换为 WGS-84\n * @param lng\n * @param lat\n * @returns {*[]}\n */\nvar gcj02towgs84 = function gcj02towgs84(lng, lat) {\n    var lat = +lat;\n    var lng = +lng;\n    if (out_of_china(lng, lat)) {\n        return [lng, lat]\n    } else {\n        var dlat = transformlat(lng - 105.0, lat - 35.0);\n        var dlng = transformlng(lng - 105.0, lat - 35.0);\n        var radlat = lat / 180.0 * PI;\n        var magic = Math.sin(radlat);\n        magic = 1 - ee * magic * magic;\n        var sqrtmagic = Math.sqrt(magic);\n        dlat = (dlat * 180.0) / ((a * (1 - ee)) / (magic * sqrtmagic) * PI);\n        dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * PI);\n        var mglat = lat + dlat;\n        var mglng = lng + dlng;\n        return [lng * 2 - mglng, lat * 2 - mglat]\n    }\n};\n\nvar transformlat = function transformlat(lng, lat) {\n    var lat = +lat;\n    var lng = +lng;\n    var ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng));\n    ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;\n    ret += (20.0 * Math.sin(lat * PI) + 40.0 * Math.sin(lat / 3.0 * PI)) * 2.0 / 3.0;\n    ret += (160.0 * Math.sin(lat / 12.0 * PI) + 320 * Math.sin(lat * PI / 30.0)) * 2.0 / 3.0;\n    return ret\n};\n\nvar transformlng = function transformlng(lng, lat) {\n    var lat = +lat;\n    var lng = +lng;\n    var ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng));\n    ret += (20.0 * Math.sin(6.0 * lng * PI) + 20.0 * Math.sin(2.0 * lng * PI)) * 2.0 / 3.0;\n    ret += (20.0 * Math.sin(lng * PI) + 40.0 * Math.sin(lng / 3.0 * PI)) * 2.0 / 3.0;\n    ret += (150.0 * Math.sin(lng / 12.0 * PI) + 300.0 * Math.sin(lng / 30.0 * PI)) * 2.0 / 3.0;\n    return ret\n};\n\n/**\n * 判断是否在国内，不在国内则不做偏移\n * @param lng\n * @param lat\n * @returns {boolean}\n */\nvar out_of_china = function out_of_china(lng, lat) {\n    var lat = +lat;\n    var lng = +lng;\n    // 纬度 3.86~53.55, 经度 73.66~135.05 \n    return !(lng &gt; 73.66 &amp;&amp; lng &lt; 135.05 &amp;&amp; lat &gt; 3.86 &amp;&amp; lat &lt; 53.55);\n};\n\nvar newLocation = gcj02towgs84(msg.data.attributes.longitude, msg.data.attributes.latitude)\n\nmsg.payload = {}\nmsg.payload.longitude = newLocation[0]\nmsg.payload.latitude = newLocation[1]\n\nreturn msg;&#34;</span>,
+        <span style="color:#ba2121">&#34;outputs&#34;</span><span style="color:#666">:</span> <span style="color:#666">1</span>,
+        <span style="color:#ba2121">&#34;noerr&#34;</span><span style="color:#666">:</span> <span style="color:#666">0</span>,
+        <span style="color:#ba2121">&#34;initialize&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;finalize&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;libs&#34;</span><span style="color:#666">:</span> [],
+        <span style="color:#ba2121">&#34;x&#34;</span><span style="color:#666">:</span> <span style="color:#666">120</span>,
+        <span style="color:#ba2121">&#34;y&#34;</span><span style="color:#666">:</span> <span style="color:#666">320</span>,
+        <span style="color:#ba2121">&#34;wires&#34;</span><span style="color:#666">:</span> [
+            [
+                <span style="color:#ba2121">&#34;8e828fb4ce44b55c&#34;</span>
+            ]
+        ]
+    },
+    {
+        <span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;8e828fb4ce44b55c&#34;</span>,
+        <span style="color:#ba2121">&#34;type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;api-call-service&#34;</span>,
+        <span style="color:#ba2121">&#34;z&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;b30b6133eb27f27e&#34;</span>,
+        <span style="color:#ba2121">&#34;name&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;server&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;fbec60d9.9bf86&#34;</span>,
+        <span style="color:#ba2121">&#34;version&#34;</span><span style="color:#666">:</span> <span style="color:#666">3</span>,
+        <span style="color:#ba2121">&#34;debugenabled&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
+        <span style="color:#ba2121">&#34;service_domain&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;device_tracker&#34;</span>,
+        <span style="color:#ba2121">&#34;service&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;see&#34;</span>,
+        <span style="color:#ba2121">&#34;entityId&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;data&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;{   \&#34;dev_id\&#34;:\&#34;volvo_car\&#34;,   \&#34;gps\&#34;:[payload.latitude, payload.longitude] }&#34;</span>,
+        <span style="color:#ba2121">&#34;dataType&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;jsonata&#34;</span>,
+        <span style="color:#ba2121">&#34;mergecontext&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;&#34;</span>,
+        <span style="color:#ba2121">&#34;mustacheAltTags&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
+        <span style="color:#ba2121">&#34;outputProperties&#34;</span><span style="color:#666">:</span> [],
+        <span style="color:#ba2121">&#34;queue&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;none&#34;</span>,
+        <span style="color:#ba2121">&#34;x&#34;</span><span style="color:#666">:</span> <span style="color:#666">180</span>,
+        <span style="color:#ba2121">&#34;y&#34;</span><span style="color:#666">:</span> <span style="color:#666">420</span>,
+        <span style="color:#ba2121">&#34;wires&#34;</span><span style="color:#666">:</span> [
+            []
+        ]
+    },
+    {
+        <span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;fbec60d9.9bf86&#34;</span>,
+        <span style="color:#ba2121">&#34;type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;server&#34;</span>,
+        <span style="color:#ba2121">&#34;name&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;Home Assistant&#34;</span>,
+        <span style="color:#ba2121">&#34;version&#34;</span><span style="color:#666">:</span> <span style="color:#666">2</span>,
+        <span style="color:#ba2121">&#34;addon&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+        <span style="color:#ba2121">&#34;rejectUnauthorizedCerts&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+        <span style="color:#ba2121">&#34;ha_boolean&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;y|yes|true|on|home|open&#34;</span>,
+        <span style="color:#ba2121">&#34;connectionDelay&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+        <span style="color:#ba2121">&#34;cacheJson&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">true</span>,
+        <span style="color:#ba2121">&#34;heartbeat&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
+        <span style="color:#ba2121">&#34;heartbeatInterval&#34;</span><span style="color:#666">:</span> <span style="color:#666">30</span>
+    }
+]</code></pre></div>
+</div>
+</div>
+</div>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  <div class="site-footer-item">
+    <a href="mailto:idream.shen@gmail.com" target="_blank">Email</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>
