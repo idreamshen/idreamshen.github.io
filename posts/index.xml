@@ -6,7 +6,19 @@
     <description>Recent content in Posts on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 16 Mar 2022 21:47:49 +0800</lastBuildDate><atom:link href="https://idreamshen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Apr 2023 12:00:00 +0800</lastBuildDate><atom:link href="https://idreamshen.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Minecraft 1.9.12 私服新人游戏安装指南</title>
+      <link>https://idreamshen.github.io/posts/2023-minecraft-private-server-guide/</link>
+      <pubDate>Wed, 05 Apr 2023 12:00:00 +0800</pubDate>
+      
+      <guid>https://idreamshen.github.io/posts/2023-minecraft-private-server-guide/</guid>
+      <description> 本文为 MC 新人内部指南，仅供群友参考使用。
+  下载群公告中的 minecraft-windows.zip （osx 系统下载 minecraft-osx.zip ）
+  解压缩 minecraft-windows.zip 并运行 HMCL-3.5.4.exe 该启动器
+  等待 HMCL 自动下载完成游戏主体文件，可能需要5分钟左右   点击右下角“启动游戏”，在“离线模式”中设置自己的英文用户名（该用户名会在游戏中展示）   首次运行可能会弹出“警告，需要 Java 17 或更高版本”的提示，我们选择“是”让它自动下载   接下来 Minecraft 游戏主体启动，点“多人游戏－添加服务器”，服务器地址填入群公告中的服务器地址，再点击完成   此时“多人游戏”的列表中会出现刚才添加的服务器，点击“加入服务器”   首次进入游戏需要设置登录密码。按下键盘 t 唤起聊天框，按照提示输入 /register password password ，并回车以完成账号注册。 比如你想设置密码为 123456 ，那就输入 /register 123456 123456 后回车即可进入游戏。   二次登录时，无需注册，但需要输入命令 /login password 进行登录。比如 /login 123456 即以密码 123456 登录。   </description>
+    </item>
+    
     <item>
       <title>使用 Node-Red 对 Volvo On Call 的地理位置纠偏</title>
       <link>https://idreamshen.github.io/posts/homeassistant-node-red-fix-car-gps/</link>
@@ -98,19 +110,6 @@ All that you write in minibuffer is interpreted as a regexp or multiple regexps 
   第一次打开会进入欢迎界面，按键 C-x b 进行切换 Buffer（C-x b 中的 b 就是 buffer），第一个默认 buffer 是 *scratch*，回车即可
   然后随便输入几个字符，打打回车等
     光标移动    C-n 移动到下一行。n 代表 next。</description>
-    </item>
-    
-    <item>
-      <title>复盘</title>
-      <link>https://idreamshen.github.io/posts/apologize/</link>
-      <pubDate>Fri, 24 May 2019 17:22:13 +0800</pubDate>
-      
-      <guid>https://idreamshen.github.io/posts/apologize/</guid>
-      <description>今早站会的快结束时，抛了这样一个问题出来：大家对每天早上的站会有没有意见？同事 Y 说到：每天站会的频率会不会有点高？诚然，这个问题在我当初提出每天站会的建议时我就想过了。对于一些小需求来说，每天站会确实会有些繁琐，多多少少会浪费点团队的时间。但对于一个大需求来说，这样的站会则是非常有意义的，因为它能保证整个团队的信息通畅，团队内不会有信息差，相关问题及早被抛出。站会的本质是沟通，最终是为了解决沟通问题。测试小组对于这一点也表示了认可。
- 回到标题，我这次要复盘什么？不是复盘我最近的工作，而是复盘我昨晚惹你生气这件事。我写这篇文章的时候，我已经在你家里了。我是被你“逼着”写下这篇复盘的。说实话，我一开始完全不知道该如何去复盘这件事情，因为很可笑的是我竟然并不明白昨晚到底是怎么惹你生气的。所以就在刚刚，我如实的询问了你。出乎意料的是，你拿出了一张 A4 纸让我自己看。整整一页的 A4 纸上写满了文字，上面记录了你的心里历程以及你对这件事情的复盘。我一行一行得阅读完，沉思了片刻。转身抱住了你，两个人就这么眼泪汪汪的抱在了一起。
- 吵架复盘。这是你在文章中提到的一个很重要的概念。我曾经假象过这样的一种形式：每个月的固定某一天，两个人相约一个咖啡馆，彼此面对面坐着，然后互相表达对于对方的赞美与批评。我觉得这种方式与吵架复盘有种一样的作用，都是可以做一个阶段性总结，然后从中理解到更深刻的内容。在很多企业里，是经常倡导复盘文化的。而在感情生活中，我觉得复盘文化是尤为重要。工作是可以随时更换的，而感情是无法随时更换的，而且也不甘轻易更换。复盘就是两个人在冷静状态下，对事情作分析总结，从而避免下次重蹈覆辙。
- 我也明白自己昨天做错了什么：我没有一些重要的事情放在心上，并且这种事情发生过不止一次。那我如何解决这个问题呢？我现在的做法是把所有重要的事情都记录到我的日常任务中。这么做能把许多重要的事记录到脑子里，与此同时，我把你的事记录到心里，反复叨念。
- 佩佩，我一直在你身边哦。</description>
     </item>
     
     <item>
@@ -216,7 +215,7 @@ Command + \  呼出 1Password 浮动窗口并填充。在浏览器页面上呼�
       
       <guid>https://idreamshen.github.io/posts/thread-status-from-jdk-hotspot/</guid>
       <description>src/share/vm/classfile/javaClasses.hpp
-// Java Thread Status for JVMTI and M&amp;amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE + // runnable / running JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE + // Thread.sleep() JVMTI_THREAD_STATE_WAITING + JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT + JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE + // Object.wait() JVMTI_THREAD_STATE_WAITING + JVMTI_THREAD_STATE_WAITING_INDEFINITELY + JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE + // Object.wait(long) JVMTI_THREAD_STATE_WAITING + JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT + JVMTI_THREAD_STATE_IN_OBJECT_WAIT, PARKED = JVMTI_THREAD_STATE_ALIVE + // LockSupport.</description>
+// Java Thread Status for JVMTI and M&amp;amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE + // runnable / running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE + // Thread.sleep()  JVMTI_THREAD_STATE_WAITING + JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT + JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE + // Object.wait()  JVMTI_THREAD_STATE_WAITING + JVMTI_THREAD_STATE_WAITING_INDEFINITELY + JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE + // Object.</description>
     </item>
     
     <item>

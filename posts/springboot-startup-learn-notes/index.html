@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -109,7 +109,7 @@ SpringApplication.run()
 </h4>
 <div id="outline-text-headline-2" class="outline-text-4">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>Object source<span style="color:#666">,</span> String<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#008000;font-weight:bold">static</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>Object source<span style="color:#666">,</span> String<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
       <span style="color:#008000;font-weight:bold">return</span> run<span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> Object<span style="color:#666">[]</span> <span style="color:#666">{</span> source <span style="color:#666">},</span> args<span style="color:#666">);</span>
   <span style="color:#666">}</span>
 
@@ -128,7 +128,7 @@ SpringApplication 实例化
 </h4>
 <div id="outline-text-headline-3" class="outline-text-4">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#00f">SpringApplication</span><span style="color:#666">(</span>Object<span style="color:#666">...</span> sources<span style="color:#666">)</span> <span style="color:#666">{</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> <span style="color:#00f">SpringApplication</span><span style="color:#666">(</span>Object<span style="color:#666">...</span> sources<span style="color:#666">)</span> <span style="color:#666">{</span>
       initialize<span style="color:#666">(</span>sources<span style="color:#666">);</span>
   <span style="color:#666">}</span>
 
@@ -191,7 +191,7 @@ SpringApplication 实例方法 run
 </h4>
 <div id="outline-text-headline-4" class="outline-text-4">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>String<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">public</span> ConfigurableApplicationContext <span style="color:#00f">run</span><span style="color:#666">(</span>String<span style="color:#666">...</span> args<span style="color:#666">)</span> <span style="color:#666">{</span>
 
       <span style="color:#408080;font-style:italic">/*
 </span><span style="color:#408080;font-style:italic">       ,* 将 org.springframework.boot.SpringApplicationRunListener 对应的实现类
@@ -248,7 +248,7 @@ SpringApplication 实例方法 prepareContext
 </h4>
 <div id="outline-text-headline-5" class="outline-text-4">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">prepareContext</span><span style="color:#666">(</span>ConfigurableApplicationContext context<span style="color:#666">,</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">prepareContext</span><span style="color:#666">(</span>ConfigurableApplicationContext context<span style="color:#666">,</span>
                               ConfigurableEnvironment environment<span style="color:#666">,</span>
                               SpringApplicationRunListeners listeners<span style="color:#666">,</span>
                               ApplicationArguments applicationArguments<span style="color:#666">)</span> <span style="color:#666">{</span>
@@ -306,7 +306,7 @@ SpringApplication 实例方法 refreshContext
 </h4>
 <div id="outline-text-headline-6" class="outline-text-4">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">refreshContext</span><span style="color:#666">(</span>ConfigurableApplicationContext context<span style="color:#666">)</span> <span style="color:#666">{</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">private</span> <span style="color:#b00040">void</span> <span style="color:#00f">refreshContext</span><span style="color:#666">(</span>ConfigurableApplicationContext context<span style="color:#666">)</span> <span style="color:#666">{</span>
       refresh<span style="color:#666">(</span>context<span style="color:#666">);</span>
 
       <span style="color:#408080;font-style:italic">// shutdownhook
@@ -364,7 +364,7 @@ AbstractApplicationContext 实例方法 prepareBeanFactory
 </h5>
 <div id="outline-text-headline-7" class="outline-text-5">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">prepareBeanFactory</span><span style="color:#666">(</span>ConfigurableListableBeanFactory beanFactory<span style="color:#666">)</span> <span style="color:#666">{</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">prepareBeanFactory</span><span style="color:#666">(</span>ConfigurableListableBeanFactory beanFactory<span style="color:#666">)</span> <span style="color:#666">{</span>
       <span style="color:#408080;font-style:italic">// Tell the internal bean factory to use the context&#39;s class loader etc.
 </span><span style="color:#408080;font-style:italic"></span>      beanFactory<span style="color:#666">.</span><span style="color:#7d9029">setBeanClassLoader</span><span style="color:#666">(</span>getClassLoader<span style="color:#666">());</span>
       beanFactory<span style="color:#666">.</span><span style="color:#7d9029">setBeanExpressionResolver</span><span style="color:#666">(</span><span style="color:#008000;font-weight:bold">new</span> StandardBeanExpressionResolver<span style="color:#666">(</span>beanFactory<span style="color:#666">.</span><span style="color:#7d9029">getBeanClassLoader</span><span style="color:#666">()));</span>
@@ -401,8 +401,7 @@ AbstractApplicationContext 实例方法 postProcessBeanFactory
 </h5>
 <div id="outline-text-headline-8" class="outline-text-5">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#408080;font-style:italic">// 默认空逻辑
-</span></code></pre></div>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#666">//</span> 默认空逻辑</code></pre></div>
 </div>
 </div>
 </div>
@@ -412,7 +411,7 @@ AbstractApplicationContext 实例方法 invokeBeanFactoryPostProcessors
 </h5>
 <div id="outline-text-headline-9" class="outline-text-5">
 <div class="src src-java">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">invokeBeanFactoryPostProcessors</span><span style="color:#666">(</span>ConfigurableListableBeanFactory beanFactory<span style="color:#666">)</span> <span style="color:#666">{</span>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">  <span style="color:#008000;font-weight:bold">protected</span> <span style="color:#b00040">void</span> <span style="color:#00f">invokeBeanFactoryPostProcessors</span><span style="color:#666">(</span>ConfigurableListableBeanFactory beanFactory<span style="color:#666">)</span> <span style="color:#666">{</span>
       PostProcessorRegistrationDelegate<span style="color:#666">.</span><span style="color:#7d9029">invokeBeanFactoryPostProcessors</span><span style="color:#666">(</span>beanFactory<span style="color:#666">,</span> getBeanFactoryPostProcessors<span style="color:#666">());</span>
   <span style="color:#666">}</span></code></pre></div>
 </div>

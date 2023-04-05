@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -112,7 +112,7 @@ var express = require(&#39;express&#39;); var app = express(); var Promise = req
 <p>我举2个实例来看一下 Nodejs 和 Java 在编程上有什么区别.</p>
 <p>1.假设需求:通过一个网页向用户展示某件商品的相关信息.</p>
 <p>Nodejs 版 (Express Framework)</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">var express = require(&#39;express&#39;);
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">var express = require(&#39;express&#39;);
 var app = express();
 var Promise = require(&#39;bluebird&#39;);
 var model = require(&#39;./models/index&#39;);
@@ -136,7 +136,7 @@ app.get(&#39;/item&#39;, function(req, res) {
     });
 });
 </code></pre></div><p>Java 版 (Spring Boot Framework)</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">@Controller
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">@Controller
 public class ItemController {
     @Autowired private UserRepository userRepository;
     @Autowired private ItemRepository itemRepository;
@@ -164,7 +164,7 @@ public class ItemController {
 </code></pre></div><p>Nodejs 版中第 11 行至 13 行是从数据库获取信息,通过 Promise 的 all 方法包裹后,三个 sql 语句并行执行,假设 3 条 sql 语句耗时分别为 1ms 1.2ms 0.8ms,那么第 14 行的代码将在 1.2ms 后执行.再看 Java 版,第 15 行至 17 行是串行查询,所以第 19 行会在 1 + 1.2 + 0.8 = 3ms 后执行.这也就是一定程度上, Nodejs 的速度要优于 Java.</p>
 <p>2.假设需求:实现一个机器人简单逻辑</p>
 <p>Nodejs 版</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">function Bot(id) {
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">function Bot(id) {
     this.id = id;
 }
 
@@ -178,7 +178,7 @@ Bot.prototype.walk = function(direction, step) {
     // ...
 }
 </code></pre></div><p>Java 版</p>
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">public class Bot {
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">public class Bot {
     private int id;
 
     public Bot(int id) {

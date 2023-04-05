@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,7 +21,7 @@
       "articleSection" : "posts",
       "name" : "从 JDK Hotspot 源码探讨线程状态",
       "headline" : "从 JDK Hotspot 源码探讨线程状态",
-      "description" : "src\/share\/vm\/classfile\/javaClasses.hpp\n\/\/ Java Thread Status for JVMTI and M\u0026amp;M use. \/\/ This thread status info is saved in threadStatus field of \/\/ java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ runnable \/ running JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Thread.sleep() JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT \u002b JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Object.wait() JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_INDEFINITELY \u002b JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Object.wait(long) JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT \u002b JVMTI_THREAD_STATE_IN_OBJECT_WAIT, PARKED = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ LockSupport.",
+      "description" : "src\/share\/vm\/classfile\/javaClasses.hpp\n\/\/ Java Thread Status for JVMTI and M\u0026amp;M use. \/\/ This thread status info is saved in threadStatus field of \/\/ java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ runnable \/ running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Thread.sleep()  JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT \u002b JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Object.wait()  JVMTI_THREAD_STATE_WAITING \u002b JVMTI_THREAD_STATE_WAITING_INDEFINITELY \u002b JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE \u002b \/\/ Object.",
       "inLanguage" : "en-US",
       "author" : "",
       "creator" : "",
@@ -39,9 +39,9 @@
   <meta property="og:title" content="从 JDK Hotspot 源码探讨线程状态 - ChenHsingYu" />
   <meta property="og:type" content="article" />
   <meta property="og:description" content="src/share/vm/classfile/javaClasses.hpp
-// Java Thread Status for JVMTI and M&amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE &#43; // runnable / running JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE &#43; // Thread.sleep() JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait() JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_INDEFINITELY &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait(long) JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, PARKED = JVMTI_THREAD_STATE_ALIVE &#43; // LockSupport." />
+// Java Thread Status for JVMTI and M&amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE &#43; // runnable / running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE &#43; // Thread.sleep()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_INDEFINITELY &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE &#43; // Object." />
   <meta name="description" content="src/share/vm/classfile/javaClasses.hpp
-// Java Thread Status for JVMTI and M&amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE &#43; // runnable / running JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE &#43; // Thread.sleep() JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait() JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_INDEFINITELY &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait(long) JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, PARKED = JVMTI_THREAD_STATE_ALIVE &#43; // LockSupport." />
+// Java Thread Status for JVMTI and M&amp;M use. // This thread status info is saved in threadStatus field of // java.lang.Thread java class. enum ThreadStatus { NEW = 0, RUNNABLE = JVMTI_THREAD_STATE_ALIVE &#43; // runnable / running  JVMTI_THREAD_STATE_RUNNABLE, SLEEPING = JVMTI_THREAD_STATE_ALIVE &#43; // Thread.sleep()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT &#43; JVMTI_THREAD_STATE_SLEEPING, IN_OBJECT_WAIT = JVMTI_THREAD_STATE_ALIVE &#43; // Object.wait()  JVMTI_THREAD_STATE_WAITING &#43; JVMTI_THREAD_STATE_WAITING_INDEFINITELY &#43; JVMTI_THREAD_STATE_IN_OBJECT_WAIT, IN_OBJECT_WAIT_TIMED = JVMTI_THREAD_STATE_ALIVE &#43; // Object." />
   <meta property="og:locale" content="zh-cn" />
 
   <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
@@ -101,115 +101,116 @@
           
           <p>
 src/share/vm/classfile/javaClasses.hpp</p>
-<div class="src src-cpp -n 380">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">// Java Thread Status for JVMTI and M&amp;M use.
-// This thread status info is saved in threadStatus field of
-// java.lang.Thread java class.
-enum ThreadStatus {
-  NEW                      = 0,
-  RUNNABLE                 = JVMTI_THREAD_STATE_ALIVE +          // runnable / running
-                             JVMTI_THREAD_STATE_RUNNABLE,
-  SLEEPING                 = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+<div class="src src-cpp">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#408080;font-style:italic">// Java Thread Status for JVMTI and M&amp;M use.
+</span><span style="color:#408080;font-style:italic">// This thread status info is saved in threadStatus field of
+</span><span style="color:#408080;font-style:italic">// java.lang.Thread java class.
+</span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">enum</span> <span style="color:#00f;font-weight:bold">ThreadStatus</span> {
+  NEW                      <span style="color:#666">=</span> <span style="color:#666">0</span>,
+  RUNNABLE                 <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// runnable / running
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_RUNNABLE,
+  SLEEPING                 <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// Thread.sleep()
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_WAITING <span style="color:#666">+</span>
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT <span style="color:#666">+</span>
                              JVMTI_THREAD_STATE_SLEEPING,
-  IN_OBJECT_WAIT           = JVMTI_THREAD_STATE_ALIVE +          // Object.wait()
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY +
+  IN_OBJECT_WAIT           <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// Object.wait()
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_WAITING <span style="color:#666">+</span>
+                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY <span style="color:#666">+</span>
                              JVMTI_THREAD_STATE_IN_OBJECT_WAIT,
-  IN_OBJECT_WAIT_TIMED     = JVMTI_THREAD_STATE_ALIVE +          // Object.wait(long)
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+  IN_OBJECT_WAIT_TIMED     <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// Object.wait(long)
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_WAITING <span style="color:#666">+</span>
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT <span style="color:#666">+</span>
                              JVMTI_THREAD_STATE_IN_OBJECT_WAIT,
-  PARKED                   = JVMTI_THREAD_STATE_ALIVE +          // LockSupport.park()
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY +
+  PARKED                   <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// LockSupport.park()
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_WAITING <span style="color:#666">+</span>
+                             JVMTI_THREAD_STATE_WAITING_INDEFINITELY <span style="color:#666">+</span>
                              JVMTI_THREAD_STATE_PARKED,
-  PARKED_TIMED             = JVMTI_THREAD_STATE_ALIVE +          // LockSupport.park(long)
-                             JVMTI_THREAD_STATE_WAITING +
-                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
+  PARKED_TIMED             <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// LockSupport.park(long)
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_WAITING <span style="color:#666">+</span>
+                             JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT <span style="color:#666">+</span>
                              JVMTI_THREAD_STATE_PARKED,
-  BLOCKED_ON_MONITOR_ENTER = JVMTI_THREAD_STATE_ALIVE +          // (re-)entering a synchronization block
-                             JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER,
-  TERMINATED               = JVMTI_THREAD_STATE_TERMINATED
-};</code></pre></div>
+  BLOCKED_ON_MONITOR_ENTER <span style="color:#666">=</span> JVMTI_THREAD_STATE_ALIVE <span style="color:#666">+</span>          <span style="color:#408080;font-style:italic">// (re-)entering a synchronization block
+</span><span style="color:#408080;font-style:italic"></span>                             JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER,
+  TERMINATED               <span style="color:#666">=</span> JVMTI_THREAD_STATE_TERMINATED
+};
+</code></pre></div>
 </div>
 <p>
 src/share/vm/prims/jvmti.xml</p>
-<div class="src src-xml -n 1198">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&lt;constants id=&#34;jvmtiThreadState&#34; label=&#34;Thread State Flags&#34; kind=&#34;bits&#34;&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_ALIVE&#34; num=&#34;0x0001&#34;&gt;
+<div class="src src-xml">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#008000;font-weight:bold">&lt;constants</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;jvmtiThreadState&#34;</span> <span style="color:#7d9029">label=</span><span style="color:#ba2121">&#34;Thread State Flags&#34;</span> <span style="color:#7d9029">kind=</span><span style="color:#ba2121">&#34;bits&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_ALIVE&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0001&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is alive. Zero if thread is new (not started) or terminated.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_TERMINATED&#34; num=&#34;0x0002&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_TERMINATED&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0002&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread has completed execution.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_RUNNABLE&#34; num=&#34;0x0004&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_RUNNABLE&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0004&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is runnable.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER&#34; num=&#34;0x0400&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_BLOCKED_ON_MONITOR_ENTER&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0400&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is waiting to enter a synchronization block/method or,
-          after an &lt;code&gt;Object.wait()&lt;/code&gt;, waiting to re-enter a 
+          after an <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>Object.wait()<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>, waiting to re-enter a 
           synchronization block/method.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_WAITING&#34; num=&#34;0x0080&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_WAITING&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0080&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is waiting.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_WAITING_INDEFINITELY&#34; num=&#34;0x0010&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_WAITING_INDEFINITELY&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0010&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is waiting without a timeout.
-          For example, &lt;code&gt;Object.wait()&lt;/code&gt;.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT&#34; num=&#34;0x0020&#34;&gt;
+          For example, <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>Object.wait()<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>.
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0020&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread is waiting with a maximum time to wait specified.
-          For example, &lt;code&gt;Object.wait(long)&lt;/code&gt;.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_SLEEPING&#34; num=&#34;0x0040&#34;&gt;
-    Thread is sleeping -- &lt;code&gt;Thread.sleep(long)&lt;/code&gt;.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_IN_OBJECT_WAIT&#34; num=&#34;0x0100&#34;&gt;
-    Thread is waiting on an object monitor -- &lt;code&gt;Object.wait&lt;/code&gt;.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_PARKED&#34; num=&#34;0x0200&#34;&gt;
-    Thread is parked, for example: &lt;code&gt;LockSupport.park&lt;/code&gt;,
-          &lt;code&gt;LockSupport.parkUtil&lt;/code&gt; and &lt;code&gt;LockSupport.parkNanos&lt;/code&gt;.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_SUSPENDED&#34; num=&#34;0x100000&#34;&gt;
+          For example, <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>Object.wait(long)<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>.
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_SLEEPING&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0040&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
+    Thread is sleeping -- <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>Thread.sleep(long)<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>.
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_IN_OBJECT_WAIT&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0100&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
+    Thread is waiting on an object monitor -- <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>Object.wait<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>.
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_PARKED&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x0200&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
+    Thread is parked, for example: <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>LockSupport.park<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>,
+          <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>LockSupport.parkUtil<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span> and <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>LockSupport.parkNanos<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>.
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_SUSPENDED&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x100000&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread suspended.
-    &lt;code&gt;java.lang.Thread.suspend()&lt;/code&gt;
-    or a &lt;jvmti/&gt; suspend function 
-          (such as &lt;functionlink id=&#34;SuspendThread&#34;&gt;&lt;/functionlink&gt;) 
+    <span style="color:#008000;font-weight:bold">&lt;code&gt;</span>java.lang.Thread.suspend()<span style="color:#008000;font-weight:bold">&lt;/code&gt;</span>
+    or a <span style="color:#008000;font-weight:bold">&lt;jvmti/&gt;</span> suspend function 
+          (such as <span style="color:#008000;font-weight:bold">&lt;functionlink</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;SuspendThread&#34;</span><span style="color:#008000;font-weight:bold">&gt;&lt;/functionlink&gt;</span>) 
           has been called on the thread. If this bit
     is set, the other bits refer to the thread state before suspension.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_INTERRUPTED&#34; num=&#34;0x200000&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_INTERRUPTED&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x200000&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
     Thread has been interrupted.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_IN_NATIVE&#34; num=&#34;0x400000&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_IN_NATIVE&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x400000&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
           Thread is in native code--that is, a native method is running
           which has not called back into the VM or Java programming
           language code.
-          &lt;p/&gt;
+          <span style="color:#008000;font-weight:bold">&lt;p/&gt;</span>
           This flag is not set when running VM compiled Java programming
           language code nor is it set when running VM code or
           VM support code. Native VM interface functions, such as JNI and
-          &lt;jvmti/&gt; functions, may be implemented as VM code.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_VENDOR_1&#34; num=&#34;0x10000000&#34;&gt;
+          <span style="color:#008000;font-weight:bold">&lt;jvmti/&gt;</span> functions, may be implemented as VM code.
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_VENDOR_1&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x10000000&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
           Defined by VM vendor.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_VENDOR_2&#34; num=&#34;0x20000000&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_VENDOR_2&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x20000000&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
           Defined by VM vendor.
-  &lt;/constant&gt;
-  &lt;constant id=&#34;JVMTI_THREAD_STATE_VENDOR_3&#34; num=&#34;0x40000000&#34;&gt;
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+  <span style="color:#008000;font-weight:bold">&lt;constant</span> <span style="color:#7d9029">id=</span><span style="color:#ba2121">&#34;JVMTI_THREAD_STATE_VENDOR_3&#34;</span> <span style="color:#7d9029">num=</span><span style="color:#ba2121">&#34;0x40000000&#34;</span><span style="color:#008000;font-weight:bold">&gt;</span>
           Defined by VM vendor.
-  &lt;/constant&gt;
-&lt;/constants&gt;</code></pre></div>
+  <span style="color:#008000;font-weight:bold">&lt;/constant&gt;</span>
+<span style="color:#008000;font-weight:bold">&lt;/constants&gt;</span></code></pre></div>
 </div>
 <p>
 当一个线程的状态为 225 时，转换成 16 进制则为 e1。
 按照公式：</p>
 <div class="src src-text">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">SLEEPING = JVMTI_THREAD_STATE_ALIVE +          // Thread.sleep()
            JVMTI_THREAD_STATE_WAITING +
            JVMTI_THREAD_STATE_WAITING_WITH_TIMEOUT +
            JVMTI_THREAD_STATE_SLEEPING</code></pre></div>
@@ -219,7 +220,7 @@ src/share/vm/prims/jvmti.xml</p>
 <p>
 另外 threadService.hpp 文件控制了一个线程的 threadStatus，比如 JavaThreadSleepState 该函数就将线程状态修改为 java_lang_Thread::SLEEPING</p>
 <div class="src src-cpp">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#408080;font-style:italic">// Change status to sleeping
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#408080;font-style:italic">// Change status to sleeping
 </span><span style="color:#408080;font-style:italic"></span><span style="color:#008000;font-weight:bold">class</span> <span style="color:#00f;font-weight:bold">JavaThreadSleepState</span> <span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">public</span> JavaThreadStatusChanger {
  <span style="color:#008000;font-weight:bold">private</span><span style="color:#666">:</span>
   ThreadStatistics<span style="color:#666">*</span> _stat;
@@ -244,7 +245,8 @@ src/share/vm/prims/jvmti.xml</p>
       _stat<span style="color:#666">-&gt;</span>thread_sleep_end();
     }
   }
-};</code></pre></div>
+};
+</code></pre></div>
 </div>
 
         </div>

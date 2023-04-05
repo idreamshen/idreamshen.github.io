@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -146,7 +146,7 @@
 <li>
 <p>在 <code class="verbatim">/config/configuration.yaml</code> 中新增 volvooncall 配置。更多参考<a href="https://www.home-assistant.io/integrations/volvooncall/">官方教程</a>。</p>
 <div class="src src-yaml">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvooncall</span>:<span style="color:#bbb">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvooncall</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">username</span>:<span style="color:#bbb"> </span>!secret volvooncall_username<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">password</span>:<span style="color:#bbb"> </span>!secret volvooncall_password<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">region</span>:<span style="color:#bbb"> </span>cn</code></pre></div>
@@ -155,7 +155,7 @@
 <li>
 <p>重启 Home Assistant 使 <code class="verbatim">volvooncall</code> 集成生效，并观察 <code class="verbatim">/config/known_devices.yaml</code> 中是否多了一个 <code class="verbatim">volvo_xxxx</code> 自动生成的配置，如下</p>
 <div class="src src-yaml">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvo_xxxxxx</span>:<span style="color:#bbb">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvo_xxxxxx</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">name</span>:<span style="color:#bbb"> </span>xxxxxx<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">mac</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">icon</span>:<span style="color:#bbb"> </span>mdi:car<span style="color:#bbb">
@@ -166,7 +166,7 @@
 <li>
 <p>在 <code class="verbatim">/config/known_devices.yaml</code> 中手动新增一个配置（将用于代替上方的 <code class="verbatim">volvo_xxxxxx</code> )</p>
 <div class="src src-yaml">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvo_car</span>:<span style="color:#bbb">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">volvo_car</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Volvo Car<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">mac</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span><span style="color:#008000;font-weight:bold">icon</span>:<span style="color:#bbb">
@@ -176,7 +176,7 @@
 <li>
 <p>重启 Home Assistant，此时你应该能在 <code class="verbatim">开发者工具</code> 中找到第3步手动生成的新实体 <code class="verbatim">device_tracker.volvo_car</code></p>
 <div class="src src-yaml">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">source_type</span>:<span style="color:#bbb"> </span><span style="color:#008000;font-weight:bold">null</span><span style="color:#bbb">
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">source_type</span>:<span style="color:#bbb"> </span><span style="color:#008000;font-weight:bold">null</span><span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">friendly_name</span>:<span style="color:#bbb"> </span>Volvo Car</code></pre></div>
 </div>
 <p>
@@ -193,7 +193,7 @@
 <p>新增一个 <code class="verbatim">function</code> 节点，用于计算新的地理坐标，并在 <code class="verbatim">函数</code> 中输入如下代码
 <img src="/image/volvo-car-node-red-function.png" alt="/image/volvo-car-node-red-function.png" title="/image/volvo-car-node-red-function.png" /></p>
 <div class="src src-js">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">var</span> x_PI <span style="color:#666">=</span> <span style="color:#666">3.14159265358979324</span> <span style="color:#666">*</span> <span style="color:#666">3000.0</span> <span style="color:#666">/</span> <span style="color:#666">180.0</span>;
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#008000;font-weight:bold">var</span> x_PI <span style="color:#666">=</span> <span style="color:#666">3.14159265358979324</span> <span style="color:#666">*</span> <span style="color:#666">3000.0</span> <span style="color:#666">/</span> <span style="color:#666">180.0</span>;
 <span style="color:#008000;font-weight:bold">var</span> PI <span style="color:#666">=</span> <span style="color:#666">3.1415926535897932384626</span>;
 <span style="color:#008000;font-weight:bold">var</span> a <span style="color:#666">=</span> <span style="color:#666">6378245.0</span>;
 <span style="color:#008000;font-weight:bold">var</span> ee <span style="color:#666">=</span> <span style="color:#666">0.00669342162296594323</span>;
@@ -324,7 +324,8 @@ msg.payload <span style="color:#666">=</span> {}
 msg.payload.longitude <span style="color:#666">=</span> newLocation[<span style="color:#666">0</span>]
 msg.payload.latitude <span style="color:#666">=</span> newLocation[<span style="color:#666">1</span>]
 
-<span style="color:#008000;font-weight:bold">return</span> msg;</code></pre></div>
+<span style="color:#008000;font-weight:bold">return</span> msg;
+</code></pre></div>
 </div>
 </li>
 <li>
@@ -359,7 +360,7 @@ Data: {
 <div id="outline-text-headline-5" class="outline-text-2">
 <p><code class="verbatim">node-red</code> 一键导入</p>
 <div class="src src-js">
-<div class="highlight"><pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">[
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">[
     {
         <span style="color:#ba2121">&#34;id&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;eaae412a3cb97052&#34;</span>,
         <span style="color:#ba2121">&#34;type&#34;</span><span style="color:#666">:</span> <span style="color:#ba2121">&#34;poll-state&#34;</span>,
@@ -452,7 +453,8 @@ Data: {
         <span style="color:#ba2121">&#34;heartbeat&#34;</span><span style="color:#666">:</span> <span style="color:#008000;font-weight:bold">false</span>,
         <span style="color:#ba2121">&#34;heartbeatInterval&#34;</span><span style="color:#666">:</span> <span style="color:#666">30</span>
     }
-]</code></pre></div>
+]
+</code></pre></div>
 </div>
 </div>
 </div>
