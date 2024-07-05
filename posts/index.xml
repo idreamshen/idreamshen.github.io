@@ -6,7 +6,20 @@
     <description>Recent content in Posts on ChenHsingYu</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 05 Apr 2023 12:00:00 +0800</lastBuildDate><atom:link href="https://blog.idreamshen.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Jul 2024 11:04:17 +0800</lastBuildDate><atom:link href="https://blog.idreamshen.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pve 扩容虚拟机硬盘-无LVM</title>
+      <link>https://blog.idreamshen.com/posts/pve-resize-vm-disk-without-lvm/</link>
+      <pubDate>Fri, 05 Jul 2024 11:04:17 +0800</pubDate>
+      
+      <guid>https://blog.idreamshen.com/posts/pve-resize-vm-disk-without-lvm/</guid>
+      <description>背景  pve 上的 k8s 虚拟机分配的硬盘容量告急，需要进行扩容操作。操作系统为 Debian 12。 虚拟机硬盘原始大小为 96G，计划扩容为 128G。
+  操作方式  先在 PVE GUI 页面上对特定硬盘增加容量。
+ 进入虚拟机终端，查看 dmesg 日志，可以发现系统检测到了硬盘容量变更。
+root@rancher-homelab-1:~# dmesg | grep &amp;#39;capacity change&amp;#39; [3419061.180984] sda: detected capacity change from 201326592 to 268435456   使用 fdisk 命令查看当前分区，显示仍为 96G。
+root@rancher-homelab-2:~# fdisk -l /dev/sda Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors Disk model: QEMU HARDDISK Units: sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disklabel type: dos Disk identifier: 0xda2259ac Device Boot Start End Sectors Size Id Type /dev/sda1 * 2048 201326591 201324544 96G 83 Linux   使用 fdisk 命令进行分区扩容。</description>
+    </item>
+    
     <item>
       <title>Minecraft 1.19.2 私服新人游戏安装指南</title>
       <link>https://blog.idreamshen.com/posts/2023-minecraft-private-server-guide/</link>

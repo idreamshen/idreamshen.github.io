@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.80.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="" />
+  <meta property="og:url" content="https://blog.idreamshen.com/posts/pve-resize-vm-disk-without-lvm/" />
+  <link rel="canonical" href="https://blog.idreamshen.com/posts/pve-resize-vm-disk-without-lvm/" /><link rel="alternate" type="application/atom+xml" href="https://blog.idreamshen.com/index.xml" title="ChenHsingYu">
+
+  <script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https:\/\/blog.idreamshen.com\/"
+      },
+      "articleSection" : "posts",
+      "name" : "Pve 扩容虚拟机硬盘-无LVM",
+      "headline" : "Pve 扩容虚拟机硬盘-无LVM",
+      "description" : "背景  pve 上的 k8s 虚拟机分配的硬盘容量告急，需要进行扩容操作。操作系统为 Debian 12。 虚拟机硬盘原始大小为 96G，计划扩容为 128G。\n  操作方式  先在 PVE GUI 页面上对特定硬盘增加容量。\n 进入虚拟机终端，查看 dmesg 日志，可以发现系统检测到了硬盘容量变更。\nroot@rancher-homelab-1:~# dmesg | grep \u0026#39;capacity change\u0026#39; [3419061.180984] sda: detected capacity change from 201326592 to 268435456   使用 fdisk 命令查看当前分区，显示仍为 96G。\nroot@rancher-homelab-2:~# fdisk -l \/dev\/sda Disk \/dev\/sda: 128 GiB, 137438953472 bytes, 268435456 sectors Disk model: QEMU HARDDISK Units: sectors of 1 * 512 = 512 bytes Sector size (logical\/physical): 512 bytes \/ 512 bytes I\/O size (minimum\/optimal): 512 bytes \/ 512 bytes Disklabel type: dos Disk identifier: 0xda2259ac Device Boot Start End Sectors Size Id Type \/dev\/sda1 * 2048 201326591 201324544 96G 83 Linux   使用 fdisk 命令进行分区扩容。",
+      "inLanguage" : "en-US",
+      "author" : "",
+      "creator" : "",
+      "publisher": "",
+      "accountablePerson" : "",
+      "copyrightHolder" : "",
+      "copyrightYear" : "2024",
+      "datePublished": "2024-07-05 11:04:17 \u002b0800 CST",
+      "dateModified" : "2024-07-05 11:04:17 \u002b0800 CST",
+      "url" : "https:\/\/blog.idreamshen.com\/posts\/pve-resize-vm-disk-without-lvm\/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Pve 扩容虚拟机硬盘-无LVM - ChenHsingYu</title>
+  <meta property="og:title" content="Pve 扩容虚拟机硬盘-无LVM - ChenHsingYu" />
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="背景  pve 上的 k8s 虚拟机分配的硬盘容量告急，需要进行扩容操作。操作系统为 Debian 12。 虚拟机硬盘原始大小为 96G，计划扩容为 128G。
+  操作方式  先在 PVE GUI 页面上对特定硬盘增加容量。
+ 进入虚拟机终端，查看 dmesg 日志，可以发现系统检测到了硬盘容量变更。
+root@rancher-homelab-1:~# dmesg | grep &#39;capacity change&#39; [3419061.180984] sda: detected capacity change from 201326592 to 268435456   使用 fdisk 命令查看当前分区，显示仍为 96G。
+root@rancher-homelab-2:~# fdisk -l /dev/sda Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors Disk model: QEMU HARDDISK Units: sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disklabel type: dos Disk identifier: 0xda2259ac Device Boot Start End Sectors Size Id Type /dev/sda1 * 2048 201326591 201324544 96G 83 Linux   使用 fdisk 命令进行分区扩容。" />
+  <meta name="description" content="背景  pve 上的 k8s 虚拟机分配的硬盘容量告急，需要进行扩容操作。操作系统为 Debian 12。 虚拟机硬盘原始大小为 96G，计划扩容为 128G。
+  操作方式  先在 PVE GUI 页面上对特定硬盘增加容量。
+ 进入虚拟机终端，查看 dmesg 日志，可以发现系统检测到了硬盘容量变更。
+root@rancher-homelab-1:~# dmesg | grep &#39;capacity change&#39; [3419061.180984] sda: detected capacity change from 201326592 to 268435456   使用 fdisk 命令查看当前分区，显示仍为 96G。
+root@rancher-homelab-2:~# fdisk -l /dev/sda Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors Disk model: QEMU HARDDISK Units: sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disklabel type: dos Disk identifier: 0xda2259ac Device Boot Start End Sectors Size Id Type /dev/sda1 * 2048 201326591 201324544 96G 83 Linux   使用 fdisk 命令进行分区扩容。" />
+  <meta property="og:locale" content="zh-cn" />
+
+  <link rel="stylesheet" href="/css/flexboxgrid-6.3.1.min.css" />
+  <link rel="stylesheet" href="/css/github-markdown.css" />
+  <link rel="stylesheet" href="/css/highlight/tomorrow.min.css" />
+  <link rel="stylesheet" href="/css/index.css">
+
+  
+
+  <link href="/index.xml" rel="alternate" type="application/rss+xml"
+    title="ChenHsingYu">
+  
+  <link href="https://fonts.googleapis.com/css?family=Arvo|Permanent+Marker|Bree+Serif" rel="stylesheet">
+  
+  
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49492756-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag("js", new Date());gtag("config", "UA-49492756-1");</script>
+</head>
+
+<body>
+  <article class="post " id="article">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="site-header">
+          
+<header>
+  <div class="signatures site-title">
+    <a href="/">ChenHsingYu</a>
+  </div>
+</header>
+<div class="row end-xs">
+  
+  
+</div>
+<div class="header-line"></div>
+
+        </div>
+        <header class="post-header">
+          <h1 class="post-title">Pve 扩容虚拟机硬盘-无LVM</h1>
+          
+          <div class="row post-desc">
+            <div class="col-xs-6">
+              
+              <time class="post-date" datetime="2024-07-05 11:04:17 CST">
+                05 Jul 2024
+              </time>
+              
+            </div>
+            <div class="col-xs-6">
+              
+            </div>
+          </div>
+          
+        </header>
+
+        <div class="post-content markdown-body">
+          
+          
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+背景
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>pve 上的 k8s 虚拟机分配的硬盘容量告急，需要进行扩容操作。操作系统为 Debian 12。
+虚拟机硬盘原始大小为 96G，计划扩容为 128G。</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+操作方式
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>先在 PVE GUI 页面上对特定硬盘增加容量。</p>
+<p>
+进入虚拟机终端，查看 dmesg 日志，可以发现系统检测到了硬盘容量变更。</p>
+<pre class="example">
+root@rancher-homelab-1:~# dmesg | grep &#39;capacity change&#39;
+[3419061.180984] sda: detected capacity change from 201326592 to 268435456
+</pre>
+<p>
+使用 fdisk 命令查看当前分区，显示仍为 96G。</p>
+<pre class="example">
+root@rancher-homelab-2:~# fdisk -l /dev/sda
+Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xda2259ac
+
+Device     Boot Start       End   Sectors Size Id Type
+/dev/sda1  *     2048 201326591 201324544  96G 83 Linux
+</pre>
+<p>
+使用 fdisk 命令进行分区扩容。</p>
+<pre class="example">
+root@rancher-homelab-1:~# fdisk /dev/sda
+
+Welcome to fdisk (util-linux 2.38.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+This disk is currently in use - repartitioning is probably a bad idea.
+It&#39;s recommended to umount all file systems, and swapoff all swap
+partitions on this disk.
+
+
+Command (m for help):
+</pre>
+<p>
+先输入 p 命令打印分区信息。可以看到识别到硬盘 /dev/sda 大小为 128G，但分区 /dev/sda1 只有 95G。</p>
+<pre class="example">
+Command (m for help): p
+
+Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xda2259ac
+
+Device     Boot     Start       End   Sectors  Size Id Type
+/dev/sda1  *         2048 201326591 201324544   95G 83 Linux
+</pre>
+<p>
+输入 d 命令删除分区，并输入 p 检查分区是否已删除。</p>
+<pre class="example">
+Command (m for help): d
+Selected partition 1
+Partition 1 has been deleted.
+
+Command (m for help): p
+Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xda2259ac
+</pre>
+<p>
+输入 n 命令创建分区，选择 primary</p>
+<pre class="example">
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 1
+First sector (2048-268435455, default 2048):
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-268435455, default 268435455):
+
+Created a new partition 1 of type &#39;Linux&#39; and of size 128 GiB.
+Partition #1 contains a ext4 signature.
+
+Do you want to remove the signature? [Y]es/[N]o: N
+
+Command (m for help): p
+
+Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xda2259ac
+
+Device     Boot Start       End   Sectors  Size Id Type
+/dev/sda1        2048 268435455 268433408  128G 83 Linux
+</pre>
+<p>
+输入 a 命令将该分区标记为 bootable。</p>
+<pre class="example">
+Command (m for help): a
+Selected partition 1
+The bootable flag on partition 1 is enabled now.
+
+Command (m for help): p
+Disk /dev/sda: 128 GiB, 137438953472 bytes, 268435456 sectors
+Disk model: QEMU HARDDISK
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xda2259ac
+
+Device     Boot Start       End   Sectors  Size Id Type
+/dev/sda1  *     2048 268435455 268433408  128G 83 Linux
+</pre>
+<p>
+输入 w 命令写入新的分区。</p>
+<pre class="example">
+Command (m for help): w
+The partition table has been altered.
+Syncing disks.
+</pre>
+<p>
+使用 df 命令查看文件系统仍然显示为 95G。</p>
+<pre class="example">
+root@rancher-homelab-2:~# df -h
+Filesystem                                              Size  Used Avail Use% Mounted on
+udev                                                     16G     0   16G   0% /dev
+tmpfs                                                   3.2G  8.5M  3.2G   1% /run
+/dev/sda1                                                95G   55G   36G  61% /
+tmpfs                                                    16G     0   16G   0% /dev/shm
+tmpfs                                                   5.0M     0  5.0M   0% /run/lock
+tmpfs                                                   3.2G     0  3.2G   0% /run/user/0
+</pre>
+<p>
+执行命令 <code class="verbatim">resize2fs /dev/sda1</code></p>
+<pre class="example">
+root@rancher-homelab-2:~# resize2fs /dev/sda1
+resize2fs 1.47.0 (5-Feb-2023)
+Filesystem at /dev/sda1 is mounted on /; on-line resizing required
+old_desc_blocks = 12, new_desc_blocks = 16
+The filesystem on /dev/sda1 is now 33554176 (4k) blocks long.
+</pre>
+<p>
+重新使用 df 命令检查，可以观察到正确识别为 126G。</p>
+<pre class="example">
+root@rancher-homelab-2:~# df -h
+Filesystem                                              Size  Used Avail Use% Mounted on
+udev                                                     16G     0   16G   0% /dev
+tmpfs                                                   3.2G  8.5M  3.2G   1% /run
+/dev/sda1                                               126G   55G   66G  46% /
+tmpfs                                                    16G     0   16G   0% /dev/shm
+tmpfs                                                   5.0M     0  5.0M   0% /run/lock
+tmpfs                                                   3.2G     0  3.2G   0% /run/user/0
+</pre>
+</div>
+</div>
+<div id="outline-container-headline-3" class="outline-2">
+<h2 id="headline-3">
+参考资料
+</h2>
+<div id="outline-text-headline-3" class="outline-text-2">
+<ul>
+<li>
+<p><a href="https://pve.proxmox.com/wiki/Resize_disks">Resize disks</a></p>
+</li>
+<li>
+<p><a href="https://ezo.biz/New_Learning/1348.html">给PVE虚拟机磁盘无损扩容</a></p>
+</li>
+</ul>
+</div>
+</div>
+
+        </div>
+
+        <div class="row middle-xs">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            
+          </div>
+        </div>
+
+        
+        
+
+        
+        
+        <div style="height: 50px;"></div>
+        
+        
+
+        <div class="site-footer">
+  
+  <div class="site-footer-item">
+    <a href="https://github.com/idreamshen" target="_blank">Github</a>
+  </div>
+  
+  <div class="site-footer-item">
+    <a href="mailto:idream.shen@gmail.com" target="_blank">Email</a>
+  </div>
+  
+  
+</div>
+
+      </div>
+    </div>
+  </article>
+
+  <script src="/js/highlight.pack.js"></script>
+
+
+<script>
+  hljs.initHighlightingOnLoad();
+  
+  
+  
+    
+    
+  
+</script>
+
+  
+
+</body>
+
+</html>
